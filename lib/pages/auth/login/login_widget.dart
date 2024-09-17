@@ -446,8 +446,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           _model.currentUser?.first.whatsapp,
                                       linkedin:
                                           _model.currentUser?.first.linkedin,
-                                      cDisp: _model.currentUser?.first
-                                          .conexoesDisponiveis,
                                     );
                                     safeSetState(() {});
 

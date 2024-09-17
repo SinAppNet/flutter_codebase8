@@ -74,14 +74,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomeWidget() : const SelectLoginWidget(),
+      errorBuilder: (context, state) => RootPageContext.wrap(
+        appStateNotifier.loggedIn ? const HomeWidget() : const SelectLoginWidget(),
+        errorRoute: state.uri.toString(),
+      ),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? const HomeWidget() : const SelectLoginWidget(),
+          builder: (context, _) => RootPageContext.wrap(
+            appStateNotifier.loggedIn ? const HomeWidget() : const SelectLoginWidget(),
+          ),
         ),
         FFRoute(
           name: 'selectLogin',

@@ -1,4 +1,3 @@
-import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -217,7 +216,7 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                                       MainAxisSize.max,
                                                   children: [
                                                     Text(
-                                                      'Hello World',
+                                                      interessesItem,
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
@@ -311,22 +310,98 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
+                                                    RichText(
+                                                      textScaler:
+                                                          MediaQuery.of(context)
+                                                              .textScaler,
+                                                      text: TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text:
+                                                                valueOrDefault<
+                                                                    String>(
+                                                              columnEmpresasRow
+                                                                  ?.nome,
+                                                              'w',
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  fontSize:
+                                                                      18.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
+                                                          TextSpan(
+                                                            text: ' - ',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
+                                                          TextSpan(
+                                                            text:
+                                                                valueOrDefault<
+                                                                    String>(
+                                                              columnEmpresasRow
+                                                                  ?.segmento,
+                                                              '2',
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  fontSize:
+                                                                      18.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          )
+                                                        ],
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ),
                                                     Text(
                                                       valueOrDefault<String>(
-                                                        columnEmpresasRow?.nome,
-                                                        'd',
+                                                        columnEmpresasRow
+                                                            ?.porte,
+                                                        'w',
                                                       ),
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
                                                           .override(
                                                             fontFamily: 'Inter',
-                                                            color: const Color(
-                                                                0xFF2F2E41),
-                                                            fontSize: 18.0,
                                                             letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.bold,
                                                           ),
                                                     ),
                                                     Padding(
@@ -416,107 +491,6 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                         Container(
                                           width: 270.0,
                                           decoration: const BoxDecoration(),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 24.0, 0.0, 0.0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        18.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Segmentos',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
-                                              Container(
-                                                width: double.infinity,
-                                                decoration: const BoxDecoration(),
-                                                child: Builder(
-                                                  builder: (context) {
-                                                    final interesses = widget
-                                                            .user?.interesses
-                                                            .toList() ??
-                                                        [];
-
-                                                    return SingleChildScrollView(
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: List.generate(
-                                                                interesses
-                                                                    .length,
-                                                                (interessesIndex) {
-                                                          final interessesItem =
-                                                              interesses[
-                                                                  interessesIndex];
-                                                          return Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color(
-                                                                  0xFFADFFCB),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                children: [
-                                                                  Text(
-                                                                    'Hello World',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Inter',
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          );
-                                                        })
-                                                            .divide(const SizedBox(
-                                                                width: 12.0))
-                                                            .addToStart(
-                                                                const SizedBox(
-                                                                    width:
-                                                                        18.0))
-                                                            .addToEnd(const SizedBox(
-                                                                width: 18.0)),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ].divide(const SizedBox(height: 12.0)),
-                                          ),
                                         ),
                                       ],
                                     );
@@ -893,22 +867,27 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                         'solicitado': widget.user?.id,
                                         'status': StatusConexao.solicitada.name,
                                       });
-                                      FFAppState().updateCurrentUserStruct(
-                                        (e) => e..incrementCDisp(-1),
-                                      );
-                                      safeSetState(() {});
-                                      await UsersTable().update(
-                                        data: {
-                                          'conexoes_disponiveis':
-                                              FFAppState().currentUser.cDisp,
-                                        },
-                                        matchingRows: (rows) => rows.eq(
-                                          'uuid',
-                                          currentUserUid,
-                                        ),
-                                      );
                                       _model.number = 0;
                                       safeSetState(() {});
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Solicitação de conexão enviada.',
+                                            style: TextStyle(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                          ),
+                                          duration:
+                                              const Duration(milliseconds: 4000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                        ),
+                                      );
                                     }
                                   },
                                   child: Container(

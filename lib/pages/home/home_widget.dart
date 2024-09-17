@@ -47,6 +47,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (RootPageContext.isInactiveRootPage(context)) {
+        return;
+      }
       _model.user = await action_blocks.updateUserState(context);
       if (_model.user?.onboarding != true) {
         safeSetState(() => _model.initialOnboardingController =
@@ -321,7 +324,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         height: 42.0,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .tertiary,
+                                              .error,
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -433,7 +436,10 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         requestFn: () =>
                                             UsuariosSemConexaoAceitaTable()
                                                 .queryRows(
-                                          queryFn: (q) => q,
+                                          queryFn: (q) => q.eq(
+                                            'perfil_completo',
+                                            true,
+                                          ),
                                           limit: 5,
                                         ),
                                       )

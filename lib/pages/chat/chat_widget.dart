@@ -1,5 +1,6 @@
 import '/backend/supabase/supabase.dart';
 import '/componentes/app_bar/app_bar_widget.dart';
+import '/componentes/empty/empty_widget.dart';
 import '/componentes/usuario_conectado/usuario_conectado_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -270,6 +271,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                                   List<MensagensRow> mensagensMensagensRowList =
                                       snapshot.data!;
 
+                                  if (mensagensMensagensRowList.isEmpty) {
+                                    return const Center(
+                                      child: EmptyWidget(),
+                                    );
+                                  }
+
                                   return ListView.separated(
                                     padding: const EdgeInsets.fromLTRB(
                                       0,
@@ -291,6 +298,58 @@ class _ChatWidgetState extends State<ChatWidget> {
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
+                                            if (mensagensMensagensRow
+                                                    .firstMessageOfDay ==
+                                                true)
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 24.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 8.0,
+                                                                12.0, 8.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          dateTimeFormat(
+                                                            "relative",
+                                                            mensagensMensagensRow
+                                                                .createdAt,
+                                                            locale: FFLocalizations
+                                                                    .of(context)
+                                                                .languageCode,
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
                                             if (mensagensMensagensRow.sender ==
                                                 FFAppState().currentUser.id)
                                               Column(
@@ -357,9 +416,13 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                             ),
                                                             Text(
                                                               dateTimeFormat(
-                                                                  "H:m",
-                                                                  mensagensMensagensRow
-                                                                      .createdAt),
+                                                                "H:m",
+                                                                mensagensMensagensRow
+                                                                    .createdAt,
+                                                                locale: FFLocalizations.of(
+                                                                        context)
+                                                                    .languageCode,
+                                                              ),
                                                               textAlign:
                                                                   TextAlign.end,
                                                               style: FlutterFlowTheme
@@ -454,9 +517,13 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                             ),
                                                             Text(
                                                               dateTimeFormat(
-                                                                  "H:m",
-                                                                  mensagensMensagensRow
-                                                                      .createdAt),
+                                                                "H:m",
+                                                                mensagensMensagensRow
+                                                                    .createdAt,
+                                                                locale: FFLocalizations.of(
+                                                                        context)
+                                                                    .languageCode,
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
@@ -585,50 +652,132 @@ class _ChatWidgetState extends State<ChatWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                await MensagensTable().insert({
-                                                  'chat': widget.chat?.id,
-                                                  'sender': FFAppState()
-                                                      .currentUser
-                                                      .id,
-                                                  'mensagem': _model
-                                                      .textController.text,
-                                                });
-                                                await ChatTable().update(
-                                                  data: {
-                                                    'messagesCount':
-                                                        functions.sum(
-                                                            widget.chat!
-                                                                .messagesCount!,
-                                                            1),
-                                                    'last_message': _model
+                                                _model.msgs =
+                                                    await MensagensTable()
+                                                        .queryRows(
+                                                  queryFn: (q) => q
+                                                      .eq(
+                                                        'chat',
+                                                        widget.chat?.id,
+                                                      )
+                                                      .eq(
+                                                        'day_sended',
+                                                        supaSerialize<DateTime>(
+                                                            getCurrentTimestamp),
+                                                      ),
+                                                );
+                                                if ((_model.msgs != null &&
+                                                        (_model.msgs)!
+                                                            .isNotEmpty) ==
+                                                    false) {
+                                                  await MensagensTable()
+                                                      .insert({
+                                                    'chat': widget.chat?.id,
+                                                    'sender': FFAppState()
+                                                        .currentUser
+                                                        .id,
+                                                    'mensagem': _model
                                                         .textController.text,
-                                                  },
-                                                  matchingRows: (rows) =>
-                                                      rows.eq(
-                                                    'id',
-                                                    widget.chat?.id,
-                                                  ),
-                                                );
-                                                safeSetState(() => _model
-                                                    .requestCompleter = null);
-                                                await _model
-                                                    .waitForRequestCompleted();
-                                                unawaited(
-                                                  () async {
-                                                    await _model.mensagens
-                                                        ?.animateTo(
-                                                      _model.mensagens!.position
-                                                          .maxScrollExtent,
-                                                      duration: const Duration(
-                                                          milliseconds: 100),
-                                                      curve: Curves.ease,
-                                                    );
-                                                  }(),
-                                                );
-                                                safeSetState(() {
-                                                  _model.textController
-                                                      ?.clear();
-                                                });
+                                                    'day_sended': supaSerialize<
+                                                            DateTime>(
+                                                        getCurrentTimestamp),
+                                                    'first_message_of_day':
+                                                        true,
+                                                  });
+                                                  await ChatTable().update(
+                                                    data: {
+                                                      'messagesCount':
+                                                          functions.sum(
+                                                              widget.chat!
+                                                                  .messagesCount!,
+                                                              1),
+                                                      'last_message': _model
+                                                          .textController.text,
+                                                    },
+                                                    matchingRows: (rows) =>
+                                                        rows.eq(
+                                                      'id',
+                                                      widget.chat?.id,
+                                                    ),
+                                                  );
+                                                  safeSetState(() => _model
+                                                      .requestCompleter = null);
+                                                  await _model
+                                                      .waitForRequestCompleted();
+                                                  unawaited(
+                                                    () async {
+                                                      await _model.mensagens
+                                                          ?.animateTo(
+                                                        _model
+                                                            .mensagens!
+                                                            .position
+                                                            .maxScrollExtent,
+                                                        duration: const Duration(
+                                                            milliseconds: 100),
+                                                        curve: Curves.ease,
+                                                      );
+                                                    }(),
+                                                  );
+                                                  safeSetState(() {
+                                                    _model.textController
+                                                        ?.clear();
+                                                  });
+                                                } else {
+                                                  await MensagensTable()
+                                                      .insert({
+                                                    'chat': widget.chat?.id,
+                                                    'sender': FFAppState()
+                                                        .currentUser
+                                                        .id,
+                                                    'mensagem': _model
+                                                        .textController.text,
+                                                    'day_sended': supaSerialize<
+                                                            DateTime>(
+                                                        getCurrentTimestamp),
+                                                    'first_message_of_day':
+                                                        false,
+                                                  });
+                                                  await ChatTable().update(
+                                                    data: {
+                                                      'messagesCount':
+                                                          functions.sum(
+                                                              widget.chat!
+                                                                  .messagesCount!,
+                                                              1),
+                                                      'last_message': _model
+                                                          .textController.text,
+                                                    },
+                                                    matchingRows: (rows) =>
+                                                        rows.eq(
+                                                      'id',
+                                                      widget.chat?.id,
+                                                    ),
+                                                  );
+                                                  safeSetState(() => _model
+                                                      .requestCompleter = null);
+                                                  await _model
+                                                      .waitForRequestCompleted();
+                                                  unawaited(
+                                                    () async {
+                                                      await _model.mensagens
+                                                          ?.animateTo(
+                                                        _model
+                                                            .mensagens!
+                                                            .position
+                                                            .maxScrollExtent,
+                                                        duration: const Duration(
+                                                            milliseconds: 100),
+                                                        curve: Curves.ease,
+                                                      );
+                                                    }(),
+                                                  );
+                                                  safeSetState(() {
+                                                    _model.textController
+                                                        ?.clear();
+                                                  });
+                                                }
+
+                                                safeSetState(() {});
                                               },
                                               child: Icon(
                                                 Icons.send_rounded,

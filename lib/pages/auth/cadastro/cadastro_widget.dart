@@ -51,9 +51,6 @@ class _CadastroWidgetState extends State<CadastroWidget> {
     _model.wppTextController ??= TextEditingController();
     _model.wppFocusNode ??= FocusNode();
 
-    _model.sobreTextController ??= TextEditingController();
-    _model.sobreFocusNode ??= FocusNode();
-
     _model.nomeEmpresaTextController2 ??= TextEditingController();
     _model.nomeEmpresaFocusNode2 ??= FocusNode();
 
@@ -72,7 +69,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
     _model.cashTextController ??= TextEditingController();
     _model.cashFocusNode ??= FocusNode();
 
-    _model.textController13 ??= TextEditingController();
+    _model.textController12 ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
   }
 
@@ -1468,134 +1465,6 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                 ),
                                               ].divide(const SizedBox(height: 10.0)),
                                             ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Sobre',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color:
-                                                            const Color(0xFF344054),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                ),
-                                                SizedBox(
-                                                  width: double.infinity,
-                                                  child: TextFormField(
-                                                    controller: _model
-                                                        .sobreTextController,
-                                                    focusNode:
-                                                        _model.sobreFocusNode,
-                                                    onChanged: (_) =>
-                                                        EasyDebounce.debounce(
-                                                      '_model.sobreTextController',
-                                                      const Duration(milliseconds: 0),
-                                                      () => safeSetState(() {}),
-                                                    ),
-                                                    autofocus: false,
-                                                    textInputAction:
-                                                        TextInputAction.done,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      isDense: true,
-                                                      hintText:
-                                                          'Conte um pouco sobre você e suas experiências pessoais...',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Inter',
-                                                                color: const Color(
-                                                                    0xFF667085),
-                                                                fontSize: 16.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-                                                          color:
-                                                              Color(0xFFD0D5DD),
-                                                          width: 2.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-                                                          color:
-                                                              Color(0xB1009C3B),
-                                                          width: 2.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          width: 2.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          width: 2.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      filled: true,
-                                                      fillColor: Colors.white,
-                                                      contentPadding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  15.0,
-                                                                  20.0,
-                                                                  15.0,
-                                                                  20.0),
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          color:
-                                                              const Color(0xFF667085),
-                                                          fontSize: 16.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                    maxLines: 5,
-                                                    maxLength: 100,
-                                                    validator: _model
-                                                        .sobreTextControllerValidator
-                                                        .asValidator(context),
-                                                  ),
-                                                ),
-                                              ].divide(const SizedBox(height: 10.0)),
-                                            ),
                                             FFButtonWidget(
                                               onPressed: ((_model
                                                                   .usernameTextController.text ==
@@ -1603,13 +1472,10 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                       (_model
                                                                   .emailTextController.text ==
                                                               '') ||
-                                                      (_model
-                                                                  .senha01TextController.text ==
-                                                              '') ||
-                                                      (_model.wppTextController
+                                                      (_model.senha01TextController
                                                                   .text ==
                                                               '') ||
-                                                      (_model.sobreTextController
+                                                      (_model.wppTextController
                                                                   .text ==
                                                               '') ||
                                                       ((_model.interessesUserValue !=
@@ -1662,9 +1528,6 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                             .text,
                                                         'whatsapp': _model
                                                             .wppTextController
-                                                            .text,
-                                                        'sobre': _model
-                                                            .sobreTextController
                                                             .text,
                                                         'interesses': _model
                                                             .interessesUserValue,
@@ -3202,7 +3065,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                     width: double.infinity,
                                                     child: TextFormField(
                                                       controller: _model
-                                                          .textController13,
+                                                          .textController12,
                                                       focusNode: _model
                                                           .textFieldFocusNode,
                                                       autofocus: false,
@@ -3305,7 +3168,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                               .numberWithOptions(
                                                               decimal: true),
                                                       validator: _model
-                                                          .textController13Validator
+                                                          .textController12Validator
                                                           .asValidator(context),
                                                     ),
                                                   ),

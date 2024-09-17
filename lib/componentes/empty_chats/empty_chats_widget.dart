@@ -91,7 +91,10 @@ class _EmptyChatsWidgetState extends State<EmptyChatsWidget> {
                       builder: (context) {
                         return Padding(
                           padding: MediaQuery.viewInsetsOf(context),
-                          child: const ContatosWidget(),
+                          child: SizedBox(
+                            height: MediaQuery.sizeOf(context).height * 0.5,
+                            child: const ContatosWidget(),
+                          ),
                         );
                       },
                     ).then((value) => safeSetState(() {}));

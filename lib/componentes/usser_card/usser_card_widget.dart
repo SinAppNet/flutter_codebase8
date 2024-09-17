@@ -1,8 +1,6 @@
-import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/componentes/complete_perfil/complete_perfil_widget.dart';
-import '/componentes/invite/invite_widget.dart';
 import '/componentes/usuario_nao_conectado/usuario_nao_conectado_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -62,19 +60,6 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
         ],
       ),
       'containerOnActionTriggerAnimation2': AnimationInfo(
-        trigger: AnimationTrigger.onActionTrigger,
-        applyInitialState: true,
-        effectsBuilder: () => [
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: const Offset(-3.0, 0.0),
-            end: const Offset(100.0, 0.0),
-          ),
-        ],
-      ),
-      'containerOnActionTriggerAnimation3': AnimationInfo(
         trigger: AnimationTrigger.onActionTrigger,
         applyInitialState: true,
         effectsBuilder: () => [
@@ -309,10 +294,8 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                         return Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            if (FFAppState()
-                                                    .currentUser
-                                                    .cDisp ==
-                                                0)
+                                            if (widget.user?.solicitacao ==
+                                                null)
                                               Align(
                                                 alignment: const AlignmentDirectional(
                                                     0.89, -1.19),
@@ -326,160 +309,105 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
-                                                    await showModalBottomSheet(
-                                                      isScrollControlled: true,
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child: const InviteWidget(),
-                                                        );
-                                                      },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
-                                                  },
-                                                  child: Container(
-                                                    width: 60.0,
-                                                    height: 60.0,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      boxShadow: const [
-                                                        BoxShadow(
-                                                          blurRadius: 4.0,
-                                                          color:
-                                                              Color(0x33000000),
-                                                          offset: Offset(
-                                                            0.0,
-                                                            2.0,
-                                                          ),
-                                                          spreadRadius: 1.0,
-                                                        )
-                                                      ],
-                                                      shape: BoxShape.circle,
-                                                      border: Border.all(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(10.0),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                            child: Image.asset(
-                                                              'assets/images/image-user-plus_(1).png',
-                                                              width: 24.0,
-                                                              height: 24.0,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ).animateOnActionTrigger(
-                                                  animationsMap[
-                                                      'containerOnActionTriggerAnimation1']!,
-                                                ),
-                                              ),
-                                            if ((widget.user?.solicitacao ==
-                                                    null) &&
-                                                (FFAppState()
-                                                        .currentUser
-                                                        .cDisp !=
-                                                    0))
-                                              Align(
-                                                alignment: const AlignmentDirectional(
-                                                    0.89, -1.19),
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    var confirmDialogResponse =
-                                                        await showDialog<bool>(
-                                                              context: context,
-                                                              builder:
-                                                                  (alertDialogContext) {
-                                                                return AlertDialog(
-                                                                  title: const Text(
-                                                                      'Enviar solicitação'),
-                                                                  content: Text(
-                                                                      'Confirme se deseja enviar uma solicitação de conexão para ${widget.user?.nome}'),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                      child: const Text(
-                                                                          'Cancelar'),
-                                                                    ),
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                      child: const Text(
-                                                                          'Confirmar'),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            ) ??
-                                                            false;
-                                                    if (confirmDialogResponse) {
-                                                      await ConexaoTable()
-                                                          .insert({
-                                                        'solicitou':
-                                                            FFAppState()
-                                                                .currentUser
-                                                                .id,
-                                                        'solicitado':
-                                                            widget.user?.id,
-                                                        'status': StatusConexao
-                                                            .solicitada.name,
-                                                      });
-                                                      FFAppState()
-                                                          .updateCurrentUserStruct(
-                                                        (e) => e
-                                                          ..incrementCDisp(-1),
-                                                      );
-                                                      safeSetState(() {});
-                                                      await UsersTable().update(
-                                                        data: {
-                                                          'conexoes_disponiveis':
+                                                    if (FFAppState()
+                                                            .currentUser
+                                                            .perfilCompleto ==
+                                                        true) {
+                                                      var confirmDialogResponse =
+                                                          await showDialog<
+                                                                  bool>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: const Text(
+                                                                        'Enviar solicitação'),
+                                                                    content: Text(
+                                                                        'Confirme se deseja enviar uma solicitação de conexão para ${widget.user?.nome}'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: const Text(
+                                                                            'Cancelar'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: const Text(
+                                                                            'Confirmar'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ) ??
+                                                              false;
+                                                      if (confirmDialogResponse) {
+                                                        await ConexaoTable()
+                                                            .insert({
+                                                          'solicitou':
                                                               FFAppState()
                                                                   .currentUser
-                                                                  .cDisp,
+                                                                  .id,
+                                                          'solicitado':
+                                                              widget.user?.id,
+                                                          'status':
+                                                              StatusConexao
+                                                                  .solicitada
+                                                                  .name,
+                                                        });
+                                                        await widget.action
+                                                            ?.call();
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Solicitação de conexão enviada.',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                              ),
+                                                            ),
+                                                            duration: const Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondary,
+                                                          ),
+                                                        );
+                                                      }
+                                                    } else {
+                                                      await showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return Padding(
+                                                            padding: MediaQuery
+                                                                .viewInsetsOf(
+                                                                    context),
+                                                            child: SizedBox(
+                                                              height: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .height *
+                                                                  0.8,
+                                                              child:
+                                                                  const CompletePerfilWidget(),
+                                                            ),
+                                                          );
                                                         },
-                                                        matchingRows: (rows) =>
-                                                            rows.eq(
-                                                          'uuid',
-                                                          currentUserUid,
-                                                        ),
-                                                      );
-                                                      await widget.action
-                                                          ?.call();
+                                                      ).then((value) =>
+                                                          safeSetState(() {}));
                                                     }
                                                   },
                                                   child: Container(
@@ -532,7 +460,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                   ),
                                                 ).animateOnActionTrigger(
                                                   animationsMap[
-                                                      'containerOnActionTriggerAnimation2']!,
+                                                      'containerOnActionTriggerAnimation1']!,
                                                 ),
                                               ),
                                             if (widget.user?.solicitacao !=
@@ -647,7 +575,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                   ),
                                                 ).animateOnActionTrigger(
                                                   animationsMap[
-                                                      'containerOnActionTriggerAnimation3']!,
+                                                      'containerOnActionTriggerAnimation2']!,
                                                 ),
                                               ),
                                           ],

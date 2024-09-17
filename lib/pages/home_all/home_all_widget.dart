@@ -168,8 +168,8 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                       width: double.infinity,
                                       height: 42.0,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiary,
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -277,10 +277,16 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Expanded(
-                                            child:
-                                                FutureBuilder<List<UsersRow>>(
-                                              future: UsersTable().queryRows(
-                                                queryFn: (q) => q,
+                                            child: FutureBuilder<
+                                                List<
+                                                    UsuariosSemConexaoAceitaRow>>(
+                                              future:
+                                                  UsuariosSemConexaoAceitaTable()
+                                                      .queryRows(
+                                                queryFn: (q) => q.eq(
+                                                  'perfil_completo',
+                                                  true,
+                                                ),
                                               ),
                                               builder: (context, snapshot) {
                                                 // Customize what your widget looks like when it's loading.
@@ -297,8 +303,8 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                     ),
                                                   );
                                                 }
-                                                List<UsersRow>
-                                                    containerUsersRowList =
+                                                List<UsuariosSemConexaoAceitaRow>
+                                                    containerUsuariosSemConexaoAceitaRowList =
                                                     snapshot.data!;
 
                                                 return Container(
@@ -354,7 +360,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                                 return const Iterable<
                                                                     String>.empty();
                                                               }
-                                                              return containerUsersRowList
+                                                              return containerUsuariosSemConexaoAceitaRowList
                                                                   .map((e) =>
                                                                       e.nome)
                                                                   .withoutNulls
@@ -789,7 +795,11 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                           ..complete(
                                                               UsuariosSemConexaoAceitaTable()
                                                                   .queryRows(
-                                                            queryFn: (q) => q,
+                                                            queryFn: (q) =>
+                                                                q.eq(
+                                                              'perfil_completo',
+                                                              true,
+                                                            ),
                                                           )))
                                                     .future,
                                                 builder: (context, snapshot) {
@@ -869,7 +879,17 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                           ..complete(
                                                               UsuariosSemConexaoAceitaTable()
                                                                   .queryRows(
-                                                            queryFn: (q) => q,
+                                                            queryFn: (q) => q
+                                                                .eq(
+                                                                  'perfil_completo',
+                                                                  true,
+                                                                )
+                                                                .overlaps(
+                                                                  'interesses',
+                                                                  FFAppState()
+                                                                      .filtroAplied
+                                                                      .interesses,
+                                                                ),
                                                           )))
                                                     .future,
                                                 builder: (context, snapshot) {

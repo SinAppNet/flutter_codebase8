@@ -52,6 +52,16 @@ class UsuariosSemConexaoAceitaRow extends SupabaseDataRow {
   String? get empresaNome => getField<String>('empresa_nome');
   set empresaNome(String? value) => setField<String>('empresa_nome', value);
 
+  List<String> get interesses => getListField<String>('interesses');
+  set interesses(List<String>? value) =>
+      setListField<String>('interesses', value);
+
+  bool? get onboarding => getField<bool>('onboarding');
+  set onboarding(bool? value) => setField<bool>('onboarding', value);
+
+  bool? get perfilCompleto => getField<bool>('perfil_completo');
+  set perfilCompleto(bool? value) => setField<bool>('perfil_completo', value);
+
   int? get solicitacao => getField<int>('solicitacao');
   set solicitacao(int? value) => setField<int>('solicitacao', value);
 }

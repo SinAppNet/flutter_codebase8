@@ -45,7 +45,7 @@ class _ContatosWidgetState extends State<ContatosWidget> {
       alignment: const AlignmentDirectional(0.0, 1.0),
       child: Container(
         width: double.infinity,
-        height: 400.0,
+        height: double.infinity,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: const BorderRadius.only(
@@ -93,6 +93,12 @@ class _ContatosWidgetState extends State<ContatosWidget> {
                         }
                         List<ConexoesAceitasRow> columnConexoesAceitasRowList =
                             snapshot.data!;
+
+                        if (columnConexoesAceitasRowList.isEmpty) {
+                          return const Center(
+                            child: EmptyWidget(),
+                          );
+                        }
 
                         return SingleChildScrollView(
                           child: Column(

@@ -189,7 +189,12 @@ class _AgendarWidgetState extends State<AgendarWidget> {
                                 15.0, 0.0, 0.0, 0.0),
                             child: Text(
                               valueOrDefault<String>(
-                                dateTimeFormat("yMd", _model.datePicked),
+                                dateTimeFormat(
+                                  "yMd",
+                                  _model.datePicked,
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
+                                ),
                                 'Selecione uma data',
                               ),
                               style: FlutterFlowTheme.of(context)

@@ -62,10 +62,6 @@ class CadastroModel extends FlutterFlowModel<CadastroWidget> {
   FocusNode? wppFocusNode;
   TextEditingController? wppTextController;
   String? Function(BuildContext, String?)? wppTextControllerValidator;
-  // State field(s) for sobre widget.
-  FocusNode? sobreFocusNode;
-  TextEditingController? sobreTextController;
-  String? Function(BuildContext, String?)? sobreTextControllerValidator;
   // Stores action output result for [Backend Call - Insert Row] action in Button widget.
   UsersRow? createdUser;
   // Stores action output result for [Backend Call - Insert Row] action in Button widget.
@@ -118,8 +114,8 @@ class CadastroModel extends FlutterFlowModel<CadastroWidget> {
   String? Function(BuildContext, String?)? cashTextControllerValidator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
-  TextEditingController? textController13;
-  String? Function(BuildContext, String?)? textController13Validator;
+  TextEditingController? textController12;
+  String? Function(BuildContext, String?)? textController12Validator;
 
   @override
   void initState(BuildContext context) {
@@ -149,9 +145,6 @@ class CadastroModel extends FlutterFlowModel<CadastroWidget> {
     wppFocusNode?.dispose();
     wppTextController?.dispose();
 
-    sobreFocusNode?.dispose();
-    sobreTextController?.dispose();
-
     nomeEmpresaFocusNode2?.dispose();
     nomeEmpresaTextController2?.dispose();
 
@@ -171,6 +164,6 @@ class CadastroModel extends FlutterFlowModel<CadastroWidget> {
     cashTextController?.dispose();
 
     textFieldFocusNode?.dispose();
-    textController13?.dispose();
+    textController12?.dispose();
   }
 }

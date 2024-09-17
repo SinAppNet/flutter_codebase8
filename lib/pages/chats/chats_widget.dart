@@ -306,7 +306,13 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                   padding:
                                                       MediaQuery.viewInsetsOf(
                                                           context),
-                                                  child: const ContatosWidget(),
+                                                  child: SizedBox(
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
+                                                            .height *
+                                                        0.5,
+                                                    child: const ContatosWidget(),
+                                                  ),
                                                 ),
                                               );
                                             },
@@ -616,8 +622,12 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                       valueOrDefault<
                                                                           String>(
                                                                         dateTimeFormat(
-                                                                            "Hm",
-                                                                            textMensagensRow?.createdAt),
+                                                                          "Hm",
+                                                                          textMensagensRow
+                                                                              ?.createdAt,
+                                                                          locale:
+                                                                              FFLocalizations.of(context).languageCode,
+                                                                        ),
                                                                         '00',
                                                                       ),
                                                                       style: FlutterFlowTheme.of(

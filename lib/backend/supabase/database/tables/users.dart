@@ -50,10 +50,6 @@ class UsersRow extends SupabaseDataRow {
   String? get empresaNome => getField<String>('empresa_nome');
   set empresaNome(String? value) => setField<String>('empresa_nome', value);
 
-  int? get conexoesDisponiveis => getField<int>('conexoes_disponiveis');
-  set conexoesDisponiveis(int? value) =>
-      setField<int>('conexoes_disponiveis', value);
-
   List<String> get interesses => getListField<String>('interesses');
   set interesses(List<String>? value) =>
       setListField<String>('interesses', value);

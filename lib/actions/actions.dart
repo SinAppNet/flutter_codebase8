@@ -24,7 +24,6 @@ Future<UsersRow?> updateUserState(BuildContext context) async {
     linkedin: returnedUser.first.linkedin,
     empresaId: returnedUser.first.empresa,
     cargo: returnedUser.first.cargo,
-    cDisp: returnedUser.first.conexoesDisponiveis,
     interesses: returnedUser.first.interesses,
     perfilCompleto: returnedUser.first.perfilCompleto,
   );

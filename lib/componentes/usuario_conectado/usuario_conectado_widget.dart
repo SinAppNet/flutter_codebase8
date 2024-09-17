@@ -332,50 +332,56 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                                           ),
                                         ),
                                       ),
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          await launchURL(
-                                              'https://api.whatsapp.com/send?phone=${widget.user?.whatsapp}');
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: const Color(0x1939D2C0),
-                                            borderRadius:
-                                                BorderRadius.circular(16.0),
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    10.0, 6.0, 10.0, 6.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  'WhatsApp',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondary,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                ),
-                                              ],
+                                      if (responsiveVisibility(
+                                        context: context,
+                                        phone: false,
+                                        tablet: false,
+                                        tabletLandscape: false,
+                                        desktop: false,
+                                      ))
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await launchURL(
+                                                'https://api.whatsapp.com/send?phone=${widget.user?.whatsapp}');
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: const Color(0x1939D2C0),
+                                              borderRadius:
+                                                  BorderRadius.circular(16.0),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      10.0, 6.0, 10.0, 6.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    'WhatsApp',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondary,
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
                                     ].divide(const SizedBox(width: 10.0)),
                                   ),
                                 ),
@@ -625,23 +631,68 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                valueOrDefault<String>(
-                                                  columnEmpresasRow?.nome,
-                                                  'd',
+                                              RichText(
+                                                textScaler:
+                                                    MediaQuery.of(context)
+                                                        .textScaler,
+                                                text: TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text: valueOrDefault<
+                                                          String>(
+                                                        columnEmpresasRow?.nome,
+                                                        'w',
+                                                      ),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            fontSize: 18.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    ),
+                                                    TextSpan(
+                                                      text: ' - ',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    ),
+                                                    TextSpan(
+                                                      text: valueOrDefault<
+                                                          String>(
+                                                        columnEmpresasRow
+                                                            ?.segmento,
+                                                        '2',
+                                                      ),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            fontSize: 18.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    )
+                                                  ],
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
                                                 ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          color:
-                                                              const Color(0xFF2F2E41),
-                                                          fontSize: 18.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsetsDirectional
@@ -719,97 +770,6 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                                   Container(
                                     width: 270.0,
                                     decoration: const BoxDecoration(),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 24.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  18.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            'Segmentos',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: double.infinity,
-                                          decoration: const BoxDecoration(),
-                                          child: Builder(
-                                            builder: (context) {
-                                              final interesses = widget
-                                                      .user?.interesses
-                                                      .toList() ??
-                                                  [];
-
-                                              return SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: List.generate(
-                                                          interesses.length,
-                                                          (interessesIndex) {
-                                                    final interessesItem =
-                                                        interesses[
-                                                            interessesIndex];
-                                                    return Container(
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            const Color(0xFFADFFCB),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets.all(8.0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Text(
-                                                              'Hello World',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Inter',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  })
-                                                      .divide(
-                                                          const SizedBox(width: 12.0))
-                                                      .addToStart(
-                                                          const SizedBox(width: 18.0))
-                                                      .addToEnd(const SizedBox(
-                                                          width: 18.0)),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ].divide(const SizedBox(height: 12.0)),
-                                    ),
                                   ),
                                 ],
                               );

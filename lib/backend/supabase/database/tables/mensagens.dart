@@ -28,4 +28,11 @@ class MensagensRow extends SupabaseDataRow {
 
   String? get mensagem => getField<String>('mensagem');
   set mensagem(String? value) => setField<String>('mensagem', value);
+
+  bool? get firstMessageOfDay => getField<bool>('first_message_of_day');
+  set firstMessageOfDay(bool? value) =>
+      setField<bool>('first_message_of_day', value);
+
+  DateTime? get daySended => getField<DateTime>('day_sended');
+  set daySended(DateTime? value) => setField<DateTime>('day_sended', value);
 }

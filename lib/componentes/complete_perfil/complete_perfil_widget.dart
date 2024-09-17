@@ -126,7 +126,7 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           24.0, 12.0, 23.0, 0.0),
                                       child: Text(
-                                        'Complete seu perfil para fazer conexões e usar todas a funcionalidades da SinApp',
+                                        'Complete o seu perfil para fazer conexões e usar todas as funcionalidades do SinApp. Isso irá nos ajudar a melhorar a sua experiência e direcionar conexões assertivas para você.',
                                         textAlign: TextAlign.center,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -1058,6 +1058,7 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                                             _model.linkedinTextController.text,
                                         'sobre':
                                             _model.sobreTextController.text,
+                                        'perfil_completo': true,
                                       },
                                       matchingRows: (rows) => rows.eq(
                                         'uuid',
@@ -1082,7 +1083,26 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                                         FFAppState().currentUser.empresaId,
                                       ),
                                     );
+                                    FFAppState().updateCurrentUserStruct(
+                                      (e) => e..perfilCompleto = true,
+                                    );
+                                    safeSetState(() {});
                                     Navigator.pop(context);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Parabés, seu perfil está completo!',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: const Duration(milliseconds: 7600),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
+                                    );
 
                                     safeSetState(() {});
                                   },

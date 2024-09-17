@@ -203,7 +203,7 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                                   fontFamily: 'Inter',
                                   letterSpacing: 0.0,
                                 ),
-                        hintText: 'Cidades',
+                        hintText: 'Estados',
                         icon: Icon(
                           Icons.keyboard_arrow_down_rounded,
                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -236,7 +236,7 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                       safeSetState(() {});
                       Navigator.pop(context);
                     },
-                    text: 'Filtrar',
+                    text: 'Aplicar filtro',
                     icon: const Icon(
                       Icons.filter_alt_outlined,
                       size: 18.0,
