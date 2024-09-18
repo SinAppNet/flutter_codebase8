@@ -5,6 +5,7 @@ import '/componentes/usuario_conectado/usuario_conectado_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -43,6 +44,24 @@ class _ChatWidgetState extends State<ChatWidget> {
         _model.mensagens!.position.maxScrollExtent,
         duration: const Duration(milliseconds: 100),
         curve: Curves.ease,
+      );
+      await actions.desconectar(
+        'mensagens',
+      );
+      await actions.conectar(
+        'mensagens',
+        () async {
+          await _model.mensagens?.animateTo(
+            _model.mensagens!.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 0),
+            curve: Curves.ease,
+          );
+          await _model.mensagens?.animateTo(
+            _model.mensagens!.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 100),
+            curve: Curves.ease,
+          );
+        },
       );
     });
 
@@ -160,7 +179,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                             padding: MediaQuery.viewInsetsOf(
                                                 context),
                                             child: UsuarioConectadoWidget(
-                                              user: rowUsersRow,
+                                              user: rowUsersRow!,
                                             ),
                                           ),
                                         );
@@ -175,7 +194,10 @@ class _ChatWidgetState extends State<ChatWidget> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Image.network(
-                                      rowUsersRow!.profilePic!,
+                                      valueOrDefault<String>(
+                                        rowUsersRow?.profilePic,
+                                        'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
+                                      ),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -186,7 +208,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                   children: [
                                     Text(
                                       valueOrDefault<String>(
-                                        rowUsersRow.nome,
+                                        rowUsersRow?.nome,
                                         'Nome',
                                       ),
                                       style: FlutterFlowTheme.of(context)
@@ -201,7 +223,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                     ),
                                     Text(
                                       valueOrDefault<String>(
-                                        rowUsersRow.empresaNome,
+                                        rowUsersRow?.empresaNome,
                                         'Empresa',
                                       ),
                                       style: FlutterFlowTheme.of(context)

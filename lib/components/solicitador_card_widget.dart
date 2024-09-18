@@ -13,9 +13,11 @@ class SolicitadorCardWidget extends StatefulWidget {
   const SolicitadorCardWidget({
     super.key,
     required this.conexao,
+    required this.callb,
   });
 
   final ConexaoRow? conexao;
+  final Future Function()? callb;
 
   @override
   State<SolicitadorCardWidget> createState() => _SolicitadorCardWidgetState();
@@ -237,6 +239,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                                 widget.conexao?.id,
                               ),
                             );
+                            await widget.callb?.call();
                           }
                         },
                       ),

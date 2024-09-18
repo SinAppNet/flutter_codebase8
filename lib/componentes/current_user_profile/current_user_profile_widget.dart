@@ -4,6 +4,8 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/permissions_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -134,17 +136,32 @@ class _CurrentUserProfileWidgetState extends State<CurrentUserProfileWidget>
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Redes Sociais',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        color: const Color(0xFF2F2E41),
-                                        fontSize: 18.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    await requestPermission(
+                                        notificationsPermission);
+                                    _model.fcv = await actions.getFCM();
+                                    _model.fcm = _model.fcv;
+                                    safeSetState(() {});
+
+                                    safeSetState(() {});
+                                  },
+                                  child: Text(
+                                    'Redes Sociais',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          color: const Color(0xFF2F2E41),
+                                          fontSize: 18.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
                                 ),
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
@@ -281,6 +298,18 @@ class _CurrentUserProfileWidgetState extends State<CurrentUserProfileWidget>
                                       ),
                                     ].divide(const SizedBox(width: 10.0)),
                                   ),
+                                ),
+                                Text(
+                                  valueOrDefault<String>(
+                                    _model.fcm,
+                                    'test',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        letterSpacing: 0.0,
+                                      ),
                                 ),
                               ].divide(const SizedBox(height: 10.0)),
                             ),

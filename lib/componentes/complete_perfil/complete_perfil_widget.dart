@@ -529,103 +529,49 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'CNPJ',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: const Color(0xFF344054),
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                          ),
-                                          SizedBox(
-                                            width: double.infinity,
-                                            child: TextFormField(
-                                              controller: _model
-                                                  .cnpjEmpresaTextController,
-                                              focusNode:
-                                                  _model.cnpjEmpresaFocusNode,
-                                              onChanged: (_) =>
-                                                  EasyDebounce.debounce(
-                                                '_model.cnpjEmpresaTextController',
-                                                const Duration(milliseconds: 0),
-                                                () => safeSetState(() {}),
-                                              ),
-                                              autofocus: false,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                hintText: 'CNPJ da empresa',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          color:
-                                                              const Color(0xFF667085),
-                                                          fontSize: 16.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0xFFD0D5DD),
-                                                    width: 2.0,
+                                      if (responsiveVisibility(
+                                        context: context,
+                                        phone: false,
+                                        tablet: false,
+                                      ))
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'CNPJ',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    color: const Color(0xFF344054),
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w500,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                            ),
+                                            SizedBox(
+                                              width: double.infinity,
+                                              child: TextFormField(
+                                                controller: _model
+                                                    .cnpjEmpresaTextController,
+                                                focusNode:
+                                                    _model.cnpjEmpresaFocusNode,
+                                                onChanged: (_) =>
+                                                    EasyDebounce.debounce(
+                                                  '_model.cnpjEmpresaTextController',
+                                                  const Duration(milliseconds: 0),
+                                                  () => safeSetState(() {}),
                                                 ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0xB1009C3B),
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                filled: true,
-                                                fillColor: Colors.white,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15.0, 20.0,
-                                                            15.0, 20.0),
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
+                                                autofocus: false,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  hintText: 'CNPJ da empresa',
+                                                  hintStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .labelMedium
                                                       .override(
                                                         fontFamily: 'Inter',
                                                         color:
@@ -633,16 +579,79 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                                                         fontSize: 16.0,
                                                         letterSpacing: 0.0,
                                                       ),
-                                              validator: _model
-                                                  .cnpjEmpresaTextControllerValidator
-                                                  .asValidator(context),
-                                              inputFormatters: [
-                                                _model.cnpjEmpresaMask
-                                              ],
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: const BorderSide(
+                                                      color: Color(0xFFD0D5DD),
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: const BorderSide(
+                                                      color: Color(0xB1009C3B),
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  contentPadding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(15.0, 20.0,
+                                                              15.0, 20.0),
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color:
+                                                              const Color(0xFF667085),
+                                                          fontSize: 16.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                validator: _model
+                                                    .cnpjEmpresaTextControllerValidator
+                                                    .asValidator(context),
+                                                inputFormatters: [
+                                                  _model.cnpjEmpresaMask
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ].divide(const SizedBox(height: 10.0)),
-                                      ),
+                                          ].divide(const SizedBox(height: 10.0)),
+                                        ),
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -979,10 +988,10 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                                                     FormFieldController<String>(
                                                         null),
                                             options: const [
-                                              'ME (Micro empresa) - Faturamento bruto menor ou igual a 360 mil',
-                                              'EPP ( Empresa de pequeno porte) - 360k a 4,8 milhões de faturamento bruto anual',
-                                              'Média - Faturamento bruto anual maior que 4,8 milhões ou igual a 300 milhões',
-                                              'Grande - Faturamento bruto anual maior que 300 milhões'
+                                              'ME  - Faturamento bruto menor ou igual a 360 mil anual',
+                                              'EPP - Faturamento bruto entre 360k a 4,8 milhões anual',
+                                              'Média - Faturamento bruto entre 4,8 milhões a 300 milhões anual',
+                                              'Grande - Faturamento bruto maior que 300 milhões anual'
                                             ],
                                             onChanged: (val) => safeSetState(
                                                 () => _model.portesValue = val),
@@ -1029,83 +1038,89 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                       if (_model.step == 1)
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 0.0, 19.0),
+                              0.0, 12.0, 0.0, 19.0),
                           child: FFButtonWidget(
-                            onPressed: ((_model.instagramTextController.text ==
-                                            '') ||
-                                    (_model.linkedinTextController.text ==
-                                            '') ||
-                                    (_model.sobreTextController.text ==
-                                            '') ||
-                                    (_model.cnpjEmpresaTextController.text ==
-                                            '') ||
-                                    (_model.cidadeEmpresaTextController
-                                                .text ==
-                                            '') ||
-                                    (_model.estadoEmpresaValue == null ||
-                                        _model.estadoEmpresaValue == '') ||
-                                    (_model.segmentosEmpresaValue == null ||
-                                        _model.segmentosEmpresaValue == '') ||
-                                    (_model.portesValue == null ||
-                                        _model.portesValue == ''))
-                                ? null
-                                : () async {
-                                    await UsersTable().update(
-                                      data: {
-                                        'instagram':
-                                            _model.instagramTextController.text,
-                                        'linkedin':
-                                            _model.linkedinTextController.text,
-                                        'sobre':
-                                            _model.sobreTextController.text,
-                                        'perfil_completo': true,
-                                      },
-                                      matchingRows: (rows) => rows.eq(
-                                        'uuid',
-                                        currentUserUid,
-                                      ),
-                                    );
-                                    await EmpresasTable().update(
-                                      data: {
-                                        'cnpj': _model
-                                            .cnpjEmpresaTextController.text,
-                                        'segmento':
-                                            _model.segmentosEmpresaValue,
-                                        'porte': _model.portesValue,
-                                        'address': <String, String?>{
-                                          'cidade': _model
-                                              .cidadeEmpresaTextController.text,
-                                          'estado': _model.estadoEmpresaValue,
-                                        },
-                                      },
-                                      matchingRows: (rows) => rows.eq(
-                                        'id',
-                                        FFAppState().currentUser.empresaId,
-                                      ),
-                                    );
-                                    FFAppState().updateCurrentUserStruct(
-                                      (e) => e..perfilCompleto = true,
-                                    );
-                                    safeSetState(() {});
-                                    Navigator.pop(context);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Parabés, seu perfil está completo!',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
+                            onPressed:
+                                ((_model.instagramTextController
+                                                    .text ==
+                                                '') ||
+                                        (_model.linkedinTextController
+                                                    .text ==
+                                                '') ||
+                                        (_model
+                                                    .sobreTextController.text ==
+                                                '') ||
+                                        (_model.cidadeEmpresaTextController
+                                                    .text ==
+                                                '') ||
+                                        (_model.estadoEmpresaValue == null ||
+                                            _model.estadoEmpresaValue == '') ||
+                                        (_model.segmentosEmpresaValue == null ||
+                                            _model.segmentosEmpresaValue ==
+                                                '') ||
+                                        (_model.portesValue == null ||
+                                            _model.portesValue == ''))
+                                    ? null
+                                    : () async {
+                                        await UsersTable().update(
+                                          data: {
+                                            'instagram': _model
+                                                .instagramTextController.text,
+                                            'linkedin': _model
+                                                .linkedinTextController.text,
+                                            'sobre':
+                                                _model.sobreTextController.text,
+                                            'perfil_completo': true,
+                                          },
+                                          matchingRows: (rows) => rows.eq(
+                                            'uuid',
+                                            currentUserUid,
                                           ),
-                                        ),
-                                        duration: const Duration(milliseconds: 7600),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondary,
-                                      ),
-                                    );
+                                        );
+                                        await EmpresasTable().update(
+                                          data: {
+                                            'segmento':
+                                                _model.segmentosEmpresaValue,
+                                            'porte': _model.portesValue,
+                                            'address': <String, String?>{
+                                              'cidade': _model
+                                                  .cidadeEmpresaTextController
+                                                  .text,
+                                              'estado':
+                                                  _model.estadoEmpresaValue,
+                                            },
+                                          },
+                                          matchingRows: (rows) => rows.eq(
+                                            'id',
+                                            FFAppState().currentUser.empresaId,
+                                          ),
+                                        );
+                                        FFAppState().updateCurrentUserStruct(
+                                          (e) => e..perfilCompleto = true,
+                                        );
+                                        safeSetState(() {});
+                                        Navigator.pop(context);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Parabés, seu perfil está completo!',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                const Duration(milliseconds: 7600),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
 
-                                    safeSetState(() {});
-                                  },
+                                        safeSetState(() {});
+                                      },
                             text: 'Salvar',
                             icon: const Icon(
                               Icons.arrow_forward_rounded,

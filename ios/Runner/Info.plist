@@ -46,7 +46,8 @@
     <string>Para completar seu perfil e uma melhor conexão, precisamos de sua permissão para a coleta de imagens.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
     <string>Para completar seu perfil e uma melhor conexão, precisamos de sua permissão para a coleta de imagens.</string>
-
+	<key>PermissionGroupNotification</key>
+    <string>lease allow push notifications</string>
 
 
 	<key>UILaunchStoryboardName</key>

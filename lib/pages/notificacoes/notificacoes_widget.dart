@@ -7,6 +7,7 @@ import '/componentes/navbar/navbar_widget.dart';
 import '/components/solicitador_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -218,18 +219,26 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget> {
                                         Expanded(
                                           child:
                                               FutureBuilder<List<ConexaoRow>>(
-                                            future: ConexaoTable().queryRows(
-                                              queryFn: (q) => q
-                                                  .eq(
-                                                    'solicitado',
-                                                    FFAppState().currentUser.id,
-                                                  )
-                                                  .eq(
-                                                    'status',
-                                                    StatusConexao
-                                                        .solicitada.name,
-                                                  ),
-                                            ),
+                                            future: (_model.requestCompleter ??=
+                                                    Completer<
+                                                        List<ConexaoRow>>()
+                                                      ..complete(ConexaoTable()
+                                                          .queryRows(
+                                                        queryFn: (q) => q
+                                                            .eq(
+                                                              'solicitado',
+                                                              FFAppState()
+                                                                  .currentUser
+                                                                  .id,
+                                                            )
+                                                            .eq(
+                                                              'status',
+                                                              StatusConexao
+                                                                  .solicitada
+                                                                  .name,
+                                                            ),
+                                                      )))
+                                                .future,
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
@@ -283,6 +292,13 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget> {
                                                             'Key8q2_${listViewIndex}_of_${listViewConexaoRowList.length}'),
                                                         conexao:
                                                             listViewConexaoRow,
+                                                        callb: () async {
+                                                          safeSetState(() =>
+                                                              _model.requestCompleter =
+                                                                  null);
+                                                          await _model
+                                                              .waitForRequestCompleted();
+                                                        },
                                                       ),
                                                     ),
                                                   );
