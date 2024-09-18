@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/permissions_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -142,8 +141,6 @@ class _CurrentUserProfileWidgetState extends State<CurrentUserProfileWidget>
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    await requestPermission(
-                                        notificationsPermission);
                                     _model.fcv = await actions.getFCM();
                                     _model.fcm = _model.fcv;
                                     safeSetState(() {});

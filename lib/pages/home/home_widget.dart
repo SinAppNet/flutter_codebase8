@@ -11,6 +11,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/walkthroughs/initial_onboarding.dart';
 import '/actions/actions.dart' as action_blocks;
+import '/flutter_flow/permissions_util.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'
     show TutorialCoachMark;
 import 'package:flutter/material.dart';
@@ -995,6 +996,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
               currentUserUid,
             ),
           );
+          await requestPermission(notificationsPermission);
         },
         onSkip: () {
           () async {
@@ -1007,6 +1009,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                 currentUserUid,
               ),
             );
+            await requestPermission(notificationsPermission);
           }();
           return true;
         },
