@@ -10,6 +10,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'edit_cia_model.dart';
 export 'edit_cia_model.dart';
 
@@ -39,6 +40,8 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
     _model.faturamentoAnualFocusNode ??= FocusNode();
 
     _model.qntdColaboradoresFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -73,7 +76,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: SpinKitWave(
+                    child: SpinKitPulse(
                       color: Color(0xFF009C3B),
                       size: 50.0,
                     ),
@@ -222,6 +225,8 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                                   .empresaId,
                                             ),
                                           );
+                                          _model.change = true;
+                                          safeSetState(() {});
                                         }
                                       },
                                       text: 'Editar',
@@ -1050,6 +1055,29 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                           containerEmpresasRow?.id,
                                         ),
                                       );
+
+                                      context.pushNamed('home');
+
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return WebViewAware(
+                                            child: AlertDialog(
+                                              title: const Text('Perfil editado!'),
+                                              content: const Text(
+                                                  'Seu perfil foi editado com sucesso.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Ok'),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      );
                                     },
                               text: 'Salvar',
                               icon: const Icon(
@@ -1058,7 +1086,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                               ),
                               options: FFButtonOptions(
                                 width: double.infinity,
-                                height: 40.0,
+                                height: 48.0,
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
                                 iconPadding: const EdgeInsetsDirectional.fromSTEB(

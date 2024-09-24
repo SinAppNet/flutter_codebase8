@@ -59,4 +59,16 @@ class UsersRow extends SupabaseDataRow {
 
   bool? get perfilCompleto => getField<bool>('perfil_completo');
   set perfilCompleto(bool? value) => setField<bool>('perfil_completo', value);
+
+  String? get fcmToken => getField<String>('fcm_token');
+  set fcmToken(String? value) => setField<String>('fcm_token', value);
+
+  String? get email => getField<String>('email');
+  set email(String? value) => setField<String>('email', value);
+
+  String? get site => getField<String>('site');
+  set site(String? value) => setField<String>('site', value);
+
+  String? get tipoConexao => getField<String>('tipo_conexao');
+  set tipoConexao(String? value) => setField<String>('tipo_conexao', value);
 }

@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/componentes/usuario_nao_conectado/usuario_nao_conectado_widget.dart';
@@ -6,6 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'solicitador_card_model.dart';
 export 'solicitador_card_model.dart';
 
@@ -36,6 +38,8 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SolicitadorCardModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -63,7 +67,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
-                child: SpinKitWave(
+                child: SpinKitPulse(
                   color: Color(0xFF009C3B),
                   size: 50.0,
                 ),
@@ -107,11 +111,13 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                         enableDrag: false,
                         context: context,
                         builder: (context) {
-                          return Padding(
-                            padding: MediaQuery.viewInsetsOf(context),
-                            child: UsuarioNaoConectadoWidget(
-                              user: _model.user!.first,
-                              solicitacao: widget.conexao?.id,
+                          return WebViewAware(
+                            child: Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: UsuarioNaoConectadoWidget(
+                                user: _model.user!.first,
+                                solicitacao: widget.conexao?.id,
+                              ),
                             ),
                           );
                         },
@@ -209,22 +215,24 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                           var confirmDialogResponse = await showDialog<bool>(
                                 context: context,
                                 builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Solicitação de conexão'),
-                                    content: Text(
-                                        'Confirme se deseja se conectar com ${containerUsersRow?.nome}'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, false),
-                                        child: const Text('Cancelar'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, true),
-                                        child: const Text('Confirmar'),
-                                      ),
-                                    ],
+                                  return WebViewAware(
+                                    child: AlertDialog(
+                                      title: const Text('Solicitação de conexão'),
+                                      content: Text(
+                                          'Confirme se deseja se conectar com ${containerUsersRow?.nome}'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: const Text('Cancelar'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: const Text('Confirmar'),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                               ) ??
@@ -240,7 +248,19 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                               ),
                             );
                             await widget.callb?.call();
+                            _model.apiResult02m = await SendPushCall.call(
+                              fcmToken: containerUsersRow?.fcmToken,
+                              pushTitle: 'Conexão aceita!',
+                              pushMessage:
+                                  '${containerUsersRow?.nome} agora faz parte da sua rede de conexões!',
+                              pushImg: containerUsersRow?.profilePic != null &&
+                                      containerUsersRow?.profilePic != ''
+                                  ? containerUsersRow?.profilePic
+                                  : 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
+                            );
                           }
+
+                          safeSetState(() {});
                         },
                       ),
                       FlutterFlowIconButton(
@@ -257,22 +277,24 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                           var confirmDialogResponse = await showDialog<bool>(
                                 context: context,
                                 builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Solicitação de conexão'),
-                                    content: Text(
-                                        'Confirme se não deseja se conectar com ${containerUsersRow?.nome}'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, false),
-                                        child: const Text('Cancelar'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, true),
-                                        child: const Text('Confirmar'),
-                                      ),
-                                    ],
+                                  return WebViewAware(
+                                    child: AlertDialog(
+                                      title: const Text('Solicitação de conexão'),
+                                      content: Text(
+                                          'Confirme se não deseja se conectar com ${containerUsersRow?.nome}'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: const Text('Cancelar'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: const Text('Confirmar'),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                               ) ??
@@ -287,6 +309,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                                 widget.conexao?.id,
                               ),
                             );
+                            await widget.callb?.call();
                           }
                         },
                       ),

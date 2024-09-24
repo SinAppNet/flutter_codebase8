@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'conexoes_model.dart';
 export 'conexoes_model.dart';
 
@@ -58,6 +59,8 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -78,10 +81,12 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
         backgroundColor: const Color(0xFFFFDF00),
         drawer: Drawer(
           elevation: 16.0,
-          child: wrapWithModel(
-            model: _model.drawerContentModel,
-            updateCallback: () => safeSetState(() {}),
-            child: const DrawerContentWidget(),
+          child: WebViewAware(
+            child: wrapWithModel(
+              model: _model.drawerContentModel,
+              updateCallback: () => safeSetState(() {}),
+              child: const DrawerContentWidget(),
+            ),
           ),
         ),
         body: SafeArea(
@@ -311,7 +316,7 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                               child: SizedBox(
                                                 width: 50.0,
                                                 height: 50.0,
-                                                child: SpinKitWave(
+                                                child: SpinKitPulse(
                                                   color: Color(0xFF009C3B),
                                                   size: 50.0,
                                                 ),
@@ -402,20 +407,26 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                     context,
                                                                 builder:
                                                                     (context) {
-                                                                  return GestureDetector(
-                                                                    onTap: () =>
-                                                                        FocusScope.of(context)
-                                                                            .unfocus(),
+                                                                  return WebViewAware(
                                                                     child:
-                                                                        Padding(
-                                                                      padding: MediaQuery
-                                                                          .viewInsetsOf(
-                                                                              context),
+                                                                        GestureDetector(
+                                                                      onTap: () =>
+                                                                          FocusScope.of(context)
+                                                                              .unfocus(),
                                                                       child:
-                                                                          UsuarioConectadoWidget(
-                                                                        user: _model
-                                                                            .usr!
-                                                                            .first,
+                                                                          Padding(
+                                                                        padding:
+                                                                            MediaQuery.viewInsetsOf(context),
+                                                                        child:
+                                                                            SizedBox(
+                                                                          height:
+                                                                              MediaQuery.sizeOf(context).height * 0.95,
+                                                                          child:
+                                                                              UsuarioConectadoWidget(
+                                                                            user:
+                                                                                _model.usr!.first,
+                                                                          ),
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   );

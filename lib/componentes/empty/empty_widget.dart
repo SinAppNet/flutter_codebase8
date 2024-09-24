@@ -25,6 +25,8 @@ class _EmptyWidgetState extends State<EmptyWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EmptyModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -36,37 +38,32 @@ class _EmptyWidgetState extends State<EmptyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Lottie.asset(
-                'assets/lottie_animations/Animation_-_1700595035646.json',
-                width: 150.0,
-                height: 130.0,
-                fit: BoxFit.cover,
-                frameRate: FrameRate(60.0),
-                repeat: false,
-                animate: true,
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-                child: Text(
-                  'Nenhum resultado.',
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                ),
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Lottie.asset(
+            'assets/lottie_animations/Animation_-_1700595035646.json',
+            width: 150.0,
+            height: 130.0,
+            fit: BoxFit.cover,
+            frameRate: FrameRate(60.0),
+            repeat: false,
+            animate: true,
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+            child: Text(
+              'Nenhum resultado.',
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Inter',
+                    letterSpacing: 0.0,
+                  ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

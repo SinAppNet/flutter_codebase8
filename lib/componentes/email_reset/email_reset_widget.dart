@@ -1,3 +1,4 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -31,7 +32,7 @@ class _EmailResetWidgetState extends State<EmailResetWidget>
     super.initState();
     _model = createModel(context, () => EmailResetModel());
 
-    _model.textController ??= TextEditingController();
+    _model.emailTextController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
 
     animationsMap.addAll({
@@ -62,6 +63,8 @@ class _EmailResetWidgetState extends State<EmailResetWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -78,7 +81,7 @@ class _EmailResetWidgetState extends State<EmailResetWidget>
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(16.0, 2.0, 16.0, 16.0),
         child: Container(
-          height: 270.0,
+          height: 300.0,
           constraints: const BoxConstraints(
             minWidth: 320.0,
             maxWidth: 420.0,
@@ -125,7 +128,7 @@ class _EmailResetWidgetState extends State<EmailResetWidget>
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(24.0, 4.0, 24.0, 0.0),
                       child: Text(
-                        'Digite abaixo o e-mail para o qual será enviado o seu link de reset senha',
+                        'Digite abaixo o e-mail para o qual será enviado o seu link de reset senha. Esse email deve ser o mesmo email da sua conta.',
                         style:
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   fontFamily: 'Inter',
@@ -146,7 +149,7 @@ class _EmailResetWidgetState extends State<EmailResetWidget>
                         child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
-                            controller: _model.textController,
+                            controller: _model.emailTextController,
                             focusNode: _model.textFieldFocusNode,
                             autofocus: false,
                             obscureText: false,
@@ -203,7 +206,7 @@ class _EmailResetWidgetState extends State<EmailResetWidget>
                                   letterSpacing: 0.0,
                                 ),
                             keyboardType: TextInputType.emailAddress,
-                            validator: _model.textControllerValidator
+                            validator: _model.emailTextControllerValidator
                                 .asValidator(context),
                           ),
                         ),
@@ -259,8 +262,37 @@ class _EmailResetWidgetState extends State<EmailResetWidget>
                             Align(
                               alignment: const AlignmentDirectional(0.0, 0.05),
                               child: FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
+                                onPressed: () async {
+                                  if (_model.emailTextController.text.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'Email required!',
+                                        ),
+                                      ),
+                                    );
+                                    return;
+                                  }
+                                  await authManager.resetPassword(
+                                    email: _model.emailTextController.text,
+                                    context: context,
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Email enviado com sucesso.',
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                      ),
+                                      duration: const Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
+                                    ),
+                                  );
+                                  Navigator.pop(context);
                                 },
                                 text: 'Enviar e-mail',
                                 options: FFButtonOptions(

@@ -10,3 +10,5 @@ export '/pages/chat/chat_widget.dart' show ChatWidget;
 export '/pages/auth/edit_user/edit_user_widget.dart' show EditUserWidget;
 export '/pages/auth/cadastro/cadastro_widget.dart' show CadastroWidget;
 export '/pages/auth/edit_cia/edit_cia_widget.dart' show EditCiaWidget;
+export '/reset_pw/reset_pw_widget.dart' show ResetPwWidget;
+export '/conteudos/conteudos_widget.dart' show ConteudosWidget;

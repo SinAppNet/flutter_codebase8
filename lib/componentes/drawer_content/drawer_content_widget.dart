@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'drawer_content_model.dart';
 export 'drawer_content_model.dart';
 
@@ -29,6 +30,8 @@ class _DrawerContentWidgetState extends State<DrawerContentWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => DrawerContentModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -157,6 +160,59 @@ class _DrawerContentWidgetState extends State<DrawerContentWidget> {
                   ),
                 ),
               ),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed(
+                    'conteudos',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: const TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF009C3B),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(15.0, 7.0, 15.0, 7.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.video_collection,
+                          color: Colors.white,
+                          size: 24.0,
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 0.0, 0.0),
+                          child: Text(
+                            'Conteúdos',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Inter',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               if (responsiveVisibility(
                 context: context,
                 phone: false,
@@ -188,7 +244,9 @@ class _DrawerContentWidgetState extends State<DrawerContentWidget> {
                                 backgroundColor: Colors.transparent,
                                 alignment: const AlignmentDirectional(0.0, 0.0)
                                     .resolve(Directionality.of(context)),
-                                child: const EmailResetWidget(),
+                                child: const WebViewAware(
+                                  child: EmailResetWidget(),
+                                ),
                               );
                             },
                           );
@@ -224,7 +282,7 @@ class _DrawerContentWidgetState extends State<DrawerContentWidget> {
               FFButtonWidget(
                 onPressed: () async {
                   await launchURL(
-                      'https://api.whatsapp.com/send?phone=557588033637&text=Ol%C3%A1,%20gostaria%20de%20um%20suporte%20referente%20ao%20Sinapp!');
+                      'https://api.whatsapp.com/send?phone=5544998640309&text=Ol%C3%A1,%20gostaria%20de%20um%20suporte%20referente%20ao%20Sinapp!');
                 },
                 text: 'Suporte',
                 icon: const FaIcon(
@@ -273,7 +331,9 @@ class _DrawerContentWidgetState extends State<DrawerContentWidget> {
                             backgroundColor: Colors.transparent,
                             alignment: const AlignmentDirectional(0.0, 0.0)
                                 .resolve(Directionality.of(context)),
-                            child: const LogoutWidget(),
+                            child: const WebViewAware(
+                              child: LogoutWidget(),
+                            ),
                           );
                         },
                       );
@@ -326,7 +386,9 @@ class _DrawerContentWidgetState extends State<DrawerContentWidget> {
                           backgroundColor: Colors.transparent,
                           alignment: const AlignmentDirectional(0.0, 0.0)
                               .resolve(Directionality.of(context)),
-                          child: const DeletarContaWidget(),
+                          child: const WebViewAware(
+                            child: DeletarContaWidget(),
+                          ),
                         );
                       },
                     );

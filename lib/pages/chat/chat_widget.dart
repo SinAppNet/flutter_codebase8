@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'chat_model.dart';
 export 'chat_model.dart';
 
@@ -38,35 +39,34 @@ class _ChatWidgetState extends State<ChatWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      safeSetState(() => _model.requestCompleter = null);
-      await _model.waitForRequestCompleted();
-      await _model.mensagens?.animateTo(
-        _model.mensagens!.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.ease,
-      );
-      await actions.desconectar(
+      await actions.unsubscribe(
         'mensagens',
       );
-      await actions.conectar(
+      await Future.delayed(const Duration(milliseconds: 500));
+      await actions.subscribe(
         'mensagens',
         () async {
-          await _model.mensagens?.animateTo(
-            _model.mensagens!.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 0),
-            curve: Curves.ease,
-          );
+          safeSetState(() => _model.requestCompleter = null);
+          await _model.waitForRequestCompleted();
           await _model.mensagens?.animateTo(
             _model.mensagens!.position.maxScrollExtent,
             duration: const Duration(milliseconds: 100),
             curve: Curves.ease,
           );
         },
+        widget.chat!.id,
+      );
+      await _model.mensagens?.animateTo(
+        _model.mensagens!.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.ease,
       );
     });
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -144,7 +144,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                 child: SizedBox(
                                   width: 50.0,
                                   height: 50.0,
-                                  child: SpinKitWave(
+                                  child: SpinKitPulse(
                                     color: Color(0xFF009C3B),
                                     size: 50.0,
                                   ),
@@ -172,14 +172,16 @@ class _ChatWidgetState extends State<ChatWidget> {
                                       enableDrag: false,
                                       context: context,
                                       builder: (context) {
-                                        return GestureDetector(
-                                          onTap: () =>
-                                              FocusScope.of(context).unfocus(),
-                                          child: Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: UsuarioConectadoWidget(
-                                              user: rowUsersRow!,
+                                        return WebViewAware(
+                                          child: GestureDetector(
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
+                                            child: Padding(
+                                              padding: MediaQuery.viewInsetsOf(
+                                                  context),
+                                              child: UsuarioConectadoWidget(
+                                                user: rowUsersRow!,
+                                              ),
                                             ),
                                           ),
                                         );
@@ -283,7 +285,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                       child: SizedBox(
                                         width: 50.0,
                                         height: 50.0,
-                                        child: SpinKitWave(
+                                        child: SpinKitPulse(
                                           color: Color(0xFF009C3B),
                                           size: 50.0,
                                         ),
@@ -306,6 +308,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                       0,
                                       68.0,
                                     ),
+                                    shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     itemCount: mensagensMensagensRowList.length,
                                     separatorBuilder: (_, __) =>

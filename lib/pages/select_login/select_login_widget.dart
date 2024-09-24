@@ -22,6 +22,8 @@ class _SelectLoginWidgetState extends State<SelectLoginWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SelectLoginModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -177,11 +179,11 @@ class _SelectLoginWidgetState extends State<SelectLoginWidget> {
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         await launchURL(
-                            'https://api.whatsapp.com/send?phone=557588033637&text=Ol%C3%A1,%20gostaria%20de%20um%20suporte%20referente%20ao%20Sinapp!');
+                            'https://api.whatsapp.com/send?phone=5544998640309&text=Ol%C3%A1,%20gostaria%20de%20um%20suporte%20referente%20ao%20Sinapp!');
                       },
                       child: Container(
-                        width: 42.0,
-                        height: 42.0,
+                        width: 62.0,
+                        height: 62.0,
                         decoration: const BoxDecoration(
                           color: Color(0xFF009C3B),
                           shape: BoxShape.circle,

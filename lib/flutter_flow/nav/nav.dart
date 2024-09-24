@@ -99,6 +99,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'home',
           path: '/home',
+          requireAuth: true,
           builder: (context, params) => HomeWidget(
             all: params.getParam(
               'all',
@@ -109,16 +110,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'notificacoes',
           path: '/notificacoes',
+          requireAuth: true,
           builder: (context, params) => const NotificacoesWidget(),
         ),
         FFRoute(
           name: 'conexoes',
           path: '/conexoes',
+          requireAuth: true,
           builder: (context, params) => const ConexoesWidget(),
         ),
         FFRoute(
           name: 'homeAll',
           path: '/homeAll',
+          requireAuth: true,
           builder: (context, params) => HomeAllWidget(
             all: params.getParam(
               'all',
@@ -129,6 +133,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'chats',
           path: '/chats',
+          requireAuth: true,
           builder: (context, params) => ChatsWidget(
             all: params.getParam(
               'all',
@@ -139,6 +144,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'chat',
           path: '/chat',
+          requireAuth: true,
           builder: (context, params) => ChatWidget(
             chat: params.getParam<ChatRow>(
               'chat',
@@ -160,8 +166,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'editCia',
           path: '/editCia',
           builder: (context, params) => const EditCiaWidget(),
+        ),
+        FFRoute(
+          name: 'resetPw',
+          path: '/resetPw',
+          builder: (context, params) => const ResetPwWidget(),
+        ),
+        FFRoute(
+          name: 'conteudos',
+          path: '/conteudos',
+          builder: (context, params) => const ConteudosWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
+      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {
@@ -348,7 +365,7 @@ class FFRoute {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: SpinKitWave(
+                    child: SpinKitPulse(
                       color: Color(0xFF009C3B),
                       size: 50.0,
                     ),

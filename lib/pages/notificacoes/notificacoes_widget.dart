@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'notificacoes_model.dart';
 export 'notificacoes_model.dart';
 
@@ -30,6 +31,8 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NotificacoesModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -50,10 +53,12 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget> {
         backgroundColor: const Color(0xFFFFDF00),
         drawer: Drawer(
           elevation: 16.0,
-          child: wrapWithModel(
-            model: _model.drawerContentModel,
-            updateCallback: () => safeSetState(() {}),
-            child: const DrawerContentWidget(),
+          child: WebViewAware(
+            child: wrapWithModel(
+              model: _model.drawerContentModel,
+              updateCallback: () => safeSetState(() {}),
+              child: const DrawerContentWidget(),
+            ),
           ),
         ),
         body: SafeArea(
@@ -246,7 +251,7 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget> {
                                                   child: SizedBox(
                                                     width: 50.0,
                                                     height: 50.0,
-                                                    child: SpinKitWave(
+                                                    child: SpinKitPulse(
                                                       color: Color(0xFF009C3B),
                                                       size: 50.0,
                                                     ),
@@ -259,7 +264,9 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget> {
 
                                               if (listViewConexaoRowList
                                                   .isEmpty) {
-                                                return const EmptyWidget();
+                                                return const Center(
+                                                  child: EmptyWidget(),
+                                                );
                                               }
 
                                               return ListView.builder(

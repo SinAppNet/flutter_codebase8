@@ -11,25 +11,23 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future conectar(
-  String tabela,
-  Future<dynamic> Function() acao,
-) async {
-  // Add your function code here!
-  final supabase = SupaFlow.client;
-  String table = tabela;
-  final channelName = 'public:' + table;
-  final channel = supabase.channel(channelName);
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-  // Configura a nova inscrição
-  channel.on(
-    RealtimeListenTypes.postgresChanges,
-    ChannelFilter(event: '*', schema: 'public', table: table),
-    (payload, [ref]) {
-      acao();
-      print('Reloaded.');
-    },
-  ).subscribe();
+Future<String?> resetPassword(String? newPassword) async {
+  try {
+    await SupaFlow.client.auth
+        .updateUser(UserAttributes(password: newPassword));
+
+    // Return null if the user has successfully reset their password
+    return null;
+  } catch (error) {
+    // Handle errors if needed
+    print('Error: $error');
+
+    // Return the error as to why reset password failed
+    return error.toString();
+  }
 }
+
 // Set your action name, define your arguments and return parameter,
 // and then add the boilerplate code using the green button on the right!

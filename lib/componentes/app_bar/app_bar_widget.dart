@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'app_bar_model.dart';
 export 'app_bar_model.dart';
 
@@ -32,6 +33,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AppBarModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -106,10 +109,16 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           backgroundColor: Colors.transparent,
                           context: context,
                           builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.viewInsetsOf(context),
-                              child: CurrentUserProfileWidget(
-                                empresa: _model.getEmpresa?.first,
+                            return WebViewAware(
+                              child: Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.95,
+                                  child: CurrentUserProfileWidget(
+                                    empresa: _model.getEmpresa?.first,
+                                  ),
+                                ),
                               ),
                             );
                           },

@@ -1,6 +1,6 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/componentes/complete_perfil/complete_perfil_widget.dart';
 import '/componentes/usuario_nao_conectado/usuario_nao_conectado_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'usser_card_model.dart';
 export 'usser_card_model.dart';
 
@@ -19,10 +20,12 @@ class UsserCardWidget extends StatefulWidget {
     super.key,
     required this.user,
     this.action,
+    this.idx,
   });
 
   final UsuariosSemConexaoAceitaRow? user;
   final Future Function()? action;
+  final int? idx;
 
   @override
   State<UsserCardWidget> createState() => _UsserCardWidgetState();
@@ -79,6 +82,8 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -98,44 +103,31 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
       hoverColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () async {
-        if (FFAppState().currentUser.perfilCompleto == true) {
-          _model.usr = await UsersTable().queryRows(
-            queryFn: (q) => q.eq(
-              'id',
-              widget.user?.id,
-            ),
-          );
-          await showModalBottomSheet(
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            enableDrag: false,
-            context: context,
-            builder: (context) {
-              return Padding(
-                padding: MediaQuery.viewInsetsOf(context),
-                child: UsuarioNaoConectadoWidget(
-                  user: _model.usr!.first,
-                  solicitacao: widget.user?.solicitacao,
-                ),
-              );
-            },
-          ).then((value) => safeSetState(() {}));
-        } else {
-          await showModalBottomSheet(
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            context: context,
-            builder: (context) {
-              return Padding(
+        _model.usr = await UsersTable().queryRows(
+          queryFn: (q) => q.eq(
+            'id',
+            widget.user?.id,
+          ),
+        );
+        await showModalBottomSheet(
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (context) {
+            return WebViewAware(
+              child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
                 child: SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.8,
-                  child: const CompletePerfilWidget(),
+                  height: MediaQuery.sizeOf(context).height * 0.95,
+                  child: UsuarioNaoConectadoWidget(
+                    user: _model.usr!.first,
+                    solicitacao: widget.user?.solicitacao,
+                  ),
                 ),
-              );
-            },
-          ).then((value) => safeSetState(() {}));
-        }
+              ),
+            );
+          },
+        ).then((value) => safeSetState(() {}));
 
         safeSetState(() {});
       },
@@ -276,7 +268,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                             child: SizedBox(
                                               width: 50.0,
                                               height: 50.0,
-                                              child: SpinKitWave(
+                                              child: SpinKitPulse(
                                                 color: Color(0xFF009C3B),
                                                 size: 50.0,
                                               ),
@@ -309,18 +301,14 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
-                                                    if (FFAppState()
-                                                            .currentUser
-                                                            .perfilCompleto ==
-                                                        true) {
-                                                      var confirmDialogResponse =
-                                                          await showDialog<
-                                                                  bool>(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (alertDialogContext) {
-                                                                  return AlertDialog(
+                                                    var confirmDialogResponse =
+                                                        await showDialog<bool>(
+                                                              context: context,
+                                                              builder:
+                                                                  (alertDialogContext) {
+                                                                return WebViewAware(
+                                                                  child:
+                                                                      AlertDialog(
                                                                     title: const Text(
                                                                         'Enviar solicitação'),
                                                                     content: Text(
@@ -341,74 +329,80 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                                             'Confirmar'),
                                                                       ),
                                                                     ],
-                                                                  );
-                                                                },
-                                                              ) ??
-                                                              false;
-                                                      if (confirmDialogResponse) {
-                                                        await ConexaoTable()
-                                                            .insert({
-                                                          'solicitou':
-                                                              FFAppState()
-                                                                  .currentUser
-                                                                  .id,
-                                                          'solicitado':
-                                                              widget.user?.id,
-                                                          'status':
-                                                              StatusConexao
-                                                                  .solicitada
-                                                                  .name,
-                                                        });
-                                                        await widget.action
-                                                            ?.call();
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                              'Solicitação de conexão enviada.',
-                                                              style: TextStyle(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                              ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ) ??
+                                                            false;
+                                                    if (confirmDialogResponse) {
+                                                      await ConexaoTable()
+                                                          .insert({
+                                                        'solicitou':
+                                                            FFAppState()
+                                                                .currentUser
+                                                                .id,
+                                                        'solicitado':
+                                                            widget.user?.id,
+                                                        'status': StatusConexao
+                                                            .solicitada.name,
+                                                      });
+                                                      await widget.action
+                                                          ?.call();
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'Solicitação de conexão enviada.',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText,
                                                             ),
-                                                            duration: const Duration(
-                                                                milliseconds:
-                                                                    4000),
-                                                            backgroundColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondary,
                                                           ),
-                                                        );
-                                                      }
-                                                    } else {
-                                                      await showModalBottomSheet(
-                                                        isScrollControlled:
-                                                            true,
-                                                        backgroundColor:
-                                                            Colors.transparent,
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return Padding(
-                                                            padding: MediaQuery
-                                                                .viewInsetsOf(
-                                                                    context),
-                                                            child: SizedBox(
-                                                              height: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .height *
-                                                                  0.8,
-                                                              child:
-                                                                  const CompletePerfilWidget(),
-                                                            ),
-                                                          );
-                                                        },
-                                                      ).then((value) =>
-                                                          safeSetState(() {}));
+                                                          duration: const Duration(
+                                                              milliseconds:
+                                                                  4000),
+                                                          backgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .secondary,
+                                                        ),
+                                                      );
+                                                      _model.usre =
+                                                          await UsersTable()
+                                                              .queryRows(
+                                                        queryFn: (q) => q.eq(
+                                                          'id',
+                                                          widget.user?.id,
+                                                        ),
+                                                      );
+                                                      _model.apiResultnx6 =
+                                                          await SendPushCall
+                                                              .call(
+                                                        fcmToken: _model.usre
+                                                            ?.first.fcmToken,
+                                                        pushTitle:
+                                                            'Solicitação de conexão',
+                                                        pushMessage:
+                                                            '${widget.user?.nome} quer fazer uma conexão com você!',
+                                                        pushImg: _model
+                                                                        .usre
+                                                                        ?.first
+                                                                        .profilePic !=
+                                                                    null &&
+                                                                _model
+                                                                        .usre
+                                                                        ?.first
+                                                                        .profilePic !=
+                                                                    ''
+                                                            ? _model.usre?.first
+                                                                .profilePic
+                                                            : 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
+                                                      );
                                                     }
+
+                                                    safeSetState(() {});
                                                   },
                                                   child: Container(
                                                     width: 60.0,
@@ -483,27 +477,30 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                               context: context,
                                                               builder:
                                                                   (alertDialogContext) {
-                                                                return AlertDialog(
-                                                                  title: const Text(
-                                                                      'Cancelar solicitação'),
-                                                                  content: Text(
-                                                                      'Confirme se deseja cancelar a solicitação de conexão com ${widget.user?.nome}'),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                      child: const Text(
-                                                                          'Cancelar'),
-                                                                    ),
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                      child: const Text(
-                                                                          'Confirmar'),
-                                                                    ),
-                                                                  ],
+                                                                return WebViewAware(
+                                                                  child:
+                                                                      AlertDialog(
+                                                                    title: const Text(
+                                                                        'Cancelar solicitação'),
+                                                                    content: Text(
+                                                                        'Confirme se deseja cancelar a solicitação de conexão com ${widget.user?.nome}'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: const Text(
+                                                                            'Cancelar'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: const Text(
+                                                                            'Confirmar'),
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 );
                                                               },
                                                             ) ??

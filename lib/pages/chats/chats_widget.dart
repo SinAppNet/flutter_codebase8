@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'chats_model.dart';
 export 'chats_model.dart';
 
@@ -38,6 +39,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -58,10 +60,12 @@ class _ChatsWidgetState extends State<ChatsWidget> {
         backgroundColor: const Color(0xFFFFDF00),
         drawer: Drawer(
           elevation: 16.0,
-          child: wrapWithModel(
-            model: _model.drawerContentModel,
-            updateCallback: () => safeSetState(() {}),
-            child: const DrawerContentWidget(),
+          child: WebViewAware(
+            child: wrapWithModel(
+              model: _model.drawerContentModel,
+              updateCallback: () => safeSetState(() {}),
+              child: const DrawerContentWidget(),
+            ),
           ),
         ),
         body: SafeArea(
@@ -298,20 +302,22 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                             backgroundColor: Colors.transparent,
                                             context: context,
                                             builder: (context) {
-                                              return GestureDetector(
-                                                onTap: () =>
-                                                    FocusScope.of(context)
-                                                        .unfocus(),
-                                                child: Padding(
-                                                  padding:
-                                                      MediaQuery.viewInsetsOf(
-                                                          context),
-                                                  child: SizedBox(
-                                                    height: MediaQuery.sizeOf(
-                                                                context)
-                                                            .height *
-                                                        0.5,
-                                                    child: const ContatosWidget(),
+                                              return WebViewAware(
+                                                child: GestureDetector(
+                                                  onTap: () =>
+                                                      FocusScope.of(context)
+                                                          .unfocus(),
+                                                  child: Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: SizedBox(
+                                                      height: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .height *
+                                                          0.5,
+                                                      child: const ContatosWidget(),
+                                                    ),
                                                   ),
                                                 ),
                                               );
@@ -340,7 +346,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                           child: SizedBox(
                                             width: 50.0,
                                             height: 50.0,
-                                            child: SpinKitWave(
+                                            child: SpinKitPulse(
                                               color: Color(0xFF009C3B),
                                               size: 50.0,
                                             ),
@@ -394,7 +400,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                       child: SizedBox(
                                                         width: 50.0,
                                                         height: 50.0,
-                                                        child: SpinKitWave(
+                                                        child: SpinKitPulse(
                                                           color:
                                                               Color(0xFF009C3B),
                                                           size: 50.0,
@@ -598,7 +604,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                           height:
                                                                               50.0,
                                                                           child:
-                                                                              SpinKitWave(
+                                                                              SpinKitPulse(
                                                                             color:
                                                                                 Color(0xFF009C3B),
                                                                             size:

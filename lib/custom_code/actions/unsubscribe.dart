@@ -11,13 +11,15 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future desconectar(String tabela) async {
-  // Add your function code here!
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-  final supabase = SupaFlow.client;
-  String table = tabela;
-  final channel = supabase.channel('public:' + table);
-
-  // Desconectar do canal
-  await channel.unsubscribe();
+/// Unsubscribes from a previously established real-time connection to a specified table in Supabase.
+///
+/// [table]: The name of the table from which to disconnect in the Supabase database.
+Future<void> unsubscribe(String table) async {
+  // Accessing the Supabase client and the specific channel for the table.
+  await SupaFlow.client
+      .channel('public:$table')
+      // Unsubscribing from the channel.
+      .unsubscribe();
 }

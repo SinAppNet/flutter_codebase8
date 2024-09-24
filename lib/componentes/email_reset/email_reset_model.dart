@@ -7,8 +7,8 @@ class EmailResetModel extends FlutterFlowModel<EmailResetWidget> {
 
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
+  TextEditingController? emailTextController;
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
@@ -16,6 +16,6 @@ class EmailResetModel extends FlutterFlowModel<EmailResetWidget> {
   @override
   void dispose() {
     textFieldFocusNode?.dispose();
-    textController?.dispose();
+    emailTextController?.dispose();
   }
 }

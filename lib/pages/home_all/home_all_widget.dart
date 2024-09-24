@@ -14,6 +14,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'home_all_model.dart';
 export 'home_all_model.dart';
 
@@ -41,6 +42,8 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
     _model = createModel(context, () => HomeAllModel());
 
     _model.pesquisaNomeTextController ??= TextEditingController();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -61,10 +64,12 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
         backgroundColor: const Color(0xFFFFDF00),
         drawer: Drawer(
           elevation: 16.0,
-          child: wrapWithModel(
-            model: _model.drawerContentModel,
-            updateCallback: () => safeSetState(() {}),
-            child: const DrawerContentWidget(),
+          child: WebViewAware(
+            child: wrapWithModel(
+              model: _model.drawerContentModel,
+              updateCallback: () => safeSetState(() {}),
+              child: const DrawerContentWidget(),
+            ),
           ),
         ),
         body: SafeArea(
@@ -146,18 +151,22 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                         backgroundColor: Colors.transparent,
                                         context: context,
                                         builder: (context) {
-                                          return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .unfocus(),
-                                            child: Padding(
-                                              padding: MediaQuery.viewInsetsOf(
-                                                  context),
-                                              child: SizedBox(
-                                                height:
-                                                    MediaQuery.sizeOf(context)
-                                                            .height *
-                                                        0.8,
-                                                child: const CompletePerfilWidget(),
+                                          return WebViewAware(
+                                            child: GestureDetector(
+                                              onTap: () =>
+                                                  FocusScope.of(context)
+                                                      .unfocus(),
+                                              child: Padding(
+                                                padding:
+                                                    MediaQuery.viewInsetsOf(
+                                                        context),
+                                                child: SizedBox(
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height *
+                                                          0.8,
+                                                  child: const CompletePerfilWidget(),
+                                                ),
                                               ),
                                             ),
                                           );
@@ -166,20 +175,19 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                     },
                                     child: Container(
                                       width: double.infinity,
-                                      height: 42.0,
                                       decoration: BoxDecoration(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
+                                        color: FlutterFlowTheme.of(context)
+                                            .warning,
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 12.0, 12.0, 12.0),
+                                        child: Column(
                                           mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              'Complete seu perfil para fazer conexões valiosas!',
+                                              'Complete seu perfil para ser melhor rankeado(a) na busca!',
+                                              textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -187,7 +195,8 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                     fontFamily: 'Inter',
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .alternate,
+                                                        .primaryText,
+                                                    fontSize: 12.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.bold,
                                                   ),
@@ -295,7 +304,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                     child: SizedBox(
                                                       width: 50.0,
                                                       height: 50.0,
-                                                      child: SpinKitWave(
+                                                      child: SpinKitPulse(
                                                         color:
                                                             Color(0xFF009C3B),
                                                         size: 50.0,
@@ -619,22 +628,25 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                       Colors.transparent,
                                                   context: context,
                                                   builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(context)
-                                                              .unfocus(),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child: SizedBox(
-                                                          height:
-                                                              MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .height *
-                                                                  0.6,
-                                                          child:
-                                                              const FiltrosWidget(),
+                                                    return WebViewAware(
+                                                      child: GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child: SizedBox(
+                                                            height: MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .height *
+                                                                0.6,
+                                                            child:
+                                                                const FiltrosWidget(),
+                                                          ),
                                                         ),
                                                       ),
                                                     );
@@ -664,29 +676,32 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                           context: context,
                                                           builder:
                                                               (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: const Text(
-                                                                  'Desativar filtros'),
-                                                              content: const Text(
-                                                                  'Clique em confirmar para desativar os filtros'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                  child: const Text(
-                                                                      'Cancelar'),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                  child: const Text(
-                                                                      'Confirmar'),
-                                                                ),
-                                                              ],
+                                                            return WebViewAware(
+                                                              child:
+                                                                  AlertDialog(
+                                                                title: const Text(
+                                                                    'Desativar filtros'),
+                                                                content: const Text(
+                                                                    'Clique em confirmar para desativar os filtros'),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                    child: const Text(
+                                                                        'Cancelar'),
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                    child: const Text(
+                                                                        'Confirmar'),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             );
                                                           },
                                                         ) ??
@@ -738,7 +753,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                   child: SizedBox(
                                                     width: 50.0,
                                                     height: 50.0,
-                                                    child: SpinKitWave(
+                                                    child: SpinKitPulse(
                                                       color: Color(0xFF009C3B),
                                                       size: 50.0,
                                                     ),
@@ -778,6 +793,8 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                     child: SingleChildScrollView(
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           if (!FFAppState().filtroOn)
                                             Padding(
@@ -795,11 +812,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                           ..complete(
                                                               UsuariosSemConexaoAceitaTable()
                                                                   .queryRows(
-                                                            queryFn: (q) =>
-                                                                q.eq(
-                                                              'perfil_completo',
-                                                              true,
-                                                            ),
+                                                            queryFn: (q) => q,
                                                           )))
                                                     .future,
                                                 builder: (context, snapshot) {
@@ -809,7 +822,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                       child: SizedBox(
                                                         width: 50.0,
                                                         height: 50.0,
-                                                        child: SpinKitWave(
+                                                        child: SpinKitPulse(
                                                           color:
                                                               Color(0xFF009C3B),
                                                           size: 50.0,
@@ -823,7 +836,9 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
 
                                                   if (listViewUsuariosSemConexaoAceitaRowList
                                                       .isEmpty) {
-                                                    return const EmptyWidget();
+                                                    return const Center(
+                                                      child: EmptyWidget(),
+                                                    );
                                                   }
 
                                                   return ListView.separated(
@@ -847,6 +862,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                             'Keydut_${listViewIndex}_of_${listViewUsuariosSemConexaoAceitaRowList.length}'),
                                                         user:
                                                             listViewUsuariosSemConexaoAceitaRow,
+                                                        idx: listViewIndex,
                                                         action: () async {
                                                           safeSetState(() =>
                                                               _model.requestCompleter2 =
@@ -879,17 +895,13 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                           ..complete(
                                                               UsuariosSemConexaoAceitaTable()
                                                                   .queryRows(
-                                                            queryFn: (q) => q
-                                                                .eq(
-                                                                  'perfil_completo',
-                                                                  true,
-                                                                )
-                                                                .overlaps(
-                                                                  'interesses',
-                                                                  FFAppState()
-                                                                      .filtroAplied
-                                                                      .interesses,
-                                                                ),
+                                                            queryFn: (q) =>
+                                                                q.overlaps(
+                                                              'interesses',
+                                                              FFAppState()
+                                                                  .filtroAplied
+                                                                  .interesses,
+                                                            ),
                                                           )))
                                                     .future,
                                                 builder: (context, snapshot) {
@@ -899,7 +911,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
                                                       child: SizedBox(
                                                         width: 50.0,
                                                         height: 50.0,
-                                                        child: SpinKitWave(
+                                                        child: SpinKitPulse(
                                                           color:
                                                               Color(0xFF009C3B),
                                                           size: 50.0,
@@ -913,7 +925,9 @@ class _HomeAllWidgetState extends State<HomeAllWidget> {
 
                                                   if (listViewUsuariosSemConexaoAceitaRowList
                                                       .isEmpty) {
-                                                    return const EmptyWidget();
+                                                    return const Center(
+                                                      child: EmptyWidget(),
+                                                    );
                                                   }
 
                                                   return ListView.separated(

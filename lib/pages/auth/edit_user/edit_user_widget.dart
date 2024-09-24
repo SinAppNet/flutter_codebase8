@@ -11,6 +11,7 @@ import '/flutter_flow/permissions_util.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'edit_user_model.dart';
 export 'edit_user_model.dart';
 
@@ -54,6 +55,8 @@ class _EditUserWidgetState extends State<EditUserWidget> {
     _model.sobreTextController ??=
         TextEditingController(text: FFAppState().currentUser.sobre);
     _model.sobreFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -205,6 +208,8 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                                         (e) => e
                                           ..profilePic = _model.uploadedFileUrl,
                                       );
+                                      safeSetState(() {});
+                                      _model.changed = true;
                                       safeSetState(() {});
                                       return;
                                     }
@@ -876,6 +881,28 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                                   await action_blocks.updateUserState(context);
                                   safeSetState(() {});
 
+                                  context.pushNamed('home');
+
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return WebViewAware(
+                                        child: AlertDialog(
+                                          title: const Text('Perfil editado!'),
+                                          content: const Text(
+                                              'Seu perfil foi editado com sucesso.'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: const Text('Ok'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+
                                   safeSetState(() {});
                                 },
                           text: 'Salvar',
@@ -885,7 +912,7 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                           ),
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 40.0,
+                            height: 48.0,
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 24.0, 0.0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(

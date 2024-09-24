@@ -29,6 +29,8 @@ class _OnbTextWidgetState extends State<OnbTextWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => OnbTextModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

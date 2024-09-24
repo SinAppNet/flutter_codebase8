@@ -83,22 +83,6 @@ class FFAppState extends ChangeNotifier {
     updateFn(_filtroAplied);
   }
 
-  final _homeFirstManager =
-      FutureRequestManager<List<UsuariosSemConexaoAceitaRow>>();
-  Future<List<UsuariosSemConexaoAceitaRow>> homeFirst({
-    String? uniqueQueryKey,
-    bool? overrideCache,
-    required Future<List<UsuariosSemConexaoAceitaRow>> Function() requestFn,
-  }) =>
-      _homeFirstManager.performRequest(
-        uniqueQueryKey: uniqueQueryKey,
-        overrideCache: overrideCache,
-        requestFn: requestFn,
-      );
-  void clearHomeFirstCache() => _homeFirstManager.clear();
-  void clearHomeFirstCacheKey(String? uniqueKey) =>
-      _homeFirstManager.clearRequest(uniqueKey);
-
   final _cardManager = FutureRequestManager<List<ConexaoRow>>();
   Future<List<ConexaoRow>> card({
     String? uniqueQueryKey,

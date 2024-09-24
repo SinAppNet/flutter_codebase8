@@ -2,13 +2,25 @@ import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 
 Future<UsersRow?> updateUserState(BuildContext context) async {
   List<UsersRow>? returnedUser;
+  String? fcm;
 
   returnedUser = await UsersTable().queryRows(
     queryFn: (q) => q.eq(
+      'uuid',
+      currentUserUid,
+    ),
+  );
+  fcm = await actions.getFCMToken();
+  await UsersTable().update(
+    data: {
+      'fcm_token': fcm,
+    },
+    matchingRows: (rows) => rows.eq(
       'uuid',
       currentUserUid,
     ),

@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'login_model.dart';
 export 'login_model.dart';
 
@@ -31,6 +32,8 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     _model.passwordTextController ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -374,13 +377,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                               .resolve(
                                                                   Directionality.of(
                                                                       context)),
-                                                      child: GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    dialogContext)
-                                                                .unfocus(),
-                                                        child:
-                                                            const EmailResetWidget(),
+                                                      child: WebViewAware(
+                                                        child: GestureDetector(
+                                                          onTap: () =>
+                                                              FocusScope.of(
+                                                                      dialogContext)
+                                                                  .unfocus(),
+                                                          child:
+                                                              const EmailResetWidget(),
+                                                        ),
                                                       ),
                                                     );
                                                   },
@@ -407,6 +412,74 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       ].divide(const SizedBox(height: 10.0)),
                                     ),
                                   ].divide(const SizedBox(height: 20.0)),
+                                ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(1.0, -1.0),
+                                child: Builder(
+                                  builder: (context) => Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  const AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: WebViewAware(
+                                                child: GestureDetector(
+                                                  onTap: () => FocusScope.of(
+                                                          dialogContext)
+                                                      .unfocus(),
+                                                  child: const EmailResetWidget(),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: RichText(
+                                        textScaler:
+                                            MediaQuery.of(context).textScaler,
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: 'Esqueci miha senha',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    color: const Color(0xFF939393),
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                            )
+                                          ],
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                               Padding(

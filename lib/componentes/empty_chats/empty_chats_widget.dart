@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'empty_chats_model.dart';
 export 'empty_chats_model.dart';
 
@@ -26,6 +27,8 @@ class _EmptyChatsWidgetState extends State<EmptyChatsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EmptyChatsModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -89,11 +92,13 @@ class _EmptyChatsWidgetState extends State<EmptyChatsWidget> {
                       backgroundColor: Colors.transparent,
                       context: context,
                       builder: (context) {
-                        return Padding(
-                          padding: MediaQuery.viewInsetsOf(context),
-                          child: SizedBox(
-                            height: MediaQuery.sizeOf(context).height * 0.5,
-                            child: const ContatosWidget(),
+                        return WebViewAware(
+                          child: Padding(
+                            padding: MediaQuery.viewInsetsOf(context),
+                            child: SizedBox(
+                              height: MediaQuery.sizeOf(context).height * 0.5,
+                              child: const ContatosWidget(),
+                            ),
                           ),
                         );
                       },

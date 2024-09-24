@@ -90,6 +90,8 @@ class _NavbarWidgetState extends State<NavbarWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

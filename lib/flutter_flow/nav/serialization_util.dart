@@ -236,6 +236,10 @@ dynamic deserializeParam<T>(
             return ColaboradoresEmpresasRow(data);
           case UsersRow:
             return UsersRow(data);
+          case UserInfoViewRow:
+            return UserInfoViewRow(data);
+          case ConteudosRow:
+            return ConteudosRow(data);
           default:
             return null;
         }

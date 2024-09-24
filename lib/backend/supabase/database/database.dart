@@ -13,3 +13,5 @@ export 'tables/chat.dart';
 export 'tables/conexoes_aceitas.dart';
 export 'tables/colaboradores_empresas.dart';
 export 'tables/users.dart';
+export 'tables/user_info_view.dart';
+export 'tables/conteudos.dart';

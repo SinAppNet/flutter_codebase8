@@ -66,6 +66,8 @@ class _DeletarContaWidgetState extends State<DeletarContaWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

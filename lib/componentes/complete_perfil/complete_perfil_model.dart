@@ -20,10 +20,13 @@ class CompletePerfilModel extends FlutterFlowModel<CompletePerfilWidget> {
   FocusNode? linkedinFocusNode;
   TextEditingController? linkedinTextController;
   String? Function(BuildContext, String?)? linkedinTextControllerValidator;
-  // State field(s) for sobre widget.
-  FocusNode? sobreFocusNode;
-  TextEditingController? sobreTextController;
-  String? Function(BuildContext, String?)? sobreTextControllerValidator;
+  // State field(s) for site widget.
+  FocusNode? siteFocusNode;
+  TextEditingController? siteTextController;
+  String? Function(BuildContext, String?)? siteTextControllerValidator;
+  // State field(s) for interessesUser widget.
+  List<String>? interessesUserValue;
+  FormFieldController<List<String>>? interessesUserValueController;
   // State field(s) for cnpjEmpresa widget.
   FocusNode? cnpjEmpresaFocusNode;
   TextEditingController? cnpjEmpresaTextController;
@@ -36,9 +39,6 @@ class CompletePerfilModel extends FlutterFlowModel<CompletePerfilWidget> {
   // State field(s) for estadoEmpresa widget.
   String? estadoEmpresaValue;
   FormFieldController<String>? estadoEmpresaValueController;
-  // State field(s) for segmentosEmpresa widget.
-  String? segmentosEmpresaValue;
-  FormFieldController<String>? segmentosEmpresaValueController;
   // State field(s) for portes widget.
   String? portesValue;
   FormFieldController<String>? portesValueController;
@@ -56,8 +56,8 @@ class CompletePerfilModel extends FlutterFlowModel<CompletePerfilWidget> {
     linkedinFocusNode?.dispose();
     linkedinTextController?.dispose();
 
-    sobreFocusNode?.dispose();
-    sobreTextController?.dispose();
+    siteFocusNode?.dispose();
+    siteTextController?.dispose();
 
     cnpjEmpresaFocusNode?.dispose();
     cnpjEmpresaTextController?.dispose();

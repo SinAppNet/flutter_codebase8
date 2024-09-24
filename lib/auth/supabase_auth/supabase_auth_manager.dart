@@ -70,7 +70,7 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       return null;
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Password reset email sent')),
+      const SnackBar(content: Text('Email enviado com sucesso!')),
     );
   }
 

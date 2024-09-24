@@ -11,7 +11,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/walkthroughs/initial_onboarding.dart';
 import '/actions/actions.dart' as action_blocks;
-import '/flutter_flow/permissions_util.dart';
+import 'dart:async';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'
     show TutorialCoachMark;
 import 'package:flutter/material.dart';
@@ -19,6 +19,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'home_model.dart';
 export 'home_model.dart';
 
@@ -51,11 +52,25 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       if (RootPageContext.isInactiveRootPage(context)) {
         return;
       }
-      _model.user = await action_blocks.updateUserState(context);
-      if (_model.user?.onboarding != true) {
-        safeSetState(() => _model.initialOnboardingController =
-            createPageWalkthrough(context));
-        _model.initialOnboardingController?.show(context: context);
+      _model.cuSer = await UsersTable().queryRows(
+        queryFn: (q) => q.eq(
+          'uuid',
+          currentUserUid,
+        ),
+      );
+      if (_model.cuSer != null && (_model.cuSer)!.isNotEmpty) {
+        _model.user = await action_blocks.updateUserState(context);
+        if (_model.user?.onboarding != true) {
+          safeSetState(() => _model.initialOnboardingController =
+              createPageWalkthrough(context));
+          _model.initialOnboardingController?.show(context: context);
+        }
+      } else {
+        GoRouter.of(context).prepareAuthEvent();
+        await authManager.signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
+        context.goNamedAuth('login', context.mounted);
       }
     });
 
@@ -139,6 +154,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -159,10 +176,12 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
         backgroundColor: const Color(0xFFFFDF00),
         drawer: Drawer(
           elevation: 16.0,
-          child: wrapWithModel(
-            model: _model.drawerContentModel,
-            updateCallback: () => safeSetState(() {}),
-            child: const DrawerContentWidget(),
+          child: WebViewAware(
+            child: wrapWithModel(
+              model: _model.drawerContentModel,
+              updateCallback: () => safeSetState(() {}),
+              child: const DrawerContentWidget(),
+            ),
           ),
         ),
         body: SafeArea(
@@ -300,20 +319,23 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           backgroundColor: Colors.transparent,
                                           context: context,
                                           builder: (context) {
-                                            return GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
-                                                      .unfocus(),
-                                              child: Padding(
-                                                padding:
-                                                    MediaQuery.viewInsetsOf(
-                                                        context),
-                                                child: SizedBox(
-                                                  height:
-                                                      MediaQuery.sizeOf(context)
-                                                              .height *
-                                                          0.8,
-                                                  child: const CompletePerfilWidget(),
+                                            return WebViewAware(
+                                              child: GestureDetector(
+                                                onTap: () =>
+                                                    FocusScope.of(context)
+                                                        .unfocus(),
+                                                child: Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: SizedBox(
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
+                                                            .height *
+                                                        0.8,
+                                                    child:
+                                                        const CompletePerfilWidget(),
+                                                  ),
                                                 ),
                                               ),
                                             );
@@ -322,20 +344,20 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       },
                                       child: Container(
                                         width: double.infinity,
-                                        height: 42.0,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .error,
+                                              .warning,
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  12.0, 12.0, 12.0, 12.0),
+                                          child: Column(
                                             mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                'Complete seu perfil para fazer conexões valiosas!',
+                                                'Complete seu perfil para ser melhor rankeado(a) na busca!',
+                                                textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -343,7 +365,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                           fontFamily: 'Inter',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .alternate,
+                                                              .primaryText,
+                                                          fontSize: 12.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -432,22 +455,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     decoration: const BoxDecoration(),
                                     child: FutureBuilder<
                                         List<UsuariosSemConexaoAceitaRow>>(
-                                      future: FFAppState()
-                                          .homeFirst(
-                                        requestFn: () =>
-                                            UsuariosSemConexaoAceitaTable()
-                                                .queryRows(
-                                          queryFn: (q) => q.eq(
-                                            'perfil_completo',
-                                            true,
-                                          ),
-                                          limit: 5,
-                                        ),
-                                      )
-                                          .then((result) {
-                                        _model.requestCompleted = true;
-                                        return result;
-                                      }),
+                                      future: (_model.requestCompleter ??= Completer<
+                                              List<
+                                                  UsuariosSemConexaoAceitaRow>>()
+                                            ..complete(
+                                                UsuariosSemConexaoAceitaTable()
+                                                    .queryRows(
+                                              queryFn: (q) => q,
+                                              limit: 5,
+                                            )))
+                                          .future,
                                       builder: (context, snapshot) {
                                         // Customize what your widget looks like when it's loading.
                                         if (!snapshot.hasData) {
@@ -455,7 +472,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             child: SizedBox(
                                               width: 50.0,
                                               height: 50.0,
-                                              child: SpinKitWave(
+                                              child: SpinKitPulse(
                                                 color: Color(0xFF009C3B),
                                                 size: 50.0,
                                               ),
@@ -468,7 +485,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
 
                                         if (listViewUsuariosSemConexaoAceitaRowList
                                             .isEmpty) {
-                                          return const EmptyWidget();
+                                          return const Center(
+                                            child: EmptyWidget(),
+                                          );
                                         }
 
                                         return ListView.separated(
@@ -496,12 +515,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               user:
                                                   listViewUsuariosSemConexaoAceitaRow,
                                               action: () async {
-                                                safeSetState(() {
-                                                  FFAppState()
-                                                      .clearHomeFirstCache();
-                                                  _model.requestCompleted =
-                                                      false;
-                                                });
+                                                safeSetState(() => _model
+                                                    .requestCompleter = null);
                                                 await _model
                                                     .waitForRequestCompleted();
                                               },
@@ -996,7 +1011,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
               currentUserUid,
             ),
           );
-          await requestPermission(notificationsPermission);
         },
         onSkip: () {
           () async {
@@ -1009,7 +1023,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                 currentUserUid,
               ),
             );
-            await requestPermission(notificationsPermission);
           }();
           return true;
         },

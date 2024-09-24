@@ -16,15 +16,18 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
 
   int? num = 0;
 
+  String? tkm;
+
   ///  State fields for stateful widgets in this page.
 
   TutorialCoachMark? initialOnboardingController;
+  // Stores action output result for [Backend Call - Query Rows] action in home widget.
+  List<UsersRow>? cuSer;
   // Stores action output result for [Action Block - updateUserState] action in home widget.
   UsersRow? user;
   // Model for appBar component.
   late AppBarModel appBarModel;
-  bool requestCompleted = false;
-  String? requestLastUniqueKey;
+  Completer<List<UsuariosSemConexaoAceitaRow>>? requestCompleter;
   // Model for navbar component.
   late NavbarModel navbarModel;
   // Model for drawerContent component.
@@ -54,7 +57,7 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
     while (true) {
       await Future.delayed(const Duration(milliseconds: 50));
       final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = requestCompleted;
+      final requestComplete = requestCompleter?.isCompleted ?? false;
       if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
         break;
       }

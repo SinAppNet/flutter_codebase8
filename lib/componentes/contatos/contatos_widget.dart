@@ -28,6 +28,8 @@ class _ContatosWidgetState extends State<ContatosWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ContatosModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -94,12 +96,6 @@ class _ContatosWidgetState extends State<ContatosWidget> {
                         List<ConexoesAceitasRow> columnConexoesAceitasRowList =
                             snapshot.data!;
 
-                        if (columnConexoesAceitasRowList.isEmpty) {
-                          return const Center(
-                            child: EmptyWidget(),
-                          );
-                        }
-
                         return SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -128,8 +124,11 @@ class _ContatosWidgetState extends State<ContatosWidget> {
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: Image.network(
-                                                columnConexoesAceitasRow
-                                                    .profilePic!,
+                                                valueOrDefault<String>(
+                                                  columnConexoesAceitasRow
+                                                      .profilePic,
+                                                  'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
+                                                ),
                                               ).image,
                                             ),
                                             borderRadius:
