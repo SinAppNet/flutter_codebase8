@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/walkthroughs/initial_onboarding.dart';
 import '/actions/actions.dart' as action_blocks;
+import '/custom_code/actions/index.dart' as actions;
 import 'dart:async';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'
     show TutorialCoachMark;
@@ -401,7 +402,12 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
-                                            context.pushNamed('tests');
+                                            _model.fcmt =
+                                                await actions.getFCMToken();
+                                            _model.tkm = _model.fcmt;
+                                            safeSetState(() {});
+
+                                            safeSetState(() {});
                                           },
                                           child: Text(
                                             'Recomendações',
@@ -544,6 +550,19 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       },
                                     ),
                                   ),
+                                  SelectionArea(
+                                      child: Text(
+                                    valueOrDefault<String>(
+                                      _model.tkm,
+                                      'tk',
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  )),
                                 ],
                               ),
                             ),
