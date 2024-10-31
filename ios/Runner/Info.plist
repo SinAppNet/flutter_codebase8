@@ -46,8 +46,14 @@
     <string>Para completar seu perfil e uma melhor conexão, precisamos de sua permissão para a coleta de imagens.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
     <string>Para completar seu perfil e uma melhor conexão, precisamos de sua permissão para a coleta de imagens.</string>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>This app requires permissions to record audio.</string>
 	<key>PermissionGroupNotification</key>
     <string>lease allow push notifications</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>audio</string>
+    </array>
 
 
 	<key>UILaunchStoryboardName</key>

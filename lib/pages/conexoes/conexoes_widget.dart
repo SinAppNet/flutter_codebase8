@@ -5,6 +5,7 @@ import '/componentes/empty/empty_widget.dart';
 import '/componentes/navbar/navbar_widget.dart';
 import '/componentes/usuario_conectado/usuario_conectado_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,6 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
     _model = createModel(context, () => ConexoesModel());
 
     _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
 
     animationsMap.addAll({
       'containerOnActionTriggerAnimation': AnimationInfo(
@@ -163,135 +163,319 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
-                                        child: Container(
-                                          width: 100.0,
-                                          height: 40.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
-                                            border: Border.all(
-                                              color: (_model.textFieldFocusNode
-                                                          ?.hasFocus ??
-                                                      false)
-                                                  ? const Color(0xFF6CEB57)
-                                                  : const Color(0xFFD0D5DD),
-                                            ),
+                                        child: FutureBuilder<
+                                            List<ConexoesAceitasRow>>(
+                                          future:
+                                              ConexoesAceitasTable().queryRows(
+                                            queryFn: (q) => q,
                                           ),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 15.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                  child: Image.asset(
-                                                    'assets/images/search-lg.png',
-                                                    width: 20.0,
-                                                    height: 20.0,
-                                                    fit: BoxFit.cover,
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return const Center(
+                                                child: SizedBox(
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  child: SpinKitPulse(
+                                                    color: Color(0xFF009C3B),
+                                                    size: 50.0,
                                                   ),
                                                 ),
-                                                Expanded(
-                                                  child: TextFormField(
-                                                    controller:
-                                                        _model.textController,
-                                                    focusNode: _model
-                                                        .textFieldFocusNode,
-                                                    autofocus: false,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      isDense: true,
-                                                      hintText:
-                                                          'Busque pelo nome da conexão',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Inter',
-                                                                color: const Color(
-                                                                    0xFF667085),
-                                                                fontSize: 16.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-                                                          color:
-                                                              Color(0x00E0E3E7),
-                                                          width: 0.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
+                                              );
+                                            }
+                                            List<ConexoesAceitasRow>
+                                                containerConexoesAceitasRowList =
+                                                snapshot.data!;
+
+                                            return Container(
+                                              width: 100.0,
+                                              height: 40.0,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                borderRadius:
+                                                    BorderRadius.circular(30.0),
+                                                border: Border.all(
+                                                  color:
+                                                      (_model.textFieldFocusNode
+                                                                  ?.hasFocus ??
+                                                              false)
+                                                          ? const Color(0xFF6CEB57)
+                                                          : const Color(0xFFD0D5DD),
+                                                ),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        15.0, 0.0, 15.0, 0.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                      child: Image.asset(
+                                                        'assets/images/search-lg.png',
+                                                        width: 20.0,
+                                                        height: 20.0,
+                                                        fit: BoxFit.cover,
                                                       ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-                                                          color:
-                                                              Color(0x004B39EF),
-                                                          width: 0.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-                                                          color:
-                                                              Color(0x00FF5963),
-                                                          width: 0.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-                                                          color:
-                                                              Color(0x00FF5963),
-                                                          width: 0.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      contentPadding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  10.0,
-                                                                  20.0,
-                                                                  10.0,
-                                                                  0.0),
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                    validator: _model
-                                                        .textControllerValidator
-                                                        .asValidator(context),
-                                                  ),
+                                                    Expanded(
+                                                      child:
+                                                          Autocomplete<String>(
+                                                        initialValue:
+                                                            const TextEditingValue(),
+                                                        optionsBuilder:
+                                                            (textEditingValue) {
+                                                          if (textEditingValue
+                                                                  .text ==
+                                                              '') {
+                                                            return const Iterable<
+                                                                String>.empty();
+                                                          }
+                                                          return containerConexoesAceitasRowList
+                                                              .map(
+                                                                  (e) => e.nome)
+                                                              .withoutNulls
+                                                              .toList()
+                                                              .where((option) {
+                                                            final lowercaseOption =
+                                                                option
+                                                                    .toLowerCase();
+                                                            return lowercaseOption
+                                                                .contains(
+                                                                    textEditingValue
+                                                                        .text
+                                                                        .toLowerCase());
+                                                          });
+                                                        },
+                                                        optionsViewBuilder:
+                                                            (context,
+                                                                onSelected,
+                                                                options) {
+                                                          return AutocompleteOptionsList(
+                                                            textFieldKey: _model
+                                                                .textFieldKey,
+                                                            textController: _model
+                                                                .textController!,
+                                                            options: options
+                                                                .toList(),
+                                                            onSelected:
+                                                                onSelected,
+                                                            textStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            textHighlightStyle:
+                                                                const TextStyle(),
+                                                            elevation: 4.0,
+                                                            optionBackgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBackground,
+                                                            optionHighlightColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                            maxHeight: 200.0,
+                                                          );
+                                                        },
+                                                        onSelected:
+                                                            (String selection) {
+                                                          safeSetState(() =>
+                                                              _model.textFieldSelectedOption =
+                                                                  selection);
+                                                          FocusScope.of(context)
+                                                              .unfocus();
+                                                        },
+                                                        fieldViewBuilder: (
+                                                          context,
+                                                          textEditingController,
+                                                          focusNode,
+                                                          onEditingComplete,
+                                                        ) {
+                                                          _model.textFieldFocusNode =
+                                                              focusNode;
+
+                                                          _model.textController =
+                                                              textEditingController;
+                                                          return TextFormField(
+                                                            key: _model
+                                                                .textFieldKey,
+                                                            controller:
+                                                                textEditingController,
+                                                            focusNode:
+                                                                focusNode,
+                                                            onEditingComplete:
+                                                                onEditingComplete,
+                                                            onFieldSubmitted:
+                                                                (_) async {
+                                                              _model.userSelected =
+                                                                  await UsersTable()
+                                                                      .queryRows(
+                                                                queryFn: (q) =>
+                                                                    q.eq(
+                                                                  'nome',
+                                                                  _model
+                                                                      .textFieldSelectedOption,
+                                                                ),
+                                                              );
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return WebViewAware(
+                                                                    child:
+                                                                        GestureDetector(
+                                                                      onTap: () =>
+                                                                          FocusScope.of(context)
+                                                                              .unfocus(),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            MediaQuery.viewInsetsOf(context),
+                                                                        child:
+                                                                            SizedBox(
+                                                                          height:
+                                                                              MediaQuery.sizeOf(context).height * 0.95,
+                                                                          child:
+                                                                              UsuarioConectadoWidget(
+                                                                            user:
+                                                                                _model.userSelected!.first,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  safeSetState(
+                                                                      () {}));
+
+                                                              safeSetState(
+                                                                  () {});
+                                                            },
+                                                            autofocus: false,
+                                                            obscureText: false,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              isDense: true,
+                                                              hintText:
+                                                                  'Busque pelo nome da conexão',
+                                                              hintStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Inter',
+                                                                        color: const Color(
+                                                                            0xFF667085),
+                                                                        fontSize:
+                                                                            16.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color: Color(
+                                                                      0x00E0E3E7),
+                                                                  width: 0.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color: Color(
+                                                                      0x004B39EF),
+                                                                  width: 0.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              errorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color: Color(
+                                                                      0x00FF5963),
+                                                                  width: 0.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color: Color(
+                                                                      0x00FF5963),
+                                                                  width: 0.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              contentPadding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          10.0,
+                                                                          20.0,
+                                                                          10.0,
+                                                                          0.0),
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                            validator: _model
+                                                                .textControllerValidator
+                                                                .asValidator(
+                                                                    context),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                          ),
+                                              ),
+                                            );
+                                          },
                                         ),
                                       ),
                                     ],

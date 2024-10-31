@@ -37,6 +37,9 @@ class _CadastroWidgetState extends State<CadastroWidget> {
     _model.emailTextController ??= TextEditingController();
     _model.emailFocusNode ??= FocusNode();
 
+    _model.cpfTextController ??= TextEditingController();
+    _model.cpfFocusNode ??= FocusNode();
+
     _model.wppTextController ??= TextEditingController();
     _model.wppFocusNode ??= FocusNode();
 
@@ -280,19 +283,30 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                'Nome',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          color:
-                                                              const Color(0xFF344054),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
+                                              InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  context.pushNamed(
+                                                      'connectRecommend');
+                                                },
+                                                child: Text(
+                                                  'Nome',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color:
+                                                            const Color(0xFF344054),
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
                                               ),
                                               SizedBox(
                                                 width: double.infinity,
@@ -515,6 +529,125 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                 validator: _model
                                                     .emailTextControllerValidator
                                                     .asValidator(context),
+                                              ),
+                                            ),
+                                          ].divide(const SizedBox(height: 10.0)),
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'CPF',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    color: const Color(0xFF344054),
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                            ),
+                                            SizedBox(
+                                              width: double.infinity,
+                                              child: TextFormField(
+                                                controller:
+                                                    _model.cpfTextController,
+                                                focusNode: _model.cpfFocusNode,
+                                                onChanged: (_) =>
+                                                    EasyDebounce.debounce(
+                                                  '_model.cpfTextController',
+                                                  const Duration(milliseconds: 0),
+                                                  () => safeSetState(() {}),
+                                                ),
+                                                autofocus: false,
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  hintText: '000.000.000-00',
+                                                  hintStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color:
+                                                            const Color(0xFF667085),
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: const BorderSide(
+                                                      color: Color(0xFFD0D5DD),
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: const BorderSide(
+                                                      color: Color(0xB1009C3B),
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  contentPadding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(15.0, 20.0,
+                                                              15.0, 20.0),
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color:
+                                                              const Color(0xFF667085),
+                                                          fontSize: 16.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                validator: _model
+                                                    .cpfTextControllerValidator
+                                                    .asValidator(context),
+                                                inputFormatters: [
+                                                  _model.cpfMask
+                                                ],
                                               ),
                                             ),
                                           ].divide(const SizedBox(height: 10.0)),
@@ -1166,6 +1299,8 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                         .text,
                                                     'whatsapp': _model
                                                         .wppTextController.text,
+                                                    'segmento_empresa': _model
+                                                        .segmentoEmpresaValue,
                                                   });
                                                   _model.createdEmpresa =
                                                       await EmpresasTable()
@@ -1178,6 +1313,21 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                     'segmento': _model
                                                         .segmentoEmpresaValue,
                                                   });
+                                                  _model.asaasClient =
+                                                      await AddAsaasCustomerCall
+                                                          .call(
+                                                    name: _model
+                                                        .usernameTextController
+                                                        .text,
+                                                    email: _model
+                                                        .emailTextController
+                                                        .text,
+                                                    phone: _model
+                                                        .wppTextController.text,
+                                                    cpf: _model
+                                                        .cpfTextController.text,
+                                                  );
+
                                                   await UsersTable().update(
                                                     data: {
                                                       'empresa': _model
@@ -1185,6 +1335,13 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                       'empresa_nome': _model
                                                           .nomeEmpresaTextController
                                                           .text,
+                                                      'asaas_customer_id':
+                                                          AddAsaasCustomerCall
+                                                              .cusId(
+                                                        (_model.asaasClient
+                                                                ?.jsonBody ??
+                                                            ''),
+                                                      ),
                                                     },
                                                     matchingRows: (rows) =>
                                                         rows.eq(
@@ -1479,20 +1636,22 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 24.0, 32.0),
                             child: FFButtonWidget(
-                              onPressed: () async {
-                                await UsersTable().update(
-                                  data: {
-                                    'tipo_conexao':
-                                        _model.tipoConexTextController.text,
-                                  },
-                                  matchingRows: (rows) => rows.eq(
-                                    'uuid',
-                                    currentUserUid,
-                                  ),
-                                );
+                              onPressed: (_model.tipoConexTextController.text == '')
+                                  ? null
+                                  : () async {
+                                      await UsersTable().update(
+                                        data: {
+                                          'tipo_conexao': _model
+                                              .tipoConexTextController.text,
+                                        },
+                                        matchingRows: (rows) => rows.eq(
+                                          'uuid',
+                                          currentUserUid,
+                                        ),
+                                      );
 
-                                context.goNamed('home');
-                              },
+                                      context.goNamed('connectRecommend');
+                                    },
                               text: 'Finalizar',
                               options: FFButtonOptions(
                                 width: double.infinity,
@@ -1517,6 +1676,9 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
+                                disabledColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                disabledTextColor: const Color(0x52000000),
                               ),
                             ),
                           ),

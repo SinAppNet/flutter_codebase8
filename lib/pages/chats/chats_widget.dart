@@ -533,6 +533,9 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                           containerUsersRow
                                                                               ?.nome,
                                                                           'Username',
+                                                                        ).maybeHandleOverflow(
+                                                                          maxChars:
+                                                                              50,
                                                                         ),
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
@@ -556,6 +559,9 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                               String>(
                                                                             listViewChatRow.lastMessage,
                                                                             'd',
+                                                                          ).maybeHandleOverflow(
+                                                                            maxChars:
+                                                                                20,
                                                                           ),
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodyMedium

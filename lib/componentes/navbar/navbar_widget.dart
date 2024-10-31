@@ -1,4 +1,3 @@
-import '/auth/supabase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -139,55 +138,42 @@ class _NavbarWidgetState extends State<NavbarWidget>
                   children: [
                     if (widget.stateInt == 1)
                       Align(
-                        alignment: const AlignmentDirectional(-0.8, -0.25),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            GoRouter.of(context).prepareAuthEvent();
-                            await authManager.signOut();
-                            GoRouter.of(context).clearRedirectLocation();
-
-                            context.goNamedAuth('selectLogin', context.mounted);
-                          },
-                          child: Container(
-                            width: 40.0,
-                            height: 40.0,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF009C3B),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4.0,
-                                  color: Color(0x33000000),
-                                  offset: Offset(
-                                    0.0,
-                                    2.0,
-                                  ),
-                                  spreadRadius: 1.0,
-                                )
-                              ],
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  FFIcons.kbell01,
-                                  color: Colors.white,
-                                  size: 20.0,
+                        alignment: const AlignmentDirectional(-0.95, -0.25),
+                        child: Container(
+                          width: 40.0,
+                          height: 40.0,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF009C3B),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 4.0,
+                                color: Color(0x33000000),
+                                offset: Offset(
+                                  0.0,
+                                  2.0,
                                 ),
-                              ],
-                            ),
+                                spreadRadius: 1.0,
+                              )
+                            ],
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FFIcons.kbell01,
+                                color: Colors.white,
+                                size: 20.0,
+                              ),
+                            ],
                           ),
                         ).animateOnPageLoad(
                             animationsMap['containerOnPageLoadAnimation1']!),
                       ),
                     if (widget.stateInt == 2)
                       Align(
-                        alignment: const AlignmentDirectional(-0.25, -0.33),
+                        alignment: const AlignmentDirectional(-0.37, -0.33),
                         child: Container(
                           width: 40.0,
                           height: 40.0,
@@ -222,7 +208,7 @@ class _NavbarWidgetState extends State<NavbarWidget>
                       ),
                     if (widget.stateInt == 3)
                       Align(
-                        alignment: const AlignmentDirectional(0.24, -0.33),
+                        alignment: const AlignmentDirectional(0.3, -0.33),
                         child: Container(
                           width: 40.0,
                           height: 40.0,
@@ -257,7 +243,7 @@ class _NavbarWidgetState extends State<NavbarWidget>
                       ),
                     if (widget.stateInt == 4)
                       Align(
-                        alignment: const AlignmentDirectional(0.8, -0.25),
+                        alignment: const AlignmentDirectional(0.95, -0.25),
                         child: Container(
                           width: 40.0,
                           height: 40.0,
@@ -281,7 +267,7 @@ class _NavbarWidgetState extends State<NavbarWidget>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                FFIcons.kicon,
+                                Icons.dynamic_feed,
                                 color: Colors.white,
                                 size: 20.0,
                               ),
@@ -336,7 +322,7 @@ class _NavbarWidgetState extends State<NavbarWidget>
                                 size: 24.0,
                               ),
                             Text(
-                              'NOTIFICAÇÕES',
+                              'ALERTAS',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -451,7 +437,7 @@ class _NavbarWidgetState extends State<NavbarWidget>
                         highlightColor: Colors.transparent,
                         onTap: () async {
                           context.pushNamed(
-                            'conexoes',
+                            'feed',
                             extra: <String, dynamic>{
                               kTransitionInfoKey: const TransitionInfo(
                                 hasTransition: true,
@@ -467,14 +453,14 @@ class _NavbarWidgetState extends State<NavbarWidget>
                           children: [
                             if (widget.stateInt != 4)
                               Icon(
-                                FFIcons.kicon,
+                                Icons.dynamic_feed,
                                 color: widget.stateInt == 4
                                     ? Colors.transparent
                                     : const Color(0xFF009C3B),
                                 size: 24.0,
                               ),
                             Text(
-                              '  CONEXÕES  ',
+                              'FEED',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(

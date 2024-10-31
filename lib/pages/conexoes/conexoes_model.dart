@@ -12,9 +12,13 @@ class ConexoesModel extends FlutterFlowModel<ConexoesWidget> {
   // Model for appBar component.
   late AppBarModel appBarModel;
   // State field(s) for TextField widget.
+  final textFieldKey = GlobalKey();
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
+  String? textFieldSelectedOption;
   String? Function(BuildContext, String?)? textControllerValidator;
+  // Stores action output result for [Backend Call - Query Rows] action in TextField widget.
+  List<UsersRow>? userSelected;
   // Stores action output result for [Backend Call - Query Rows] action in Row widget.
   List<UsersRow>? usr;
   // Stores action output result for [Backend Call - Query Rows] action in Container widget.
@@ -37,7 +41,6 @@ class ConexoesModel extends FlutterFlowModel<ConexoesWidget> {
   void dispose() {
     appBarModel.dispose();
     textFieldFocusNode?.dispose();
-    textController?.dispose();
 
     navbarModel.dispose();
     drawerContentModel.dispose();

@@ -17,6 +17,12 @@ class NotificacoesModel extends FlutterFlowModel<NotificacoesWidget> {
   // Model for appBar component.
   late AppBarModel appBarModel;
   Completer<List<ConexaoRow>>? requestCompleter;
+  // Stores action output result for [Backend Call - Query Rows] action in Row widget.
+  List<UsersRow>? usr;
+  // Stores action output result for [Backend Call - Query Rows] action in Container widget.
+  List<ChatRow>? chats;
+  // Stores action output result for [Backend Call - Insert Row] action in Container widget.
+  ChatRow? chat;
   // Model for navbar component.
   late NavbarModel navbarModel;
   // Model for drawerContent component.

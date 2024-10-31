@@ -21,10 +21,14 @@ class UsuarioNaoConectadoWidget extends StatefulWidget {
     super.key,
     required this.user,
     this.solicitacao,
-  });
+    this.callback,
+    int? temp,
+  }) : temp = temp ?? 0;
 
   final UsersRow? user;
   final int? solicitacao;
+  final Future Function()? callback;
+  final int temp;
 
   @override
   State<UsuarioNaoConectadoWidget> createState() =>
@@ -912,56 +916,19 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        var confirmDialogResponse =
-                                            await showDialog<bool>(
-                                                  context: context,
-                                                  builder:
-                                                      (alertDialogContext) {
-                                                    return WebViewAware(
-                                                      child: AlertDialog(
-                                                        title: const Text(
-                                                            'Enviar solicitação'),
-                                                        content: Text(
-                                                            'Confirme se deseja enviar uma solicitação de conexão para ${widget.user?.nome}'),
-                                                        actions: [
-                                                          TextButton(
-                                                            onPressed: () =>
-                                                                Navigator.pop(
-                                                                    alertDialogContext,
-                                                                    false),
-                                                            child: const Text(
-                                                                'Cancelar'),
-                                                          ),
-                                                          TextButton(
-                                                            onPressed: () =>
-                                                                Navigator.pop(
-                                                                    alertDialogContext,
-                                                                    true),
-                                                            child: const Text(
-                                                                'Confirmar'),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                ) ??
-                                                false;
-                                        if (confirmDialogResponse) {
+                                        if (widget.temp == 1) {
                                           await ConexaoTable().insert({
                                             'solicitou':
                                                 FFAppState().currentUser.id,
                                             'solicitado': widget.user?.id,
-                                            'status':
-                                                StatusConexao.solicitada.name,
+                                            'status': StatusConexao.aceita.name,
                                           });
-                                          _model.number = 0;
-                                          safeSetState(() {});
-                                          Navigator.pop(context);
+                                          await widget.callback?.call();
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Solicitação de conexão enviada.',
+                                                'Conexão realizada com sucesso!',
                                                 style: TextStyle(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -975,19 +942,106 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                                       .secondary,
                                             ),
                                           );
-                                          _model.apiResultujy =
-                                              await SendPushCall.call(
-                                            fcmToken: widget.user?.fcmToken,
-                                            pushTitle: 'Solicitação de conexão',
-                                            pushMessage:
-                                                '${widget.user?.nome} quer fazer uma conexão com você!',
-                                            pushImg: widget.user?.profilePic !=
-                                                        null &&
-                                                    widget.user?.profilePic !=
-                                                        ''
-                                                ? widget.user?.profilePic
-                                                : 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
+                                          _model.usres =
+                                              await UsersTable().queryRows(
+                                            queryFn: (q) => q.eq(
+                                              'id',
+                                              widget.user?.id,
+                                            ),
                                           );
+                                          _model.apiResultnx6a =
+                                              await SendPushCall.call(
+                                            fcmToken:
+                                                _model.usres?.first.fcmToken,
+                                            pushTitle: 'Nova conexão!',
+                                            pushMessage:
+                                                '${FFAppState().currentUser.nome} fez uma conexão com você!',
+                                          );
+
+                                          FFAppState().initAvance = true;
+                                          safeSetState(() {});
+                                          Navigator.pop(context);
+                                        } else {
+                                          var confirmDialogResponse =
+                                              await showDialog<bool>(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return WebViewAware(
+                                                        child: AlertDialog(
+                                                          title: const Text(
+                                                              'Enviar solicitação'),
+                                                          content: Text(
+                                                              'Confirme se deseja enviar uma solicitação de conexão para ${widget.user?.nome}'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      false),
+                                                              child: const Text(
+                                                                  'Cancelar'),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      true),
+                                                              child: const Text(
+                                                                  'Confirmar'),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                  ) ??
+                                                  false;
+                                          if (confirmDialogResponse) {
+                                            await ConexaoTable().insert({
+                                              'solicitou':
+                                                  FFAppState().currentUser.id,
+                                              'solicitado': widget.user?.id,
+                                              'status':
+                                                  StatusConexao.solicitada.name,
+                                            });
+                                            await widget.callback?.call();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Solicitação de conexão enviada.',
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                  ),
+                                                ),
+                                                duration: const Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                              ),
+                                            );
+                                            _model.usre =
+                                                await UsersTable().queryRows(
+                                              queryFn: (q) => q.eq(
+                                                'id',
+                                                widget.user?.id,
+                                              ),
+                                            );
+                                            _model.apiResultnx6 =
+                                                await SendPushCall.call(
+                                              fcmToken:
+                                                  _model.usre?.first.fcmToken,
+                                              pushTitle:
+                                                  'Solicitação de conexão',
+                                              pushMessage:
+                                                  '${FFAppState().currentUser.nome} quer fazer uma conexão com você!',
+                                            );
+
+                                            Navigator.pop(context);
+                                          }
                                         }
 
                                         safeSetState(() {});
@@ -1091,6 +1145,8 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                           );
                                           _model.number = 0;
                                           safeSetState(() {});
+                                          await widget.callback?.call();
+                                          Navigator.pop(context);
                                         }
                                       },
                                       child: Container(
@@ -1144,6 +1200,24 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                               ],
                             ),
                           ),
+                          if ((widget.user?.planoAtual != null) &&
+                              (widget.user?.planoAtual != 3))
+                            Align(
+                              alignment: const AlignmentDirectional(1.0, -1.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 12.0, 0.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.network(
+                                    'https://static.vecteezy.com/system/resources/thumbnails/047/309/918/small_2x/verified-badge-profile-icon-png.png',
+                                    width: 42.0,
+                                    height: 42.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),

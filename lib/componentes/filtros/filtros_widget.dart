@@ -9,7 +9,12 @@ import 'filtros_model.dart';
 export 'filtros_model.dart';
 
 class FiltrosWidget extends StatefulWidget {
-  const FiltrosWidget({super.key});
+  const FiltrosWidget({
+    super.key,
+    required this.callback,
+  });
+
+  final Future Function()? callback;
 
   @override
   State<FiltrosWidget> createState() => _FiltrosWidgetState();
@@ -76,78 +81,95 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      'Filtros',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Inter',
-                            color: const Color(0xFF2F2E41),
-                            fontSize: 22.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                  ],
-                ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                  child: Column(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+                  child: Row(
                     mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Interesses',
+                        'Filtros',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
-                              color: const Color(0xFF344054),
+                              color: const Color(0xFF2F2E41),
+                              fontSize: 22.0,
                               letterSpacing: 0.0,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.bold,
                             ),
                       ),
-                      FlutterFlowDropDown<String>(
-                        multiSelectController:
-                            _model.interessesUserValueController ??=
-                                FormListFieldController<String>(null),
-                        options: const [
-                          'Conhecer outros empreendedores pelo Brasil',
-                          'Aprender mais sobre networking',
-                          'Encontrar novos clientes',
-                          'Fechar parcerias',
-                          'Investir em novos negócios',
-                          'Levantar capital',
-                          'Procurar fornecedores'
-                        ],
-                        width: double.infinity,
-                        height: 50.0,
-                        textStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
-                        hintText: 'Interesses',
-                        icon: Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 24.0,
-                        ),
-                        fillColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                        elevation: 0.0,
-                        borderColor: const Color(0xFFD0D5DD),
-                        borderWidth: 2.0,
-                        borderRadius: 8.0,
-                        margin: const EdgeInsetsDirectional.fromSTEB(
-                            16.0, 4.0, 16.0, 4.0),
-                        hidesUnderline: true,
-                        isSearchable: false,
-                        isMultiSelect: true,
-                        onMultiSelectChanged: (val) => safeSetState(
-                            () => _model.interessesUserValue = val),
-                      ),
-                    ].divide(const SizedBox(height: 10.0)),
+                    ],
                   ),
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Segmento',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            color: const Color(0xFF344054),
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                    FlutterFlowDropDown<String>(
+                      controller: _model.segmentoEmpresaValueController ??=
+                          FormFieldController<String>(null),
+                      options: const [
+                        'Advocacia',
+                        'Agropecuaria',
+                        'Alementação e gastronomia',
+                        'Arquitetura',
+                        'Beleza e estética',
+                        'Comunicação visual',
+                        'Consultoria e Mentoria',
+                        'Construção Civil',
+                        'Contabilidade',
+                        'E-commerce',
+                        'Educação',
+                        'Energia sustentável',
+                        'Finanças',
+                        'Fitness',
+                        'Industria',
+                        'Investimentos',
+                        'Marketing',
+                        'Moda e vestuário',
+                        'SAAS',
+                        'Seguros',
+                        'Terapias holisticas',
+                        'Tecnologia',
+                        'Transportes',
+                        'Varejo',
+                        'Outros'
+                      ],
+                      onChanged: (val) =>
+                          safeSetState(() => _model.segmentoEmpresaValue = val),
+                      width: double.infinity,
+                      height: 50.0,
+                      textStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Inter',
+                                letterSpacing: 0.0,
+                              ),
+                      hintText: 'Segmento',
+                      icon: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        size: 24.0,
+                      ),
+                      fillColor:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                      elevation: 0.0,
+                      borderColor: const Color(0xFFD0D5DD),
+                      borderWidth: 2.0,
+                      borderRadius: 8.0,
+                      margin:
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
+                      hidesUnderline: true,
+                      isSearchable: false,
+                      isMultiSelect: false,
+                    ),
+                  ].divide(const SizedBox(height: 10.0)),
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
@@ -231,12 +253,13 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                   child: FFButtonWidget(
                     onPressed: () async {
                       FFAppState().filtroAplied = FiltroAplicadoStruct(
-                        interesses: _model.interessesUserValue,
-                        cidade: _model.estadoEmpresaValue,
+                        estado: _model.estadoEmpresaValue,
+                        segmento: _model.segmentoEmpresaValue,
                       );
                       FFAppState().filtroOn = true;
                       safeSetState(() {});
                       Navigator.pop(context);
+                      await widget.callback?.call();
                     },
                     text: 'Aplicar filtro',
                     icon: const Icon(

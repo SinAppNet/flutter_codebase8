@@ -27,10 +27,11 @@ class HomeAllModel extends FlutterFlowModel<HomeAllWidget> {
   String? Function(BuildContext, String?)? pesquisaNomeTextControllerValidator;
   // Stores action output result for [Backend Call - Query Rows] action in PesquisaNome widget.
   List<UsersRow>? usr;
+  Completer<List<UsuariosSemConexaoAceitaRow>>? requestCompleter2;
   // Model for usserCard component.
   late UsserCardModel usserCardModel1;
-  Completer<List<UsuariosSemConexaoAceitaRow>>? requestCompleter2;
   Completer<List<UsuariosSemConexaoAceitaRow>>? requestCompleter1;
+  Completer<List<UsuariosSemConexaoAceitaRow>>? requestCompleter3;
   // Model for navbar component.
   late NavbarModel navbarModel;
   // Model for drawerContent component.
@@ -79,6 +80,21 @@ class HomeAllModel extends FlutterFlowModel<HomeAllWidget> {
       await Future.delayed(const Duration(milliseconds: 50));
       final timeElapsed = stopwatch.elapsedMilliseconds;
       final requestComplete = requestCompleter1?.isCompleted ?? false;
+      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
+        break;
+      }
+    }
+  }
+
+  Future waitForRequestCompleted3({
+    double minWait = 0,
+    double maxWait = double.infinity,
+  }) async {
+    final stopwatch = Stopwatch()..start();
+    while (true) {
+      await Future.delayed(const Duration(milliseconds: 50));
+      final timeElapsed = stopwatch.elapsedMilliseconds;
+      final requestComplete = requestCompleter3?.isCompleted ?? false;
       if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
         break;
       }

@@ -71,4 +71,26 @@ class UsersRow extends SupabaseDataRow {
 
   String? get tipoConexao => getField<String>('tipo_conexao');
   set tipoConexao(String? value) => setField<String>('tipo_conexao', value);
+
+  String? get segmentoEmpresa => getField<String>('segmento_empresa');
+  set segmentoEmpresa(String? value) =>
+      setField<String>('segmento_empresa', value);
+
+  String? get cidadePrincipal => getField<String>('cidade_principal');
+  set cidadePrincipal(String? value) =>
+      setField<String>('cidade_principal', value);
+
+  String? get estadoPrincipal => getField<String>('estado_principal');
+  set estadoPrincipal(String? value) =>
+      setField<String>('estado_principal', value);
+
+  bool? get initRecommend => getField<bool>('init_recommend');
+  set initRecommend(bool? value) => setField<bool>('init_recommend', value);
+
+  String? get asaasCustomerId => getField<String>('asaas_customer_id');
+  set asaasCustomerId(String? value) =>
+      setField<String>('asaas_customer_id', value);
+
+  int? get planoAtual => getField<int>('plano_atual');
+  set planoAtual(int? value) => setField<int>('plano_atual', value);
 }

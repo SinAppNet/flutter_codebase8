@@ -37,6 +37,9 @@ class FFAppState extends ChangeNotifier {
     await _safeInitAsync(() async {
       _filtroOn = await secureStorage.getBool('ff_filtroOn') ?? _filtroOn;
     });
+    await _safeInitAsync(() async {
+      _initAvance = await secureStorage.getBool('ff_initAvance') ?? _initAvance;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -81,6 +84,17 @@ class FFAppState extends ChangeNotifier {
 
   void updateFiltroApliedStruct(Function(FiltroAplicadoStruct) updateFn) {
     updateFn(_filtroAplied);
+  }
+
+  bool _initAvance = false;
+  bool get initAvance => _initAvance;
+  set initAvance(bool value) {
+    _initAvance = value;
+    secureStorage.setBool('ff_initAvance', value);
+  }
+
+  void deleteInitAvance() {
+    secureStorage.delete(key: 'ff_initAvance');
   }
 
   final _cardManager = FutureRequestManager<List<ConexaoRow>>();

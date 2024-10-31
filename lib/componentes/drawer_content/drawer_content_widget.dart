@@ -54,6 +54,39 @@ class _DrawerContentWidgetState extends State<DrawerContentWidget> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              FFButtonWidget(
+                onPressed: () async {
+                  context.pushNamed('premiumPlans');
+                },
+                text: 'Seja premium',
+                icon: const FaIcon(
+                  FontAwesomeIcons.crown,
+                  color: Color(0xFF009C3B),
+                  size: 18.0,
+                ),
+                options: FFButtonOptions(
+                  width: double.infinity,
+                  height: 40.0,
+                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  iconPadding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: const Color(0xFFFFDF00),
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Inter',
+                        color: Colors.black,
+                        fontSize: 14.0,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.normal,
+                      ),
+                  elevation: 3.0,
+                  borderSide: const BorderSide(
+                    color: Colors.transparent,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                showLoadingIndicator: false,
+              ),
               InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -93,6 +126,59 @@ class _DrawerContentWidgetState extends State<DrawerContentWidget> {
                               10.0, 0.0, 0.0, 0.0),
                           child: Text(
                             'Meu perfil',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Inter',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed(
+                    'feed',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: const TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF009C3B),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(15.0, 7.0, 15.0, 7.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.person_sharp,
+                          color: Colors.white,
+                          size: 24.0,
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 0.0, 0.0),
+                          child: Text(
+                            'Feed',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(

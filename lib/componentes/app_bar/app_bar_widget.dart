@@ -3,7 +3,9 @@ import '/componentes/current_user_profile/current_user_profile_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'app_bar_model.dart';
 export 'app_bar_model.dart';
@@ -79,7 +81,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 context.safePop();
               },
               child: const Icon(
-                Icons.arrow_back,
+                Icons.arrow_back_sharp,
                 color: Colors.white,
                 size: 32.0,
               ),
@@ -87,6 +89,26 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
+              if (widget.back == false)
+                Builder(
+                  builder: (context) => InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      await Share.share(
+                        'lp.sinapp.online',
+                        sharePositionOrigin: getWidgetBoundingBox(context),
+                      );
+                    },
+                    child: const FaIcon(
+                      FontAwesomeIcons.share,
+                      color: Colors.white,
+                      size: 32.0,
+                    ),
+                  ),
+                ),
               SizedBox(
                 width: 42.0,
                 height: 42.0,
@@ -147,7 +169,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   ],
                 ),
               ),
-            ].divide(const SizedBox(width: 25.0)),
+            ].divide(const SizedBox(width: 12.0)),
           ),
         ],
       ),

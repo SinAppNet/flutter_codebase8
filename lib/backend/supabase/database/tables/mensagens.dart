@@ -35,4 +35,10 @@ class MensagensRow extends SupabaseDataRow {
 
   DateTime? get daySended => getField<DateTime>('day_sended');
   set daySended(DateTime? value) => setField<DateTime>('day_sended', value);
+
+  bool? get isAudio => getField<bool>('isAudio');
+  set isAudio(bool? value) => setField<bool>('isAudio', value);
+
+  String? get audioPath => getField<String>('audioPath');
+  set audioPath(String? value) => setField<String>('audioPath', value);
 }

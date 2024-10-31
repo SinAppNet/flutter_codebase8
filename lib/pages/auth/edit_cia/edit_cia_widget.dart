@@ -1,3 +1,4 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -5,7 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
-import '/flutter_flow/permissions_util.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -147,87 +147,73 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                     alignment: const AlignmentDirectional(0.0, 1.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        await requestPermission(
-                                            photoLibraryPermission);
-                                        if (await getPermissionStatus(
-                                            photoLibraryPermission)) {
-                                          final selectedMedia =
-                                              await selectMediaWithSourceBottomSheet(
-                                            context: context,
-                                            storageFolderPath: 'empresa',
-                                            allowPhoto: true,
-                                          );
-                                          if (selectedMedia != null &&
-                                              selectedMedia.every((m) =>
-                                                  validateFileFormat(
-                                                      m.storagePath,
-                                                      context))) {
-                                            safeSetState(() =>
-                                                _model.isDataUploading = true);
-                                            var selectedUploadedFiles =
-                                                <FFUploadedFile>[];
+                                        final selectedMedia =
+                                            await selectMediaWithSourceBottomSheet(
+                                          context: context,
+                                          storageFolderPath: 'empresa',
+                                          allowPhoto: true,
+                                        );
+                                        if (selectedMedia != null &&
+                                            selectedMedia.every((m) =>
+                                                validateFileFormat(
+                                                    m.storagePath, context))) {
+                                          safeSetState(() =>
+                                              _model.isDataUploading = true);
+                                          var selectedUploadedFiles =
+                                              <FFUploadedFile>[];
 
-                                            var downloadUrls = <String>[];
-                                            try {
-                                              selectedUploadedFiles =
-                                                  selectedMedia
-                                                      .map(
-                                                          (m) => FFUploadedFile(
-                                                                name: m
-                                                                    .storagePath
-                                                                    .split('/')
-                                                                    .last,
-                                                                bytes: m.bytes,
-                                                                height: m
-                                                                    .dimensions
-                                                                    ?.height,
-                                                                width: m
-                                                                    .dimensions
-                                                                    ?.width,
-                                                                blurHash:
-                                                                    m.blurHash,
-                                                              ))
-                                                      .toList();
+                                          var downloadUrls = <String>[];
+                                          try {
+                                            selectedUploadedFiles =
+                                                selectedMedia
+                                                    .map((m) => FFUploadedFile(
+                                                          name: m.storagePath
+                                                              .split('/')
+                                                              .last,
+                                                          bytes: m.bytes,
+                                                          height: m.dimensions
+                                                              ?.height,
+                                                          width: m.dimensions
+                                                              ?.width,
+                                                          blurHash: m.blurHash,
+                                                        ))
+                                                    .toList();
 
-                                              downloadUrls =
-                                                  await uploadSupabaseStorageFiles(
-                                                bucketName: 'users',
-                                                selectedFiles: selectedMedia,
-                                              );
-                                            } finally {
-                                              _model.isDataUploading = false;
-                                            }
-                                            if (selectedUploadedFiles.length ==
-                                                    selectedMedia.length &&
-                                                downloadUrls.length ==
-                                                    selectedMedia.length) {
-                                              safeSetState(() {
-                                                _model.uploadedLocalFile =
-                                                    selectedUploadedFiles.first;
-                                                _model.uploadedFileUrl =
-                                                    downloadUrls.first;
-                                              });
-                                            } else {
-                                              safeSetState(() {});
-                                              return;
-                                            }
+                                            downloadUrls =
+                                                await uploadSupabaseStorageFiles(
+                                              bucketName: 'users',
+                                              selectedFiles: selectedMedia,
+                                            );
+                                          } finally {
+                                            _model.isDataUploading = false;
                                           }
-
-                                          await EmpresasTable().update(
-                                            data: {
-                                              'logo_pic':
-                                                  _model.uploadedFileUrl,
-                                            },
-                                            matchingRows: (rows) => rows.eq(
-                                              'id',
-                                              FFAppState()
-                                                  .currentUser
-                                                  .empresaId,
-                                            ),
-                                          );
-                                          _model.change = true;
-                                          safeSetState(() {});
+                                          if (selectedUploadedFiles.length ==
+                                                  selectedMedia.length &&
+                                              downloadUrls.length ==
+                                                  selectedMedia.length) {
+                                            safeSetState(() {
+                                              _model.uploadedLocalFile =
+                                                  selectedUploadedFiles.first;
+                                              _model.uploadedFileUrl =
+                                                  downloadUrls.first;
+                                            });
+                                          } else {
+                                            safeSetState(() {});
+                                            return;
+                                          }
                                         }
+
+                                        await EmpresasTable().update(
+                                          data: {
+                                            'logo_pic': _model.uploadedFileUrl,
+                                          },
+                                          matchingRows: (rows) => rows.eq(
+                                            'id',
+                                            FFAppState().currentUser.empresaId,
+                                          ),
+                                        );
+                                        _model.change = true;
+                                        safeSetState(() {});
                                       },
                                       text: 'Editar',
                                       options: FFButtonOptions(
@@ -689,9 +675,9 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                 ),
                                 FlutterFlowDropDown<String>(
                                   controller:
-                                      _model.segmentosEmpresaValueController ??=
+                                      _model.segmentoEmpresaValueController ??=
                                           FormFieldController<String>(
-                                    _model.segmentosEmpresaValue ??=
+                                    _model.segmentoEmpresaValue ??=
                                         containerEmpresasRow?.segmento,
                                   ),
                                   options: const [
@@ -723,7 +709,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                   ],
                                   onChanged: (val) async {
                                     safeSetState(() =>
-                                        _model.segmentosEmpresaValue = val);
+                                        _model.segmentoEmpresaValue = val);
                                     _model.change = true;
                                     safeSetState(() {});
                                   },
@@ -735,7 +721,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                         fontFamily: 'Inter',
                                         letterSpacing: 0.0,
                                       ),
-                                  hintText: 'Segmentos',
+                                  hintText: 'Segmento',
                                   icon: Icon(
                                     Icons.keyboard_arrow_down_rounded,
                                     color: FlutterFlowTheme.of(context)
@@ -1047,12 +1033,26 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                             'estado': _model.estadoEmpresaValue,
                                           },
                                           'segmento':
-                                              _model.segmentosEmpresaValue,
+                                              _model.segmentoEmpresaValue,
                                           'porte': _model.portesValue,
                                         },
                                         matchingRows: (rows) => rows.eq(
                                           'id',
                                           containerEmpresasRow?.id,
+                                        ),
+                                      );
+                                      await UsersTable().update(
+                                        data: {
+                                          'cidade_principal': _model
+                                              .cidadeEmpresaTextController.text,
+                                          'estado_principal':
+                                              _model.estadoEmpresaValue,
+                                          'segmento_empresa':
+                                              _model.segmentoEmpresaValue,
+                                        },
+                                        matchingRows: (rows) => rows.eq(
+                                          'uuid',
+                                          currentUserUid,
                                         ),
                                       );
 

@@ -117,6 +117,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                               child: UsuarioNaoConectadoWidget(
                                 user: _model.user!.first,
                                 solicitacao: widget.conexao?.id,
+                                callback: () async {},
                               ),
                             ),
                           );

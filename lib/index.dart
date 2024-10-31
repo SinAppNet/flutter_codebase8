@@ -12,3 +12,8 @@ export '/pages/auth/cadastro/cadastro_widget.dart' show CadastroWidget;
 export '/pages/auth/edit_cia/edit_cia_widget.dart' show EditCiaWidget;
 export '/reset_pw/reset_pw_widget.dart' show ResetPwWidget;
 export '/conteudos/conteudos_widget.dart' show ConteudosWidget;
+export '/connect_recommend/connect_recommend_widget.dart'
+    show ConnectRecommendWidget;
+export '/premium_plans/premium_plans_widget.dart' show PremiumPlansWidget;
+export '/tests/tests_widget.dart' show TestsWidget;
+export '/feed/feed_widget.dart' show FeedWidget;

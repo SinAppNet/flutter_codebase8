@@ -7,33 +7,29 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class FiltroAplicadoStruct extends BaseStruct {
   FiltroAplicadoStruct({
-    List<String>? interesses,
-    String? cidade,
-  })  : _interesses = interesses,
-        _cidade = cidade;
+    String? estado,
+    String? segmento,
+  })  : _estado = estado,
+        _segmento = segmento;
 
-  // "interesses" field.
-  List<String>? _interesses;
-  List<String> get interesses => _interesses ?? const [];
-  set interesses(List<String>? val) => _interesses = val;
+  // "estado" field.
+  String? _estado;
+  String get estado => _estado ?? '';
+  set estado(String? val) => _estado = val;
 
-  void updateInteresses(Function(List<String>) updateFn) {
-    updateFn(_interesses ??= []);
-  }
+  bool hasEstado() => _estado != null;
 
-  bool hasInteresses() => _interesses != null;
+  // "segmento" field.
+  String? _segmento;
+  String get segmento => _segmento ?? '';
+  set segmento(String? val) => _segmento = val;
 
-  // "cidade" field.
-  String? _cidade;
-  String get cidade => _cidade ?? '';
-  set cidade(String? val) => _cidade = val;
-
-  bool hasCidade() => _cidade != null;
+  bool hasSegmento() => _segmento != null;
 
   static FiltroAplicadoStruct fromMap(Map<String, dynamic> data) =>
       FiltroAplicadoStruct(
-        interesses: getDataList(data['interesses']),
-        cidade: data['cidade'] as String?,
+        estado: data['estado'] as String?,
+        segmento: data['segmento'] as String?,
       );
 
   static FiltroAplicadoStruct? maybeFromMap(dynamic data) => data is Map
@@ -41,32 +37,31 @@ class FiltroAplicadoStruct extends BaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'interesses': _interesses,
-        'cidade': _cidade,
+        'estado': _estado,
+        'segmento': _segmento,
       }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'interesses': serializeParam(
-          _interesses,
+        'estado': serializeParam(
+          _estado,
           ParamType.String,
-          isList: true,
         ),
-        'cidade': serializeParam(
-          _cidade,
+        'segmento': serializeParam(
+          _segmento,
           ParamType.String,
         ),
       }.withoutNulls;
 
   static FiltroAplicadoStruct fromSerializableMap(Map<String, dynamic> data) =>
       FiltroAplicadoStruct(
-        interesses: deserializeParam<String>(
-          data['interesses'],
+        estado: deserializeParam(
+          data['estado'],
           ParamType.String,
-          true,
+          false,
         ),
-        cidade: deserializeParam(
-          data['cidade'],
+        segmento: deserializeParam(
+          data['segmento'],
           ParamType.String,
           false,
         ),
@@ -77,19 +72,20 @@ class FiltroAplicadoStruct extends BaseStruct {
 
   @override
   bool operator ==(Object other) {
-    const listEquality = ListEquality();
     return other is FiltroAplicadoStruct &&
-        listEquality.equals(interesses, other.interesses) &&
-        cidade == other.cidade;
+        estado == other.estado &&
+        segmento == other.segmento;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([interesses, cidade]);
+  int get hashCode => const ListEquality().hash([estado, segmento]);
 }
 
 FiltroAplicadoStruct createFiltroAplicadoStruct({
-  String? cidade,
+  String? estado,
+  String? segmento,
 }) =>
     FiltroAplicadoStruct(
-      cidade: cidade,
+      estado: estado,
+      segmento: segmento,
     );

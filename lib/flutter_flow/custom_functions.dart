@@ -20,3 +20,19 @@ int sum(
   // receive two integer and return the sum
   return a + b;
 }
+
+String newCustomFunctionz(String fullName) {
+  List<String> nameParts = fullName.split(' ');
+
+  // Retorna a primeira parte da lista (o primeiro nome)
+  return nameParts[0];
+}
+
+List<dynamic> newJsonItem(
+  List<dynamic> jsonList,
+  dynamic newJson,
+) {
+  // receive a list of json and a unique json, add the unique json on the list and return the new updated list
+  jsonList.add(newJson);
+  return jsonList;
+}

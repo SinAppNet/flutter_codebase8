@@ -364,7 +364,7 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   isDense: true,
-                                  hintText: 'exemplo@conecter.com',
+                                  hintText: 'exemplo@sinapp.com',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
@@ -848,7 +848,7 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                                       letterSpacing: 0.0,
                                     ),
                                 maxLines: 5,
-                                maxLength: 100,
+                                maxLength: 200,
                                 validator: _model.sobreTextControllerValidator
                                     .asValidator(context),
                               ),
@@ -880,9 +880,6 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                                   );
                                   await action_blocks.updateUserState(context);
                                   safeSetState(() {});
-
-                                  context.pushNamed('home');
-
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
@@ -902,6 +899,8 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                                       );
                                     },
                                   );
+
+                                  context.pushNamed('home');
 
                                   safeSetState(() {});
                                 },

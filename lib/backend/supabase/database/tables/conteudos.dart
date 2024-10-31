@@ -25,4 +25,7 @@ class ConteudosRow extends SupabaseDataRow {
 
   String? get refLink => getField<String>('refLink');
   set refLink(String? value) => setField<String>('refLink', value);
+
+  int? get ordem => getField<int>('ordem');
+  set ordem(int? value) => setField<int>('ordem', value);
 }

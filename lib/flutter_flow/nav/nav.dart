@@ -176,6 +176,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'conteudos',
           path: '/conteudos',
           builder: (context, params) => const ConteudosWidget(),
+        ),
+        FFRoute(
+          name: 'connectRecommend',
+          path: '/connectRecommend',
+          builder: (context, params) => const ConnectRecommendWidget(),
+        ),
+        FFRoute(
+          name: 'premiumPlans',
+          path: '/premiumPlans',
+          builder: (context, params) => const PremiumPlansWidget(),
+        ),
+        FFRoute(
+          name: 'tests',
+          path: '/tests',
+          builder: (context, params) => const TestsWidget(),
+        ),
+        FFRoute(
+          name: 'feed',
+          path: '/feed',
+          builder: (context, params) => const FeedWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

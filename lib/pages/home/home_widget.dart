@@ -3,7 +3,6 @@ import '/backend/supabase/supabase.dart';
 import '/componentes/app_bar/app_bar_widget.dart';
 import '/componentes/complete_perfil/complete_perfil_widget.dart';
 import '/componentes/drawer_content/drawer_content_widget.dart';
-import '/componentes/empty/empty_widget.dart';
 import '/componentes/navbar/navbar_widget.dart';
 import '/componentes/usser_card/usser_card_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -91,6 +90,18 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
             delay: 0.0.ms,
             duration: 500.0.ms,
             begin: const Offset(0.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'listViewOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 820.0.ms,
+            begin: const Offset(82.0, 0.0),
             end: const Offset(0.0, 0.0),
           ),
         ],
@@ -384,17 +395,26 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          'Recomendações',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color: const Color(0xFF2F2E41),
-                                                fontSize: 22.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed('tests');
+                                          },
+                                          child: Text(
+                                            'Recomendações',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  color: const Color(0xFF2F2E41),
+                                                  fontSize: 22.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
                                         ),
                                         Column(
                                           mainAxisSize: MainAxisSize.max,
@@ -461,7 +481,11 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             ..complete(
                                                 UsuariosSemConexaoAceitaTable()
                                                     .queryRows(
-                                              queryFn: (q) => q,
+                                              queryFn: (q) => q.not(
+                                                'profile_pic',
+                                                'is',
+                                                null,
+                                              ),
                                               limit: 5,
                                             )))
                                           .future,
@@ -482,13 +506,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         List<UsuariosSemConexaoAceitaRow>
                                             listViewUsuariosSemConexaoAceitaRowList =
                                             snapshot.data!;
-
-                                        if (listViewUsuariosSemConexaoAceitaRowList
-                                            .isEmpty) {
-                                          return const Center(
-                                            child: EmptyWidget(),
-                                          );
-                                        }
 
                                         return ListView.separated(
                                           padding: const EdgeInsets.fromLTRB(
@@ -522,7 +539,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               },
                                             );
                                           },
-                                        );
+                                        ).animateOnPageLoad(animationsMap[
+                                            'listViewOnPageLoadAnimation']!);
                                       },
                                     ),
                                   ),
@@ -682,7 +700,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       ),
                                     Align(
                                       alignment:
-                                          const AlignmentDirectional(0.24, -0.33),
+                                          const AlignmentDirectional(0.3, -0.33),
                                       child: Container(
                                         width: 40.0,
                                         height: 40.0,
@@ -810,7 +828,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               size: 24.0,
                                             ),
                                             Text(
-                                              'NOTIFICAÇÕES',
+                                              'ALERTAS',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -888,19 +906,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
-                                            context.pushNamed(
-                                              'home',
-                                              extra: <String, dynamic>{
-                                                kTransitionInfoKey:
-                                                    const TransitionInfo(
-                                                  hasTransition: true,
-                                                  transitionType:
-                                                      PageTransitionType.fade,
-                                                  duration:
-                                                      Duration(milliseconds: 0),
-                                                ),
-                                              },
-                                            );
+                                            context.pushNamed('home');
                                           },
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -936,7 +942,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
                                           context.pushNamed(
-                                            'conexoes',
+                                            'feed',
                                             extra: <String, dynamic>{
                                               kTransitionInfoKey:
                                                   const TransitionInfo(
@@ -955,12 +961,12 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
                                             const Icon(
-                                              FFIcons.kicon,
+                                              Icons.dynamic_feed,
                                               color: Color(0xFF009C3B),
                                               size: 24.0,
                                             ),
                                             Text(
-                                              '  CONEXÕES  ',
+                                              'FEED',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium

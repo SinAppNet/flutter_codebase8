@@ -157,6 +157,50 @@ class NnAccCreatedCall {
   }
 }
 
+class AddAsaasCustomerCall {
+  static Future<ApiCallResponse> call({
+    String? name = '',
+    String? email = '',
+    String? phone = '',
+    String? cpf = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "email": "$email",
+  "phone": "$phone",
+  "cpfCnpj": "$cpf"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'add asaas customer',
+      apiUrl: 'https://asaas.com/api/v3/customers',
+      callType: ApiCallType.POST,
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json',
+        'user-agent':
+            '\$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA0OTc0MzQ6OiRhYWNoXzE0NDlhNDk4LWI5NWItNDJhNi04NzI4LTkwYjc3MmNkYjRmNQ==',
+        'access_token':
+            '\$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA0OTc0MzQ6OiRhYWNoXzE0NDlhNDk4LWI5NWItNDJhNi04NzI4LTkwYjc3MmNkYjRmNQ==',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? cusId(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.id''',
+      ));
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

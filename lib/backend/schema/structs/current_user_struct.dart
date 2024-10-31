@@ -20,6 +20,9 @@ class CurrentUserStruct extends BaseStruct {
     int? cDisp,
     List<String>? interesses,
     bool? perfilCompleto,
+    String? customerIdAsaas,
+    bool? premium,
+    String? currentPlan,
   })  : _id = id,
         _nome = nome,
         _email = email,
@@ -32,7 +35,10 @@ class CurrentUserStruct extends BaseStruct {
         _cargo = cargo,
         _cDisp = cDisp,
         _interesses = interesses,
-        _perfilCompleto = perfilCompleto;
+        _perfilCompleto = perfilCompleto,
+        _customerIdAsaas = customerIdAsaas,
+        _premium = premium,
+        _currentPlan = currentPlan;
 
   // "id" field.
   int? _id;
@@ -135,6 +141,27 @@ class CurrentUserStruct extends BaseStruct {
 
   bool hasPerfilCompleto() => _perfilCompleto != null;
 
+  // "customer_id_asaas" field.
+  String? _customerIdAsaas;
+  String get customerIdAsaas => _customerIdAsaas ?? '';
+  set customerIdAsaas(String? val) => _customerIdAsaas = val;
+
+  bool hasCustomerIdAsaas() => _customerIdAsaas != null;
+
+  // "premium" field.
+  bool? _premium;
+  bool get premium => _premium ?? false;
+  set premium(bool? val) => _premium = val;
+
+  bool hasPremium() => _premium != null;
+
+  // "currentPlan" field.
+  String? _currentPlan;
+  String get currentPlan => _currentPlan ?? '';
+  set currentPlan(String? val) => _currentPlan = val;
+
+  bool hasCurrentPlan() => _currentPlan != null;
+
   static CurrentUserStruct fromMap(Map<String, dynamic> data) =>
       CurrentUserStruct(
         id: castToType<int>(data['id']),
@@ -150,6 +177,9 @@ class CurrentUserStruct extends BaseStruct {
         cDisp: castToType<int>(data['cDisp']),
         interesses: getDataList(data['interesses']),
         perfilCompleto: data['perfil_completo'] as bool?,
+        customerIdAsaas: data['customer_id_asaas'] as String?,
+        premium: data['premium'] as bool?,
+        currentPlan: data['currentPlan'] as String?,
       );
 
   static CurrentUserStruct? maybeFromMap(dynamic data) => data is Map
@@ -170,6 +200,9 @@ class CurrentUserStruct extends BaseStruct {
         'cDisp': _cDisp,
         'interesses': _interesses,
         'perfil_completo': _perfilCompleto,
+        'customer_id_asaas': _customerIdAsaas,
+        'premium': _premium,
+        'currentPlan': _currentPlan,
       }.withoutNulls;
 
   @override
@@ -226,6 +259,18 @@ class CurrentUserStruct extends BaseStruct {
         'perfil_completo': serializeParam(
           _perfilCompleto,
           ParamType.bool,
+        ),
+        'customer_id_asaas': serializeParam(
+          _customerIdAsaas,
+          ParamType.String,
+        ),
+        'premium': serializeParam(
+          _premium,
+          ParamType.bool,
+        ),
+        'currentPlan': serializeParam(
+          _currentPlan,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -296,6 +341,21 @@ class CurrentUserStruct extends BaseStruct {
           ParamType.bool,
           false,
         ),
+        customerIdAsaas: deserializeParam(
+          data['customer_id_asaas'],
+          ParamType.String,
+          false,
+        ),
+        premium: deserializeParam(
+          data['premium'],
+          ParamType.bool,
+          false,
+        ),
+        currentPlan: deserializeParam(
+          data['currentPlan'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -317,7 +377,10 @@ class CurrentUserStruct extends BaseStruct {
         cargo == other.cargo &&
         cDisp == other.cDisp &&
         listEquality.equals(interesses, other.interesses) &&
-        perfilCompleto == other.perfilCompleto;
+        perfilCompleto == other.perfilCompleto &&
+        customerIdAsaas == other.customerIdAsaas &&
+        premium == other.premium &&
+        currentPlan == other.currentPlan;
   }
 
   @override
@@ -334,7 +397,10 @@ class CurrentUserStruct extends BaseStruct {
         cargo,
         cDisp,
         interesses,
-        perfilCompleto
+        perfilCompleto,
+        customerIdAsaas,
+        premium,
+        currentPlan
       ]);
 }
 
@@ -351,6 +417,9 @@ CurrentUserStruct createCurrentUserStruct({
   String? cargo,
   int? cDisp,
   bool? perfilCompleto,
+  String? customerIdAsaas,
+  bool? premium,
+  String? currentPlan,
 }) =>
     CurrentUserStruct(
       id: id,
@@ -365,4 +434,7 @@ CurrentUserStruct createCurrentUserStruct({
       cargo: cargo,
       cDisp: cDisp,
       perfilCompleto: perfilCompleto,
+      customerIdAsaas: customerIdAsaas,
+      premium: premium,
+      currentPlan: currentPlan,
     );

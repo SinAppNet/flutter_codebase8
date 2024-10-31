@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'cadastro_widget.dart' show CadastroWidget;
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CadastroModel extends FlutterFlowModel<CadastroWidget> {
   ///  Local state fields for this page.
@@ -32,6 +33,11 @@ class CadastroModel extends FlutterFlowModel<CadastroWidget> {
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
   String? Function(BuildContext, String?)? emailTextControllerValidator;
+  // State field(s) for cpf widget.
+  FocusNode? cpfFocusNode;
+  TextEditingController? cpfTextController;
+  final cpfMask = MaskTextInputFormatter(mask: '###.###.###-##');
+  String? Function(BuildContext, String?)? cpfTextControllerValidator;
   // State field(s) for wpp widget.
   FocusNode? wppFocusNode;
   TextEditingController? wppTextController;
@@ -56,6 +62,8 @@ class CadastroModel extends FlutterFlowModel<CadastroWidget> {
   UsersRow? createdUser;
   // Stores action output result for [Backend Call - Insert Row] action in Button widget.
   EmpresasRow? createdEmpresa;
+  // Stores action output result for [Backend Call - API (add asaas customer)] action in Button widget.
+  ApiCallResponse? asaasClient;
   // Stores action output result for [Backend Call - Update Row(s)] action in Button widget.
   List<UsersRow>? editedUser;
   bool isDataUploading2 = false;
@@ -86,6 +94,9 @@ class CadastroModel extends FlutterFlowModel<CadastroWidget> {
 
     emailFocusNode?.dispose();
     emailTextController?.dispose();
+
+    cpfFocusNode?.dispose();
+    cpfTextController?.dispose();
 
     wppFocusNode?.dispose();
     wppTextController?.dispose();

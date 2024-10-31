@@ -32,9 +32,9 @@ class EditCiaModel extends FlutterFlowModel<EditCiaWidget> {
   // State field(s) for estadoEmpresa widget.
   String? estadoEmpresaValue;
   FormFieldController<String>? estadoEmpresaValueController;
-  // State field(s) for segmentosEmpresa widget.
-  String? segmentosEmpresaValue;
-  FormFieldController<String>? segmentosEmpresaValueController;
+  // State field(s) for segmentoEmpresa widget.
+  String? segmentoEmpresaValue;
+  FormFieldController<String>? segmentoEmpresaValueController;
   // State field(s) for faturamentoAnual widget.
   FocusNode? faturamentoAnualFocusNode;
   TextEditingController? faturamentoAnualTextController;

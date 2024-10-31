@@ -15,8 +15,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Subscribes to a specified table in Supabase to receive real-time updates.
 
-Future<void> subscribe(
-    String table, Future Function() callbackAction, int chatId) async {
+Future<void> subscribe(String table, Future Function() callbackAction,
+    int keyId, String key) async {
   // Accessing the Supabase client and subscribing to a specific channel.
   SupaFlow.client
       .channel('public:$table')
@@ -29,7 +29,7 @@ Future<void> subscribe(
             event: "insert",
             schema: 'public',
             table: table,
-            filter: "chat=eq.$chatId"),
+            filter: "$key=eq.$keyId"),
 
         // callbackAction is the action to be taken whenever a new message is sent
         (payload, [ref]) => callbackAction(),

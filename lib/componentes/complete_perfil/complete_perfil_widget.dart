@@ -939,6 +939,10 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                                       'perfil_completo': true,
                                       'interesses': _model.interessesUserValue,
                                       'site': _model.siteTextController.text,
+                                      'cidade_principal': _model
+                                          .cidadeEmpresaTextController.text,
+                                      'estado_principal':
+                                          _model.estadoEmpresaValue,
                                     },
                                     matchingRows: (rows) => rows.eq(
                                       'uuid',

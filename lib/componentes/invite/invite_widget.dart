@@ -64,7 +64,7 @@ class _InviteWidgetState extends State<InviteWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Convide seus amigos, ganhe \nprêmios !',
+                'Convide seus amigos!',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Inter',
@@ -77,7 +77,7 @@ class _InviteWidgetState extends State<InviteWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
                 child: Text(
-                  'Compartilhe o seu link de convite com amigos empreendedores. Cada novo amigo convidado, você ganha 3 conexões.',
+                  'Compartilhe. Convide outros empresários para o SinApp e permita que eles também criem novas conexões e oportunidades de negócios!',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',

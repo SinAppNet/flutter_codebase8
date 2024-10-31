@@ -239,7 +239,7 @@ class _ContatosWidgetState extends State<ContatosWidget> {
                                             size: 18.0,
                                           ),
                                           onPressed: () async {
-                                            _model.chat =
+                                            _model.chats =
                                                 await ChatTable().queryRows(
                                               queryFn: (q) => q
                                                   .contains(
@@ -251,26 +251,42 @@ class _ContatosWidgetState extends State<ContatosWidget> {
                                                     '{${FFAppState().currentUser.id}}',
                                                   ),
                                             );
+                                            if ((_model.chats != null &&
+                                                    (_model.chats)!
+                                                        .isNotEmpty) ==
+                                                true) {
+                                              context.pushNamed(
+                                                'chat',
+                                                queryParameters: {
+                                                  'chat': serializeParam(
+                                                    _model.chats?.first,
+                                                    ParamType.SupabaseRow,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            } else {
+                                              _model.chat =
+                                                  await ChatTable().insert({
+                                                'users': (int var1, int var2) {
+                                                  return [var1, var2];
+                                                }(
+                                                    columnConexoesAceitasRow
+                                                        .id!,
+                                                    FFAppState()
+                                                        .currentUser
+                                                        .id),
+                                              });
 
-                                            context.pushNamed(
-                                              'chat',
-                                              queryParameters: {
-                                                'chat': serializeParam(
-                                                  _model.chat?.first,
-                                                  ParamType.SupabaseRow,
-                                                ),
-                                              }.withoutNulls,
-                                              extra: <String, dynamic>{
-                                                kTransitionInfoKey:
-                                                    const TransitionInfo(
-                                                  hasTransition: true,
-                                                  transitionType:
-                                                      PageTransitionType.fade,
-                                                  duration:
-                                                      Duration(milliseconds: 0),
-                                                ),
-                                              },
-                                            );
+                                              context.pushNamed(
+                                                'chat',
+                                                queryParameters: {
+                                                  'chat': serializeParam(
+                                                    _model.chat,
+                                                    ParamType.SupabaseRow,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            }
 
                                             safeSetState(() {});
                                           },

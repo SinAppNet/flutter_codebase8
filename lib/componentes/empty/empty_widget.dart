@@ -42,9 +42,10 @@ class _EmptyWidgetState extends State<EmptyWidget> {
       padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Lottie.asset(
-            'assets/lottie_animations/Animation_-_1700595035646.json',
+            'assets/jsons/Animation_-_1700595035646.json',
             width: 150.0,
             height: 130.0,
             fit: BoxFit.cover,

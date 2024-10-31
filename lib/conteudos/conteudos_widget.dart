@@ -105,7 +105,7 @@ class _ConteudosWidgetState extends State<ConteudosWidget> {
                       ),
                       child: FutureBuilder<List<ConteudosRow>>(
                         future: ConteudosTable().queryRows(
-                          queryFn: (q) => q,
+                          queryFn: (q) => q.order('ordem', ascending: true),
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.

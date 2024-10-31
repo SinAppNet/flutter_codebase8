@@ -7,7 +7,9 @@ class ContatosModel extends FlutterFlowModel<ContatosWidget> {
   ///  State fields for stateful widgets in this component.
 
   // Stores action output result for [Backend Call - Query Rows] action in IconButton widget.
-  List<ChatRow>? chat;
+  List<ChatRow>? chats;
+  // Stores action output result for [Backend Call - Insert Row] action in IconButton widget.
+  ChatRow? chat;
 
   @override
   void initState(BuildContext context) {}

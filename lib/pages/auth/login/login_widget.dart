@@ -100,10 +100,28 @@ class _LoginWidgetState extends State<LoginWidget> {
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              25.0, 50.0, 25.0, 50.0),
+                              25.0, 32.0, 25.0, 50.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
+                              Align(
+                                alignment: const AlignmentDirectional(-1.0, -1.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.safePop();
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 42.0,
+                                  ),
+                                ),
+                              ),
                               Align(
                                 alignment: const AlignmentDirectional(-1.0, -1.0),
                                 child: Padding(
@@ -457,7 +475,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         text: TextSpan(
                                           children: [
                                             TextSpan(
-                                              text: 'Esqueci miha senha',
+                                              text: 'Esqueci minha senha',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium

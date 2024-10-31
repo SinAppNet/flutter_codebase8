@@ -1118,6 +1118,24 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                               ],
                             ),
                           ),
+                          if ((widget.user?.planoAtual != null) &&
+                              (widget.user?.planoAtual != 3))
+                            Align(
+                              alignment: const AlignmentDirectional(1.0, -1.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 12.0, 0.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.network(
+                                    'https://static.vecteezy.com/system/resources/thumbnails/047/309/918/small_2x/verified-badge-profile-icon-png.png',
+                                    width: 42.0,
+                                    height: 42.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
