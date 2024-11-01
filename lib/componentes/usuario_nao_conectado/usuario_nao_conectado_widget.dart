@@ -951,8 +951,7 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                           );
                                           _model.apiResultnx6a =
                                               await SendPushCall.call(
-                                            fcmToken:
-                                                _model.usres?.first.fcmToken,
+                                            fcmToken: widget.user?.fcmToken,
                                             pushTitle: 'Nova conexão!',
                                             pushMessage:
                                                 '${FFAppState().currentUser.nome} fez uma conexão com você!',
@@ -1032,8 +1031,7 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                             );
                                             _model.apiResultnx6 =
                                                 await SendPushCall.call(
-                                              fcmToken:
-                                                  _model.usre?.first.fcmToken,
+                                              fcmToken: widget.user?.fcmToken,
                                               pushTitle:
                                                   'Solicitação de conexão',
                                               pushMessage:

@@ -59,7 +59,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       );
       if (_model.cuSer != null && (_model.cuSer)!.isNotEmpty) {
         _model.user = await action_blocks.updateUserState(context);
-        if (_model.user?.onboarding != true) {}
       } else {
         GoRouter.of(context).prepareAuthEvent();
         await authManager.signOut();
