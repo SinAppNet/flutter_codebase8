@@ -724,8 +724,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                 ],
               ),
             ),
-            if ((widget.user?.planoAtual != null) &&
-                (widget.user?.planoAtual != 3))
+            if (widget.user?.premium == true)
               Align(
                 alignment: const AlignmentDirectional(1.0, -1.0),
                 child: Padding(

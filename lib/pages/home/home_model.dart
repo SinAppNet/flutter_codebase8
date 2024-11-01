@@ -27,8 +27,6 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
   UsersRow? user;
   // Model for appBar component.
   late AppBarModel appBarModel;
-  // Stores action output result for [Custom Action - getFCMToken] action in Text widget.
-  String? fcmt;
   Completer<List<UsuariosSemConexaoAceitaRow>>? requestCompleter;
   // Model for navbar component.
   late NavbarModel navbarModel;

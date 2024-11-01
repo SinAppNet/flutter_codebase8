@@ -96,6 +96,9 @@ class UsuariosSemConexaoAceitaRow extends SupabaseDataRow {
   int? get planoAtual => getField<int>('plano_atual');
   set planoAtual(int? value) => setField<int>('plano_atual', value);
 
+  bool? get premium => getField<bool>('premium');
+  set premium(bool? value) => setField<bool>('premium', value);
+
   int? get solicitacao => getField<int>('solicitacao');
   set solicitacao(int? value) => setField<int>('solicitacao', value);
 }

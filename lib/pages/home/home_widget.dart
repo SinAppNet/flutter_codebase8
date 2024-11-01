@@ -10,7 +10,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/walkthroughs/initial_onboarding.dart';
 import '/actions/actions.dart' as action_blocks;
-import '/custom_code/actions/index.dart' as actions;
 import 'dart:async';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'
     show TutorialCoachMark;
@@ -60,11 +59,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       );
       if (_model.cuSer != null && (_model.cuSer)!.isNotEmpty) {
         _model.user = await action_blocks.updateUserState(context);
-        if (_model.user?.onboarding != true) {
-          safeSetState(() => _model.initialOnboardingController =
-              createPageWalkthrough(context));
-          _model.initialOnboardingController?.show(context: context);
-        }
+        if (_model.user?.onboarding != true) {}
       } else {
         GoRouter.of(context).prepareAuthEvent();
         await authManager.signOut();
@@ -396,31 +391,17 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            _model.fcmt =
-                                                await actions.getFCMToken();
-                                            _model.tkm = _model.fcmt;
-                                            safeSetState(() {});
-
-                                            safeSetState(() {});
-                                          },
-                                          child: Text(
-                                            'Recomendações',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: const Color(0xFF2F2E41),
-                                                  fontSize: 22.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                          ),
+                                        Text(
+                                          'Recomendações',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color: const Color(0xFF2F2E41),
+                                                fontSize: 22.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                         ),
                                         Column(
                                           mainAxisSize: MainAxisSize.max,
@@ -550,19 +531,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       },
                                     ),
                                   ),
-                                  SelectionArea(
-                                      child: Text(
-                                    valueOrDefault<String>(
-                                      _model.tkm,
-                                      'tk',
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
-                                  )),
                                 ],
                               ),
                             ),

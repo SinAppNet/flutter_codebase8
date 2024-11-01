@@ -176,7 +176,7 @@ class _WritePostWidgetState extends State<WritePostWidget> {
                 autofocus: false,
                 obscureText: false,
                 decoration: InputDecoration(
-                  hintText: 'Escreva o que está acontecendo',
+                  hintText: 'O que você está buscando?',
                   hintStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,

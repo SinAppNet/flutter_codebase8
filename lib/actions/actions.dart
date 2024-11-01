@@ -30,6 +30,7 @@ Future<UsersRow?> updateUserState(BuildContext context) async {
         cargo: returnedUser?.first.cargo,
         interesses: returnedUser?.first.interesses,
         perfilCompleto: returnedUser?.first.perfilCompleto,
+        premium: returnedUser?.first.premium,
       );
       FFAppState().update(() {});
       return returnedUser?.first;

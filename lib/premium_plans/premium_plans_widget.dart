@@ -106,51 +106,6 @@ class _PremiumPlansWidgetState extends State<PremiumPlansWidget> {
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 24.0, 24.0, 24.0),
-                                child: Container(
-                                  width: MediaQuery.sizeOf(context).width * 1.0,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFFFDF00),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        24.0, 24.0, 24.0, 24.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Escolha seu plano',
-                                          style: FlutterFlowTheme.of(context)
-                                              .headlineMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color: const Color(0xFF009C3B),
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                        Text(
-                                          'Selecione o plano que melhor atende às suas necessidades',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color: const Color(0xFF344054),
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 24.0, 0.0, 24.0),
                                 child: FutureBuilder<List<PlanosAssinaturaRow>>(
                                   future: PlanosAssinaturaTable().queryRows(
@@ -248,7 +203,7 @@ class _PremiumPlansWidgetState extends State<PremiumPlansWidget> {
                                                                 ),
                                                           ),
                                                           Text(
-                                                            'Ideal para iniciantes',
+                                                            'Networking de qualidade e mais',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyMedium
@@ -366,7 +321,7 @@ class _PremiumPlansWidgetState extends State<PremiumPlansWidget> {
                                                                   'https://sinappnetwork.bubbleapps.io/version-test/payment?plano=${columnPlanosAssinaturaRow.id.toString()}&user=${FFAppState().currentUser.id.toString()}');
                                                             },
                                                             text:
-                                                                'Selecionar Plano',
+                                                                'Assinar Plano',
                                                             options:
                                                                 FFButtonOptions(
                                                               width: double
@@ -595,7 +550,7 @@ class _PremiumPlansWidgetState extends State<PremiumPlansWidget> {
                                                                   'Button pressed ...');
                                                             },
                                                             text:
-                                                                'Selecionar Plano',
+                                                                'Assinar Plano',
                                                             options:
                                                                 FFButtonOptions(
                                                               width: double
@@ -654,7 +609,7 @@ class _PremiumPlansWidgetState extends State<PremiumPlansWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     32.0, 32.0, 32.0, 24.0),
                                 child: Text(
-                                  'Todos os planos incluem uma garantia de reembolso de 30 dias',
+                                  'Você será redirecionado(a) para uma página de pagamento segura.',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
