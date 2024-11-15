@@ -382,7 +382,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                 future:
                                                     UsersTable().querySingleRow(
                                                   queryFn: (q) => q
-                                                      .in_(
+                                                      .inFilter(
                                                         'id',
                                                         listViewChatRow.users,
                                                       )

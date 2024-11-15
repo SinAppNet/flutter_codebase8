@@ -48,8 +48,11 @@ class _WritePostWidgetState extends State<WritePostWidget> {
       if (widget.edit == true) {
         safeSetState(() {
           _model.postTextTextController?.text = widget.postEdit!.postText!;
-          _model.postTextTextController?.selection =
-              const TextSelection.collapsed(offset: 0);
+          _model.postTextFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.postTextTextController?.selection =
+                const TextSelection.collapsed(offset: 0);
+          });
         });
         _model.edit = true;
         safeSetState(() {});
@@ -408,7 +411,7 @@ class _WritePostWidgetState extends State<WritePostWidget> {
                                           },
                                           matchingRows: (rows) => rows.eq(
                                             'id',
-                                            widget.postEdit?.id,
+                                            widget.postEdit!.id,
                                           ),
                                         );
                                         shouldSetState = true;
@@ -426,7 +429,7 @@ class _WritePostWidgetState extends State<WritePostWidget> {
                                           },
                                           matchingRows: (rows) => rows.eq(
                                             'id',
-                                            widget.postEdit?.id,
+                                            widget.postEdit!.id,
                                           ),
                                         );
                                         shouldSetState = true;
@@ -445,7 +448,7 @@ class _WritePostWidgetState extends State<WritePostWidget> {
                                         },
                                         matchingRows: (rows) => rows.eq(
                                           'id',
-                                          widget.postEdit?.id,
+                                          widget.postEdit!.id,
                                         ),
                                       );
                                       shouldSetState = true;

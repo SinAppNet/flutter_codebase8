@@ -1038,7 +1038,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                         },
                                         matchingRows: (rows) => rows.eq(
                                           'id',
-                                          containerEmpresasRow?.id,
+                                          containerEmpresasRow!.id,
                                         ),
                                       );
                                       await UsersTable().update(

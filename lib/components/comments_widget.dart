@@ -85,7 +85,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                               )
                               .eq(
                                 'post',
-                                widget.post?.id,
+                                widget.post!.id,
                               ),
                         )))
                   .future,

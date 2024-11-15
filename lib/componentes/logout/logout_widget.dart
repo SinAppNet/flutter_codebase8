@@ -197,7 +197,7 @@ class _LogoutWidgetState extends State<LogoutWidget>
                                   GoRouter.of(context).clearRedirectLocation();
 
                                   context.goNamedAuth(
-                                      'selectLogin', context.mounted);
+                                      'splashScreenNew', context.mounted);
                                 },
                                 text: 'Confirmar',
                                 options: FFButtonOptions(

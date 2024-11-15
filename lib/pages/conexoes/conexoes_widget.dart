@@ -327,7 +327,7 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                     q.eq(
                                                                   'nome',
                                                                   _model
-                                                                      .textFieldSelectedOption,
+                                                                      .textFieldSelectedOption!,
                                                                 ),
                                                               );
                                                               await showModalBottomSheet(
@@ -578,7 +578,7 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                     q.eq(
                                                                   'uuid',
                                                                   listViewConexoesAceitasRow
-                                                                      .uuid,
+                                                                      .uuid!,
                                                                 ),
                                                               );
                                                               await showModalBottomSheet(
@@ -746,7 +746,7 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                   queryFn: (q) => q
                                                                       .contains(
                                                                         'users',
-                                                                        '{${listViewConexoesAceitasRow.id}}',
+                                                                        '{${listViewConexoesAceitasRow.id!}}',
                                                                       )
                                                                       .contains(
                                                                         'users',

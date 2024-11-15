@@ -772,7 +772,7 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
                                                                                 q.eq(
                                                                           'uuid',
                                                                           listViewConexoesAceitasRow
-                                                                              .uuid,
+                                                                              .uuid!,
                                                                         ),
                                                                       );
                                                                       await showModalBottomSheet(
@@ -915,7 +915,7 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
                                                                           queryFn: (q) => q
                                                                               .contains(
                                                                                 'users',
-                                                                                '{${listViewConexoesAceitasRow.id}}',
+                                                                                '{${listViewConexoesAceitasRow.id!}}',
                                                                               )
                                                                               .contains(
                                                                                 'users',

@@ -3,5 +3,3 @@ export 'onesignal.dart' show onesignal;
 export 'initialize_firebase.dart' show initializeFirebase;
 export 'get_push_permission.dart' show getPushPermission;
 export 'reset_password.dart' show resetPassword;
-export 'subscribe.dart' show subscribe;
-export 'unsubscribe.dart' show unsubscribe;

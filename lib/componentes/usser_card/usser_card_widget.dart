@@ -109,7 +109,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
         _model.usr = await UsersTable().queryRows(
           queryFn: (q) => q.eq(
             'id',
-            widget.user?.id,
+            widget.user!.id!,
           ),
         );
         await showModalBottomSheet(
@@ -272,7 +272,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                 ConexaoTable().querySingleRow(
                                               queryFn: (q) => q.eq(
                                                 'id',
-                                                widget.user?.solicitacao,
+                                                widget.user!.solicitacao!,
                                               ),
                                             ),
                                           )
@@ -367,7 +367,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                             queryFn: (q) =>
                                                                 q.eq(
                                                               'id',
-                                                              widget.user?.id,
+                                                              widget.user!.id!,
                                                             ),
                                                           );
                                                           _model.apiResultnx6a =
@@ -488,7 +488,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                                   q.eq(
                                                                 'id',
                                                                 widget
-                                                                    .user?.id,
+                                                                    .user!.id!,
                                                               ),
                                                             );
                                                             _model.apiResultnx6 =
@@ -637,8 +637,8 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                                 (rows) =>
                                                                     rows.eq(
                                                               'id',
-                                                              widget.user
-                                                                  ?.solicitacao,
+                                                              widget.user!
+                                                                  .solicitacao!,
                                                             ),
                                                           );
                                                           await widget.action

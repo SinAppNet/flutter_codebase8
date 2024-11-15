@@ -352,7 +352,7 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                                 future: EmpresasTable().querySingleRow(
                                   queryFn: (q) => q.eq(
                                     'id',
-                                    widget.user?.empresa,
+                                    widget.user!.empresa!,
                                   ),
                                 ),
                                 builder: (context, snapshot) {
@@ -1031,7 +1031,7 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                                         queryFn: (q) => q
                                             .contains(
                                               'users',
-                                              '{${widget.user?.id}}',
+                                              '{${widget.user!.id}}',
                                             )
                                             .contains(
                                               'users',

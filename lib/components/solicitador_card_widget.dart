@@ -57,7 +57,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
         future: UsersTable().querySingleRow(
           queryFn: (q) => q.eq(
             'id',
-            widget.conexao?.solicitou,
+            widget.conexao!.solicitou!,
           ),
         ),
         builder: (context, snapshot) {
@@ -102,7 +102,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                       _model.user = await UsersTable().queryRows(
                         queryFn: (q) => q.eq(
                           'id',
-                          widget.conexao?.solicitou,
+                          widget.conexao!.solicitou!,
                         ),
                       );
                       await showModalBottomSheet(
@@ -245,7 +245,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                               },
                               matchingRows: (rows) => rows.eq(
                                 'id',
-                                widget.conexao?.id,
+                                widget.conexao!.id,
                               ),
                             );
                             await widget.callb?.call();
@@ -307,7 +307,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                               },
                               matchingRows: (rows) => rows.eq(
                                 'id',
-                                widget.conexao?.id,
+                                widget.conexao!.id,
                               ),
                             );
                             await widget.callb?.call();

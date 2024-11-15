@@ -114,7 +114,7 @@ class _CommenWidgetState extends State<CommenWidget>
                       future: UsersTable().querySingleRow(
                         queryFn: (q) => q.eq(
                           'id',
-                          widget.comment?.commenter,
+                          widget.comment!.commenter!,
                         ),
                       ),
                       builder: (context, snapshot) {
@@ -245,7 +245,7 @@ class _CommenWidgetState extends State<CommenWidget>
                                     await FeedComentariosTable().delete(
                                       matchingRows: (rows) => rows.eq(
                                         'id',
-                                        widget.comment?.id,
+                                        widget.comment!.id,
                                       ),
                                     );
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -298,7 +298,7 @@ class _CommenWidgetState extends State<CommenWidget>
                               )
                               .eq(
                                 'comment',
-                                widget.comment?.id,
+                                widget.comment!.id,
                               ),
                         ),
                         builder: (context, snapshot) {
@@ -345,7 +345,7 @@ class _CommenWidgetState extends State<CommenWidget>
                                       )
                                       .eq(
                                         'comment',
-                                        widget.comment?.id,
+                                        widget.comment!.id,
                                       ),
                                 );
                               }

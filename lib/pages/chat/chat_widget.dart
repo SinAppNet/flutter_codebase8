@@ -8,10 +8,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
-import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
@@ -40,31 +38,6 @@ class _ChatWidgetState extends State<ChatWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ChatModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.unsubscribe(
-        'mensagens',
-      );
-      await Future.delayed(const Duration(milliseconds: 500));
-      await actions.subscribe(
-        'mensagens',
-        () async {
-          await _model.mensagens?.animateTo(
-            _model.mensagens!.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 100),
-            curve: Curves.ease,
-          );
-        },
-        widget.chat!.id,
-        'chat',
-      );
-      await _model.mensagens?.animateTo(
-        _model.mensagens!.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.ease,
-      );
-    });
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -131,7 +104,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                         child: FutureBuilder<List<UsersRow>>(
                           future: UsersTable().querySingleRow(
                             queryFn: (q) => q
-                                .in_(
+                                .inFilter(
                                   'id',
                                   widget.chat!.users,
                                 )
@@ -277,7 +250,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                           ..complete(MensagensTable().queryRows(
                                             queryFn: (q) => q.eq(
                                               'chat',
-                                              widget.chat?.id,
+                                              widget.chat!.id,
                                             ),
                                           )))
                                     .future,
@@ -671,13 +644,21 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                     safeSetState(() {
                                                       _model.textController
                                                           ?.text = message!;
-                                                      _model.textController
-                                                              ?.selection =
-                                                          TextSelection.collapsed(
-                                                              offset: _model
-                                                                  .textController!
-                                                                  .text
-                                                                  .length);
+                                                      _model.textFieldFocusNode
+                                                          ?.requestFocus();
+                                                      WidgetsBinding.instance
+                                                          .addPostFrameCallback(
+                                                              (_) {
+                                                        _model.textController
+                                                                ?.selection =
+                                                            TextSelection
+                                                                .collapsed(
+                                                          offset: _model
+                                                              .textController!
+                                                              .text
+                                                              .length,
+                                                        );
+                                                      });
                                                     });
                                                   },
                                                 ),
@@ -807,7 +788,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                         queryFn: (q) => q
                                                             .eq(
                                                               'chat',
-                                                              widget.chat?.id,
+                                                              widget.chat!.id,
                                                             )
                                                             .eq(
                                                               'day_sended',
@@ -854,7 +835,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                           matchingRows:
                                                               (rows) => rows.eq(
                                                             'id',
-                                                            widget.chat?.id,
+                                                            widget.chat!.id,
                                                           ),
                                                         );
                                                         safeSetState(() => _model
@@ -920,7 +901,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                           matchingRows:
                                                               (rows) => rows.eq(
                                                             'id',
-                                                            widget.chat?.id,
+                                                            widget.chat!.id,
                                                           ),
                                                         );
                                                         safeSetState(() => _model
@@ -1121,7 +1102,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                               .eq(
                                                                 'chat',
                                                                 widget
-                                                                    .chat?.id,
+                                                                    .chat!.id,
                                                               )
                                                               .eq(
                                                                 'day_sended',
@@ -1170,7 +1151,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                                 (rows) =>
                                                                     rows.eq(
                                                               'id',
-                                                              widget.chat?.id,
+                                                              widget.chat!.id,
                                                             ),
                                                           );
                                                           safeSetState(() =>
@@ -1236,7 +1217,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                                 (rows) =>
                                                                     rows.eq(
                                                               'id',
-                                                              widget.chat?.id,
+                                                              widget.chat!.id,
                                                             ),
                                                           );
                                                           safeSetState(() =>

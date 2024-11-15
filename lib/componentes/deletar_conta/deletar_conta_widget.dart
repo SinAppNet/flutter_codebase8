@@ -318,7 +318,7 @@ class _DeletarContaWidgetState extends State<DeletarContaWidget>
                                             .clearRedirectLocation();
 
                                         context.goNamedAuth(
-                                            'selectLogin', context.mounted);
+                                            'splashScreenNew', context.mounted);
                                       },
                                 text: 'Deletar conta',
                                 options: FFButtonOptions(

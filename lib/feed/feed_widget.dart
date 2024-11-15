@@ -7,10 +7,8 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/custom_code/actions/index.dart' as actions;
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -37,22 +35,6 @@ class _FeedWidgetState extends State<FeedWidget> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _model = createModel(context, () => FeedModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.unsubscribe(
-        'feed_postagens',
-      );
-      await actions.subscribe(
-        'feed_postagens',
-        () async {
-          safeSetState(() => _model.requestCompleter = null);
-          await _model.waitForRequestCompleted();
-        },
-        FFAppState().currentUser.id,
-        'poster',
-      );
-    });
 
     animationsMap.addAll({
       'listViewOnPageLoadAnimation': AnimationInfo(
@@ -241,7 +223,12 @@ class _FeedWidgetState extends State<FeedWidget> with TickerProviderStateMixin {
                         future: (_model.requestCompleter ??=
                                 Completer<List<FeedPostagensRow>>()
                                   ..complete(FeedPostagensTable().queryRows(
-                                    queryFn: (q) => q.order('created_at'),
+                                    queryFn: (q) => q
+                                        .eq(
+                                          'approved',
+                                          true,
+                                        )
+                                        .order('created_at'),
                                   )))
                             .future,
                         builder: (context, snapshot) {

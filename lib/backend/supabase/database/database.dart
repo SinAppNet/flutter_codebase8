@@ -5,8 +5,10 @@ export '../supabase.dart';
 export 'row.dart';
 export 'table.dart';
 
+export 'tables/invite_history.dart';
 export 'tables/assinatura.dart';
 export 'tables/planos_assinatura.dart';
+export 'tables/invite.dart';
 export 'tables/usuarios_sem_conexao_aceita.dart';
 export 'tables/conexao.dart';
 export 'tables/empresas.dart';

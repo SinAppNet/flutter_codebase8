@@ -82,7 +82,7 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                           ..complete(UsersTable().querySingleRow(
                             queryFn: (q) => q.eq(
                               'id',
-                              widget.feed?.poster,
+                              widget.feed!.poster!,
                             ),
                           )))
                         .future,
@@ -413,7 +413,7 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                                   await FeedPostagensTable().delete(
                                     matchingRows: (rows) => rows.eq(
                                       'id',
-                                      widget.feed?.id,
+                                      widget.feed!.id,
                                     ),
                                   );
                                   await widget.callback?.call();
@@ -501,7 +501,7 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                                   ..complete(LikesTable().queryRows(
                                     queryFn: (q) => q.eq(
                                       'post',
-                                      widget.feed?.id,
+                                      widget.feed!.id,
                                     ),
                                   )))
                             .future,
@@ -551,7 +551,7 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                                       )
                                       .eq(
                                         'post',
-                                        widget.feed?.id,
+                                        widget.feed!.id,
                                       ),
                                 );
                                 safeSetState(
@@ -600,7 +600,7 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                                   ..complete(FeedComentariosTable().queryRows(
                                     queryFn: (q) => q.eq(
                                       'post',
-                                      widget.feed?.id,
+                                      widget.feed!.id,
                                     ),
                                   )))
                             .future,

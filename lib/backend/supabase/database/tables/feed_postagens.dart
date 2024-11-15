@@ -42,4 +42,7 @@ class FeedPostagensRow extends SupabaseDataRow {
 
   List<dynamic> get likes => getListField<dynamic>('likes');
   set likes(List<dynamic>? value) => setListField<dynamic>('likes', value);
+
+  bool? get approved => getField<bool>('approved');
+  set approved(bool? value) => setField<bool>('approved', value);
 }

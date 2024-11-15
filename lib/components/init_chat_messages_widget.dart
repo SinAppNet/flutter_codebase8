@@ -41,7 +41,7 @@ class _InitChatMessagesWidgetState extends State<InitChatMessagesWidget> {
       _model.usr = await UsersTable().queryRows(
         queryFn: (q) => q.eq(
           'id',
-          widget.username,
+          widget.username!,
         ),
       );
     });
@@ -64,7 +64,7 @@ class _InitChatMessagesWidgetState extends State<InitChatMessagesWidget> {
         future: UsersTable().querySingleRow(
           queryFn: (q) => q.eq(
             'id',
-            widget.username,
+            widget.username!,
           ),
         ),
         builder: (context, snapshot) {

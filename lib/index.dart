@@ -17,3 +17,5 @@ export '/connect_recommend/connect_recommend_widget.dart'
 export '/premium_plans/premium_plans_widget.dart' show PremiumPlansWidget;
 export '/tests/tests_widget.dart' show TestsWidget;
 export '/feed/feed_widget.dart' show FeedWidget;
+export '/pages/splash_screen_new/splash_screen_new_widget.dart'
+    show SplashScreenNewWidget;

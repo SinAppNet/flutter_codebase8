@@ -75,7 +75,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) => RootPageContext.wrap(
-        appStateNotifier.loggedIn ? const HomeWidget() : const SelectLoginWidget(),
+        appStateNotifier.loggedIn ? const HomeWidget() : const SplashScreenNewWidget(),
         errorRoute: state.uri.toString(),
       ),
       routes: [
@@ -83,7 +83,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: '_initialize',
           path: '/',
           builder: (context, _) => RootPageContext.wrap(
-            appStateNotifier.loggedIn ? const HomeWidget() : const SelectLoginWidget(),
+            appStateNotifier.loggedIn ? const HomeWidget() : const SplashScreenNewWidget(),
           ),
         ),
         FFRoute(
@@ -196,6 +196,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'feed',
           path: '/feed',
           builder: (context, params) => const FeedWidget(),
+        ),
+        FFRoute(
+          name: 'splashScreenNew',
+          path: '/splashScreenNew',
+          builder: (context, params) => const SplashScreenNewWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -367,7 +372,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/selectLogin';
+            return '/splashScreenNew';
           }
           return null;
         },

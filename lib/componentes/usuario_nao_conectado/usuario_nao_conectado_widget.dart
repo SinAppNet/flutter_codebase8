@@ -206,7 +206,7 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                       future: EmpresasTable().querySingleRow(
                                         queryFn: (q) => q.eq(
                                           'id',
-                                          widget.user?.empresa,
+                                          widget.user!.empresa!,
                                         ),
                                       ),
                                       builder: (context, snapshot) {
@@ -946,7 +946,7 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                               await UsersTable().queryRows(
                                             queryFn: (q) => q.eq(
                                               'id',
-                                              widget.user?.id,
+                                              widget.user!.id,
                                             ),
                                           );
                                           _model.apiResultnx6a =
@@ -1026,7 +1026,7 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                                 await UsersTable().queryRows(
                                               queryFn: (q) => q.eq(
                                                 'id',
-                                                widget.user?.id,
+                                                widget.user!.id,
                                               ),
                                             );
                                             _model.apiResultnx6 =
@@ -1138,7 +1138,7 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                           await ConexaoTable().delete(
                                             matchingRows: (rows) => rows.eq(
                                               'id',
-                                              widget.solicitacao,
+                                              widget.solicitacao!,
                                             ),
                                           );
                                           _model.number = 0;

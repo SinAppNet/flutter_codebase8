@@ -40,6 +40,9 @@ class FFAppState extends ChangeNotifier {
     await _safeInitAsync(() async {
       _initAvance = await secureStorage.getBool('ff_initAvance') ?? _initAvance;
     });
+    await _safeInitAsync(() async {
+      _invited = await secureStorage.getBool('ff_invited') ?? _invited;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -95,6 +98,17 @@ class FFAppState extends ChangeNotifier {
 
   void deleteInitAvance() {
     secureStorage.delete(key: 'ff_initAvance');
+  }
+
+  bool _invited = false;
+  bool get invited => _invited;
+  set invited(bool value) {
+    _invited = value;
+    secureStorage.setBool('ff_invited', value);
+  }
+
+  void deleteInvited() {
+    secureStorage.delete(key: 'ff_invited');
   }
 
   final _cardManager = FutureRequestManager<List<ConexaoRow>>();

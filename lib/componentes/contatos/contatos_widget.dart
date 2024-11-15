@@ -244,7 +244,7 @@ class _ContatosWidgetState extends State<ContatosWidget> {
                                               queryFn: (q) => q
                                                   .contains(
                                                     'users',
-                                                    '{${columnConexoesAceitasRow.id}}',
+                                                    '{${columnConexoesAceitasRow.id!}}',
                                                   )
                                                   .contains(
                                                     'users',
