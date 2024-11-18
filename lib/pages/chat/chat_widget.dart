@@ -104,7 +104,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                         child: FutureBuilder<List<UsersRow>>(
                           future: UsersTable().querySingleRow(
                             queryFn: (q) => q
-                                .inFilter(
+                                .in_(
                                   'id',
                                   widget.chat!.users,
                                 )

@@ -4,32 +4,35 @@ abstract class SupabaseTable<T extends SupabaseDataRow> {
   String get tableName;
   T createRow(Map<String, dynamic> data);
 
-  PostgrestFilterBuilder _select() => SupaFlow.client.from(tableName).select();
+  PostgrestFilterBuilder<T> _select<T>() =>
+      SupaFlow.client.from(tableName).select<T>();
 
   Future<List<T>> queryRows({
     required PostgrestTransformBuilder Function(PostgrestFilterBuilder) queryFn,
     int? limit,
   }) {
-    final select = _select();
+    final select = _select<PostgrestList>();
     var query = queryFn(select);
     query = limit != null ? query.limit(limit) : query;
-    return query.select().then((rows) => rows.map(createRow).toList());
+    return query
+        .select<PostgrestList>()
+        .then((rows) => rows.map(createRow).toList());
   }
 
   Future<List<T>> querySingleRow({
     required PostgrestTransformBuilder Function(PostgrestFilterBuilder) queryFn,
   }) =>
-      queryFn(_select())
+      queryFn(_select<PostgrestMap>())
           .limit(1)
-          .select()
+          .select<PostgrestMap>()
           .maybeSingle()
           .catchError((e) => print('Error querying row: $e'))
-          .then((r) => [if (r != null) createRow(r)]);
+          .then((r) => [createRow(r)]);
 
   Future<T> insert(Map<String, dynamic> data) => SupaFlow.client
       .from(tableName)
       .insert(data)
-      .select()
+      .select<PostgrestMap>()
       .limit(1)
       .single()
       .then(createRow);
@@ -45,7 +48,9 @@ abstract class SupabaseTable<T extends SupabaseDataRow> {
       await update;
       return [];
     }
-    return update.select().then((rows) => rows.map(createRow).toList());
+    return update
+        .select<PostgrestList>()
+        .then((rows) => rows.map(createRow).toList());
   }
 
   Future<List<T>> delete({
@@ -58,7 +63,9 @@ abstract class SupabaseTable<T extends SupabaseDataRow> {
       await delete;
       return [];
     }
-    return delete.select().then((rows) => rows.map(createRow).toList());
+    return delete
+        .select<PostgrestList>()
+        .then((rows) => rows.map(createRow).toList());
   }
 }
 
