@@ -40,8 +40,6 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
     _model.faturamentoAnualFocusNode ??= FocusNode();
 
     _model.qntdColaboradoresFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -56,7 +54,10 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
@@ -64,7 +65,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
           top: true,
           child: FutureBuilder<List<EmpresasRow>>(
             future: EmpresasTable().querySingleRow(
-              queryFn: (q) => q.eq(
+              queryFn: (q) => q.eqOrNull(
                 'id',
                 FFAppState().currentUser.empresaId,
               ),
@@ -207,7 +208,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                           data: {
                                             'logo_pic': _model.uploadedFileUrl,
                                           },
-                                          matchingRows: (rows) => rows.eq(
+                                          matchingRows: (rows) => rows.eqOrNull(
                                             'id',
                                             FFAppState().currentUser.empresaId,
                                           ),
@@ -1036,9 +1037,9 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                               _model.segmentoEmpresaValue,
                                           'porte': _model.portesValue,
                                         },
-                                        matchingRows: (rows) => rows.eq(
+                                        matchingRows: (rows) => rows.eqOrNull(
                                           'id',
-                                          containerEmpresasRow!.id,
+                                          containerEmpresasRow?.id,
                                         ),
                                       );
                                       await UsersTable().update(
@@ -1050,7 +1051,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                           'segmento_empresa':
                                               _model.segmentoEmpresaValue,
                                         },
-                                        matchingRows: (rows) => rows.eq(
+                                        matchingRows: (rows) => rows.eqOrNull(
                                           'uuid',
                                           currentUserUid,
                                         ),

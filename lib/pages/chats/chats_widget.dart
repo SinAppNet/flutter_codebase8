@@ -39,7 +39,6 @@ class _ChatsWidgetState extends State<ChatsWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -54,7 +53,10 @@ class _ChatsWidgetState extends State<ChatsWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: const Color(0xFFFFDF00),
@@ -304,9 +306,13 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                             builder: (context) {
                                               return WebViewAware(
                                                 child: GestureDetector(
-                                                  onTap: () =>
-                                                      FocusScope.of(context)
-                                                          .unfocus(),
+                                                  onTap: () {
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
                                                   child: Padding(
                                                     padding:
                                                         MediaQuery.viewInsetsOf(
@@ -334,7 +340,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                   decoration: const BoxDecoration(),
                                   child: FutureBuilder<List<ChatRow>>(
                                     future: ChatTable().queryRows(
-                                      queryFn: (q) => q.contains(
+                                      queryFn: (q) => q.containsOrNull(
                                         'users',
                                         '{${FFAppState().currentUser.id}}',
                                       ),
@@ -382,11 +388,11 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                 future:
                                                     UsersTable().querySingleRow(
                                                   queryFn: (q) => q
-                                                      .in_(
+                                                      .inFilterOrNull(
                                                         'id',
                                                         listViewChatRow.users,
                                                       )
-                                                      .neq(
+                                                      .neqOrNull(
                                                         'id',
                                                         FFAppState()
                                                             .currentUser
@@ -589,13 +595,13 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                         MensagensRow>>(
                                                                   future: MensagensTable()
                                                                       .querySingleRow(
-                                                                    queryFn:
-                                                                        (q) => q
-                                                                            .eq(
-                                                                              'chat',
-                                                                              listViewChatRow.id,
-                                                                            )
-                                                                            .order('created_at'),
+                                                                    queryFn: (q) => q
+                                                                        .eqOrNull(
+                                                                          'chat',
+                                                                          listViewChatRow
+                                                                              .id,
+                                                                        )
+                                                                        .order('created_at'),
                                                                   ),
                                                                   builder: (context,
                                                                       snapshot) {

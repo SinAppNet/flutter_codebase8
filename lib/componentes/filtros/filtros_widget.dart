@@ -33,8 +33,6 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FiltrosModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

@@ -59,8 +59,6 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -75,7 +73,10 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: const Color(0xFFFFDF00),
@@ -324,10 +325,10 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                   await UsersTable()
                                                                       .queryRows(
                                                                 queryFn: (q) =>
-                                                                    q.eq(
+                                                                    q.eqOrNull(
                                                                   'nome',
                                                                   _model
-                                                                      .textFieldSelectedOption!,
+                                                                      .textFieldSelectedOption,
                                                                 ),
                                                               );
                                                               await showModalBottomSheet(
@@ -343,9 +344,15 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                   return WebViewAware(
                                                                     child:
                                                                         GestureDetector(
-                                                                      onTap: () =>
-                                                                          FocusScope.of(context)
-                                                                              .unfocus(),
+                                                                      onTap:
+                                                                          () {
+                                                                        FocusScope.of(context)
+                                                                            .unfocus();
+                                                                        FocusManager
+                                                                            .instance
+                                                                            .primaryFocus
+                                                                            ?.unfocus();
+                                                                      },
                                                                       child:
                                                                           Padding(
                                                                         padding:
@@ -357,7 +364,7 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                           child:
                                                                               UsuarioConectadoWidget(
                                                                             user:
-                                                                                _model.userSelected!.first,
+                                                                                _model.userSelected!.firstOrNull!,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -575,10 +582,10 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                   await UsersTable()
                                                                       .queryRows(
                                                                 queryFn: (q) =>
-                                                                    q.eq(
+                                                                    q.eqOrNull(
                                                                   'uuid',
                                                                   listViewConexoesAceitasRow
-                                                                      .uuid!,
+                                                                      .uuid,
                                                                 ),
                                                               );
                                                               await showModalBottomSheet(
@@ -594,9 +601,15 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                   return WebViewAware(
                                                                     child:
                                                                         GestureDetector(
-                                                                      onTap: () =>
-                                                                          FocusScope.of(context)
-                                                                              .unfocus(),
+                                                                      onTap:
+                                                                          () {
+                                                                        FocusScope.of(context)
+                                                                            .unfocus();
+                                                                        FocusManager
+                                                                            .instance
+                                                                            .primaryFocus
+                                                                            ?.unfocus();
+                                                                      },
                                                                       child:
                                                                           Padding(
                                                                         padding:
@@ -608,7 +621,7 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                           child:
                                                                               UsuarioConectadoWidget(
                                                                             user:
-                                                                                _model.usr!.first,
+                                                                                _model.usr!.firstOrNull!,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -744,11 +757,11 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                     await ChatTable()
                                                                         .queryRows(
                                                                   queryFn: (q) => q
-                                                                      .contains(
+                                                                      .containsOrNull(
                                                                         'users',
-                                                                        '{${listViewConexoesAceitasRow.id!}}',
+                                                                        '{${listViewConexoesAceitasRow.id}}',
                                                                       )
-                                                                      .contains(
+                                                                      .containsOrNull(
                                                                         'users',
                                                                         '{${FFAppState().currentUser.id}}',
                                                                       ),
@@ -767,7 +780,7 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
                                                                           serializeParam(
                                                                         _model
                                                                             .chats
-                                                                            ?.first,
+                                                                            ?.firstOrNull,
                                                                         ParamType
                                                                             .SupabaseRow,
                                                                       ),

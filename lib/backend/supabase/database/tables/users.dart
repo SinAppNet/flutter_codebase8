@@ -96,4 +96,17 @@ class UsersRow extends SupabaseDataRow {
 
   bool? get premium => getField<bool>('premium');
   set premium(bool? value) => setField<bool>('premium', value);
+
+  bool? get in7daysTrial => getField<bool>('in_7days_trial');
+  set in7daysTrial(bool? value) => setField<bool>('in_7days_trial', value);
+
+  bool? get field7daysTrialEnded => getField<bool>('7days_trial_ended');
+  set field7daysTrialEnded(bool? value) =>
+      setField<bool>('7days_trial_ended', value);
+
+  String? get referredCode => getField<String>('referred_code');
+  set referredCode(String? value) => setField<String>('referred_code', value);
+
+  int? get destaque => getField<int>('destaque');
+  set destaque(int? value) => setField<int>('destaque', value);
 }

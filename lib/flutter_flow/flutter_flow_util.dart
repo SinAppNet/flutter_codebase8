@@ -33,7 +33,7 @@ export 'custom_icons.dart' show FFIcons;
 export 'internationalization.dart' show FFLocalizations;
 export 'nav/nav.dart';
 
-final RouteObserver<ModalRoute> routeObserver = RouteObserver<PageRoute>();
+final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 T valueOrDefault<T>(T? value, T defaultValue) =>
     (value is String && value.isEmpty) || value == null ? defaultValue : value;
@@ -583,8 +583,9 @@ Future<void> stopAudioRecording({
   if (recordedFilePath == null) {
     return;
   }
+
   final recordedFileBytes = FFUploadedFile(
-    name: audioName,
+    name: '$audioName.m4a',
     bytes: await XFile(recordedPath!).readAsBytes(),
   );
   onRecordingComplete(

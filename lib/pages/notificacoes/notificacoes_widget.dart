@@ -4,8 +4,8 @@ import '/componentes/app_bar/app_bar_widget.dart';
 import '/componentes/drawer_content/drawer_content_widget.dart';
 import '/componentes/empty/empty_widget.dart';
 import '/componentes/navbar/navbar_widget.dart';
+import '/componentes/solicitador_card/solicitador_card_widget.dart';
 import '/componentes/usuario_conectado/usuario_conectado_widget.dart';
-import '/components/solicitador_card_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -182,8 +182,6 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -198,7 +196,10 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: const Color(0xFFFFDF00),
@@ -521,13 +522,13 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
                                                       ..complete(ConexaoTable()
                                                           .queryRows(
                                                         queryFn: (q) => q
-                                                            .eq(
+                                                            .eqOrNull(
                                                               'solicitado',
                                                               FFAppState()
                                                                   .currentUser
                                                                   .id,
                                                             )
-                                                            .eq(
+                                                            .eqOrNull(
                                                               'status',
                                                               StatusConexao
                                                                   .solicitada
@@ -769,10 +770,10 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
                                                                               .queryRows(
                                                                         queryFn:
                                                                             (q) =>
-                                                                                q.eq(
+                                                                                q.eqOrNull(
                                                                           'uuid',
                                                                           listViewConexoesAceitasRow
-                                                                              .uuid!,
+                                                                              .uuid,
                                                                         ),
                                                                       );
                                                                       await showModalBottomSheet(
@@ -787,13 +788,16 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
                                                                           return WebViewAware(
                                                                             child:
                                                                                 GestureDetector(
-                                                                              onTap: () => FocusScope.of(context).unfocus(),
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
                                                                               child: Padding(
                                                                                 padding: MediaQuery.viewInsetsOf(context),
                                                                                 child: SizedBox(
                                                                                   height: MediaQuery.sizeOf(context).height * 0.95,
                                                                                   child: UsuarioConectadoWidget(
-                                                                                    user: _model.usr!.first,
+                                                                                    user: _model.usr!.firstOrNull!,
                                                                                   ),
                                                                                 ),
                                                                               ),
@@ -913,11 +917,11 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
                                                                         _model.chats =
                                                                             await ChatTable().queryRows(
                                                                           queryFn: (q) => q
-                                                                              .contains(
+                                                                              .containsOrNull(
                                                                                 'users',
-                                                                                '{${listViewConexoesAceitasRow.id!}}',
+                                                                                '{${listViewConexoesAceitasRow.id}}',
                                                                               )
-                                                                              .contains(
+                                                                              .containsOrNull(
                                                                                 'users',
                                                                                 '{${FFAppState().currentUser.id}}',
                                                                               ),
@@ -931,7 +935,7 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
                                                                             queryParameters:
                                                                                 {
                                                                               'chat': serializeParam(
-                                                                                _model.chats?.first,
+                                                                                _model.chats?.firstOrNull,
                                                                                 ParamType.SupabaseRow,
                                                                               ),
                                                                             }.withoutNulls,

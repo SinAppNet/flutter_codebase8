@@ -99,8 +99,6 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -204,9 +202,9 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                   children: [
                                     FutureBuilder<List<EmpresasRow>>(
                                       future: EmpresasTable().querySingleRow(
-                                        queryFn: (q) => q.eq(
+                                        queryFn: (q) => q.eqOrNull(
                                           'id',
-                                          widget.user!.empresa!,
+                                          widget.user?.empresa,
                                         ),
                                       ),
                                       builder: (context, snapshot) {
@@ -625,7 +623,7 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                                           future: UsersTable()
                                                               .querySingleRow(
                                                             queryFn: (q) =>
-                                                                q.eq(
+                                                                q.eqOrNull(
                                                               'id',
                                                               getJsonField(
                                                                 usersItem,
@@ -944,9 +942,9 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                           );
                                           _model.usres =
                                               await UsersTable().queryRows(
-                                            queryFn: (q) => q.eq(
+                                            queryFn: (q) => q.eqOrNull(
                                               'id',
-                                              widget.user!.id,
+                                              widget.user?.id,
                                             ),
                                           );
                                           _model.apiResultnx6a =
@@ -1024,9 +1022,9 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                             );
                                             _model.usre =
                                                 await UsersTable().queryRows(
-                                              queryFn: (q) => q.eq(
+                                              queryFn: (q) => q.eqOrNull(
                                                 'id',
-                                                widget.user!.id,
+                                                widget.user?.id,
                                               ),
                                             );
                                             _model.apiResultnx6 =
@@ -1136,9 +1134,10 @@ class _UsuarioNaoConectadoWidgetState extends State<UsuarioNaoConectadoWidget>
                                                 false;
                                         if (confirmDialogResponse) {
                                           await ConexaoTable().delete(
-                                            matchingRows: (rows) => rows.eq(
+                                            matchingRows: (rows) =>
+                                                rows.eqOrNull(
                                               'id',
-                                              widget.solicitacao!,
+                                              widget.solicitacao,
                                             ),
                                           );
                                           _model.number = 0;

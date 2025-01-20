@@ -222,6 +222,10 @@ dynamic deserializeParam<T>(
         switch (T) {
           case InviteHistoryRow:
             return InviteHistoryRow(data);
+          case PagamentoRow:
+            return PagamentoRow(data);
+          case RegistroDiarioRow:
+            return RegistroDiarioRow(data);
           case AssinaturaRow:
             return AssinaturaRow(data);
           case PlanosAssinaturaRow:
@@ -238,14 +242,20 @@ dynamic deserializeParam<T>(
             return MensagensRow(data);
           case ChatRow:
             return ChatRow(data);
+          case UsuariosSemConexoesRow:
+            return UsuariosSemConexoesRow(data);
           case ConexoesAceitasRow:
             return ConexoesAceitasRow(data);
+          case EventParticipantsRow:
+            return EventParticipantsRow(data);
           case FeedComentariosRow:
             return FeedComentariosRow(data);
           case ColaboradoresEmpresasRow:
             return ColaboradoresEmpresasRow(data);
           case FeedPostagensRow:
             return FeedPostagensRow(data);
+          case EventsRow:
+            return EventsRow(data);
           case UsersRow:
             return UsersRow(data);
           case LikesRow:

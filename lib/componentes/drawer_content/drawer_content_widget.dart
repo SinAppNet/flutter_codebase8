@@ -30,8 +30,6 @@ class _DrawerContentWidgetState extends State<DrawerContentWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => DrawerContentModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

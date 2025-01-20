@@ -85,8 +85,6 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -107,9 +105,9 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
       highlightColor: Colors.transparent,
       onTap: () async {
         _model.usr = await UsersTable().queryRows(
-          queryFn: (q) => q.eq(
+          queryFn: (q) => q.eqOrNull(
             'id',
-            widget.user!.id!,
+            widget.user?.id,
           ),
         );
         await showModalBottomSheet(
@@ -123,7 +121,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                 child: SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.95,
                   child: UsuarioNaoConectadoWidget(
-                    user: _model.usr!.first,
+                    user: _model.usr!.firstOrNull!,
                     solicitacao: widget.user?.solicitacao,
                     temp: widget.temp,
                     callback: () async {},
@@ -270,9 +268,9 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                               .card(
                                             requestFn: () =>
                                                 ConexaoTable().querySingleRow(
-                                              queryFn: (q) => q.eq(
+                                              queryFn: (q) => q.eqOrNull(
                                                 'id',
-                                                widget.user!.solicitacao!,
+                                                widget.user?.solicitacao,
                                               ),
                                             ),
                                           )
@@ -365,9 +363,9 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                               await UsersTable()
                                                                   .queryRows(
                                                             queryFn: (q) =>
-                                                                q.eq(
+                                                                q.eqOrNull(
                                                               'id',
-                                                              widget.user!.id!,
+                                                              widget.user?.id,
                                                             ),
                                                           );
                                                           _model.apiResultnx6a =
@@ -375,26 +373,26 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                                   .call(
                                                             fcmToken: _model
                                                                 .usres
-                                                                ?.first
-                                                                .fcmToken,
+                                                                ?.firstOrNull
+                                                                ?.fcmToken,
                                                             pushTitle:
                                                                 'Nova conexão!',
                                                             pushMessage:
-                                                                '${_model.usres?.first.nome} fez uma conexão com você!',
+                                                                '${_model.usres?.firstOrNull?.nome} fez uma conexão com você!',
                                                             pushImg: _model
                                                                             .usres
-                                                                            ?.first
-                                                                            .profilePic !=
+                                                                            ?.firstOrNull
+                                                                            ?.profilePic !=
                                                                         null &&
                                                                     _model
                                                                             .usres
-                                                                            ?.first
-                                                                            .profilePic !=
+                                                                            ?.firstOrNull
+                                                                            ?.profilePic !=
                                                                         ''
                                                                 ? _model
                                                                     .usres
-                                                                    ?.first
-                                                                    .profilePic
+                                                                    ?.firstOrNull
+                                                                    ?.profilePic
                                                                 : 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
                                                           );
 
@@ -485,10 +483,10 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                                 await UsersTable()
                                                                     .queryRows(
                                                               queryFn: (q) =>
-                                                                  q.eq(
+                                                                  q.eqOrNull(
                                                                 'id',
                                                                 widget
-                                                                    .user!.id!,
+                                                                    .user?.id,
                                                               ),
                                                             );
                                                             _model.apiResultnx6 =
@@ -496,24 +494,24 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                                     .call(
                                                               fcmToken: _model
                                                                   .usre
-                                                                  ?.first
-                                                                  .fcmToken,
+                                                                  ?.firstOrNull
+                                                                  ?.fcmToken,
                                                               pushTitle:
                                                                   'Solicitação de conexão',
                                                               pushMessage:
                                                                   '${widget.user?.nome} quer fazer uma conexão com você!',
                                                               pushImg: _model
                                                                               .usre
-                                                                              ?.first
-                                                                              .profilePic !=
+                                                                              ?.firstOrNull
+                                                                              ?.profilePic !=
                                                                           null &&
-                                                                      _model.usre?.first
-                                                                              .profilePic !=
+                                                                      _model.usre?.firstOrNull
+                                                                              ?.profilePic !=
                                                                           ''
                                                                   ? _model
                                                                       .usre
-                                                                      ?.first
-                                                                      .profilePic
+                                                                      ?.firstOrNull
+                                                                      ?.profilePic
                                                                   : 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
                                                             );
                                                           }
@@ -546,9 +544,9 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                             color: Colors.white,
                                                           ),
                                                         ),
-                                                        child: Padding(
+                                                        child: const Padding(
                                                           padding:
-                                                              const EdgeInsets.all(
+                                                              EdgeInsets.all(
                                                                   10.0),
                                                           child: Column(
                                                             mainAxisSize:
@@ -557,22 +555,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
                                                                     .center,
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/image-user-plus_(1).png',
-                                                                  width: 24.0,
-                                                                  height: 24.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            ],
+                                                            children: [],
                                                           ),
                                                         ),
                                                       ),
@@ -634,11 +617,11 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                           await ConexaoTable()
                                                               .delete(
                                                             matchingRows:
-                                                                (rows) =>
-                                                                    rows.eq(
+                                                                (rows) => rows
+                                                                    .eqOrNull(
                                                               'id',
-                                                              widget.user!
-                                                                  .solicitacao!,
+                                                              widget.user
+                                                                  ?.solicitacao,
                                                             ),
                                                           );
                                                           await widget.action
@@ -671,9 +654,9 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                             color: Colors.white,
                                                           ),
                                                         ),
-                                                        child: Padding(
+                                                        child: const Padding(
                                                           padding:
-                                                              const EdgeInsets.all(
+                                                              EdgeInsets.all(
                                                                   10.0),
                                                           child: Column(
                                                             mainAxisSize:
@@ -682,22 +665,7 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
                                                                     .center,
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/image-user-plus_(1).png',
-                                                                  width: 24.0,
-                                                                  height: 24.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            ],
+                                                            children: [],
                                                           ),
                                                         ),
                                                       ),

@@ -54,8 +54,6 @@ class _CadastroWidgetState extends State<CadastroWidget> {
 
     _model.tipoConexTextController ??= TextEditingController();
     _model.tipoConexFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -68,7 +66,10 @@ class _CadastroWidgetState extends State<CadastroWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -1344,7 +1345,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                       ),
                                                     },
                                                     matchingRows: (rows) =>
-                                                        rows.eq(
+                                                        rows.eqOrNull(
                                                       'uuid',
                                                       currentUserUid,
                                                     ),
@@ -1445,7 +1446,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                             .uploadedFileUrl2,
                                                       },
                                                       matchingRows: (rows) =>
-                                                          rows.eq(
+                                                          rows.eqOrNull(
                                                         'uuid',
                                                         currentUserUid,
                                                       ),
@@ -1644,7 +1645,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                           'tipo_conexao': _model
                                               .tipoConexTextController.text,
                                         },
-                                        matchingRows: (rows) => rows.eq(
+                                        matchingRows: (rows) => rows.eqOrNull(
                                           'uuid',
                                           currentUserUid,
                                         ),

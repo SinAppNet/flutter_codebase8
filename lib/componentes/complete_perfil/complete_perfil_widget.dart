@@ -46,8 +46,6 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
 
     _model.cidadeEmpresaTextController ??= TextEditingController();
     _model.cidadeEmpresaFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -944,7 +942,7 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                                       'estado_principal':
                                           _model.estadoEmpresaValue,
                                     },
-                                    matchingRows: (rows) => rows.eq(
+                                    matchingRows: (rows) => rows.eqOrNull(
                                       'uuid',
                                       currentUserUid,
                                     ),
@@ -958,7 +956,7 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
                                         'estado': _model.estadoEmpresaValue,
                                       },
                                     },
-                                    matchingRows: (rows) => rows.eq(
+                                    matchingRows: (rows) => rows.eqOrNull(
                                       'id',
                                       FFAppState().currentUser.empresaId,
                                     ),

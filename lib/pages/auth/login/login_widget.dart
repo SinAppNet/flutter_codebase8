@@ -32,8 +32,6 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     _model.passwordTextController ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -46,7 +44,10 @@ class _LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
@@ -397,10 +398,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                                       context)),
                                                       child: WebViewAware(
                                                         child: GestureDetector(
-                                                          onTap: () =>
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus(),
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
                                                           child:
                                                               const EmailResetWidget(),
                                                         ),
@@ -459,9 +465,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                               context)),
                                               child: WebViewAware(
                                                 child: GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          dialogContext)
-                                                      .unfocus(),
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
                                                   child: const EmailResetWidget(),
                                                 ),
                                               ),
@@ -519,29 +529,31 @@ class _LoginWidgetState extends State<LoginWidget> {
 
                                     _model.currentUser =
                                         await UsersTable().queryRows(
-                                      queryFn: (q) => q.eq(
+                                      queryFn: (q) => q.eqOrNull(
                                         'uuid',
                                         currentUserUid,
                                       ),
                                     );
                                     FFAppState().currentUser =
                                         CurrentUserStruct(
-                                      id: _model.currentUser?.first.id,
-                                      nome: _model.currentUser?.first.nome,
-                                      profilePic:
-                                          _model.currentUser?.first.profilePic,
-                                      sobre: _model.currentUser?.first.sobre,
-                                      whatsapp:
-                                          _model.currentUser?.first.whatsapp,
-                                      instagram:
-                                          _model.currentUser?.first.whatsapp,
-                                      linkedin:
-                                          _model.currentUser?.first.linkedin,
+                                      id: _model.currentUser?.firstOrNull?.id,
+                                      nome:
+                                          _model.currentUser?.firstOrNull?.nome,
+                                      profilePic: _model
+                                          .currentUser?.firstOrNull?.profilePic,
+                                      sobre: _model
+                                          .currentUser?.firstOrNull?.sobre,
+                                      whatsapp: _model
+                                          .currentUser?.firstOrNull?.whatsapp,
+                                      instagram: _model
+                                          .currentUser?.firstOrNull?.whatsapp,
+                                      linkedin: _model
+                                          .currentUser?.firstOrNull?.linkedin,
                                     );
                                     safeSetState(() {});
 
                                     context.goNamedAuth(
-                                        'home', context.mounted);
+                                        'newHome', context.mounted);
 
                                     safeSetState(() {});
                                   },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-import '/components/onb_text_widget.dart';
+import '/pages/onb_text/onb_text_widget.dart';
 
 // Focus widget keys for this walkthrough
 final textHrtyahqh = GlobalKey();

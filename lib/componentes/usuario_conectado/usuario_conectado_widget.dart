@@ -77,8 +77,6 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -350,9 +348,9 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                               ),
                               FutureBuilder<List<EmpresasRow>>(
                                 future: EmpresasTable().querySingleRow(
-                                  queryFn: (q) => q.eq(
+                                  queryFn: (q) => q.eqOrNull(
                                     'id',
-                                    widget.user!.empresa!,
+                                    widget.user?.empresa,
                                   ),
                                 ),
                                 builder: (context, snapshot) {
@@ -735,7 +733,8 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                                                           List<UsersRow>>(
                                                         future: UsersTable()
                                                             .querySingleRow(
-                                                          queryFn: (q) => q.eq(
+                                                          queryFn: (q) =>
+                                                              q.eqOrNull(
                                                             'id',
                                                             getJsonField(
                                                               usersItem,
@@ -1029,11 +1028,11 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                                       _model.chats =
                                           await ChatTable().queryRows(
                                         queryFn: (q) => q
-                                            .contains(
+                                            .containsOrNull(
                                               'users',
-                                              '{${widget.user!.id}}',
+                                              '{${widget.user?.id}}',
                                             )
-                                            .contains(
+                                            .containsOrNull(
                                               'users',
                                               '{${FFAppState().currentUser.id}}',
                                             ),
@@ -1045,7 +1044,7 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
                                           'chat',
                                           queryParameters: {
                                             'chat': serializeParam(
-                                              _model.chats?.first,
+                                              _model.chats?.firstOrNull,
                                               ParamType.SupabaseRow,
                                             ),
                                           }.withoutNulls,

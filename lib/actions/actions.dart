@@ -12,28 +12,28 @@ Future<UsersRow?> updateUserState(BuildContext context) async {
   await Future.wait([
     Future(() async {
       returnedUser = await UsersTable().queryRows(
-        queryFn: (q) => q.eq(
+        queryFn: (q) => q.eqOrNull(
           'uuid',
           currentUserUid,
         ),
       );
       FFAppState().currentUser = CurrentUserStruct(
-        id: returnedUser?.first.id,
-        nome: returnedUser?.first.nome,
-        email: returnedUser?.first.email,
-        profilePic: returnedUser?.first.profilePic,
-        sobre: returnedUser?.first.sobre,
-        whatsapp: returnedUser?.first.whatsapp,
-        instagram: returnedUser?.first.instagram,
-        linkedin: returnedUser?.first.linkedin,
-        empresaId: returnedUser?.first.empresa,
-        cargo: returnedUser?.first.cargo,
-        interesses: returnedUser?.first.interesses,
-        perfilCompleto: returnedUser?.first.perfilCompleto,
-        premium: returnedUser?.first.premium,
+        id: returnedUser?.firstOrNull?.id,
+        nome: returnedUser?.firstOrNull?.nome,
+        email: returnedUser?.firstOrNull?.email,
+        profilePic: returnedUser?.firstOrNull?.profilePic,
+        sobre: returnedUser?.firstOrNull?.sobre,
+        whatsapp: returnedUser?.firstOrNull?.whatsapp,
+        instagram: returnedUser?.firstOrNull?.instagram,
+        linkedin: returnedUser?.firstOrNull?.linkedin,
+        empresaId: returnedUser?.firstOrNull?.empresa,
+        cargo: returnedUser?.firstOrNull?.cargo,
+        interesses: returnedUser?.firstOrNull?.interesses,
+        perfilCompleto: returnedUser?.firstOrNull?.perfilCompleto,
+        premium: returnedUser?.firstOrNull?.premium,
       );
       FFAppState().update(() {});
-      return returnedUser?.first;
+      return returnedUser?.firstOrNull;
     }),
     Future(() async {
       fcm = await actions.getFCMToken();
@@ -41,7 +41,7 @@ Future<UsersRow?> updateUserState(BuildContext context) async {
         data: {
           'fcm_token': fcm,
         },
-        matchingRows: (rows) => rows.eq(
+        matchingRows: (rows) => rows.eqOrNull(
           'uuid',
           currentUserUid,
         ),

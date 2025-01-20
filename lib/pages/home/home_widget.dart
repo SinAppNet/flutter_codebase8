@@ -48,11 +48,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (RootPageContext.isInactiveRootPage(context)) {
-        return;
-      }
       _model.cuSer = await UsersTable().queryRows(
-        queryFn: (q) => q.eq(
+        queryFn: (q) => q.eqOrNull(
           'uuid',
           currentUserUid,
         ),
@@ -160,8 +157,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -176,7 +171,10 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: const Color(0xFFFFDF00),
@@ -237,17 +235,26 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Faça mais \nconexões, faça \nmais negócios!',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          color: const Color(0xFF0A0A0A),
-                                          fontSize: 30.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed('newSplashScreen');
+                                    },
+                                    child: Text(
+                                      'Faça mais \nconexões, faça \nmais negócios!',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            color: const Color(0xFF0A0A0A),
+                                            fontSize: 30.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -327,9 +334,13 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           builder: (context) {
                                             return WebViewAware(
                                               child: GestureDetector(
-                                                onTap: () =>
-                                                    FocusScope.of(context)
-                                                        .unfocus(),
+                                                onTap: () {
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
                                                 child: Padding(
                                                   padding:
                                                       MediaQuery.viewInsetsOf(
@@ -390,17 +401,38 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          'Recomendações',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color: const Color(0xFF2F2E41),
-                                                fontSize: 22.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'newHome',
+                                              extra: <String, dynamic>{
+                                                kTransitionInfoKey:
+                                                    const TransitionInfo(
+                                                  hasTransition: true,
+                                                  transitionType:
+                                                      PageTransitionType.fade,
+                                                  duration:
+                                                      Duration(milliseconds: 0),
+                                                ),
+                                              },
+                                            );
+                                          },
+                                          child: Text(
+                                            'Recomendações',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  color: const Color(0xFF2F2E41),
+                                                  fontSize: 22.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
                                         ),
                                         Column(
                                           mainAxisSize: MainAxisSize.max,
@@ -630,13 +662,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                FFIcons.kbell01,
-                                                color: Colors.white,
-                                                size: 20.0,
-                                              ),
-                                            ],
+                                            children: [],
                                           ),
                                         ).animateOnPageLoad(animationsMap[
                                             'containerOnPageLoadAnimation1']!),
@@ -673,13 +699,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                FFIcons.kmessageChatSquare,
-                                                color: Colors.white,
-                                                size: 20.0,
-                                              ),
-                                            ],
+                                            children: [],
                                           ),
                                         ).animateOnPageLoad(animationsMap[
                                             'containerOnPageLoadAnimation2']!),
@@ -709,13 +729,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              FFIcons.kiconsAnimation,
-                                              color: Colors.white,
-                                              size: 20.0,
-                                            ),
-                                          ],
+                                          children: [],
                                         ).addWalkthrough(
                                           columnRa8ig3k1,
                                           _model.initialOnboardingController,
@@ -754,13 +768,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                FFIcons.kicon,
-                                                color: Colors.white,
-                                                size: 20.0,
-                                              ),
-                                            ],
+                                            children: [],
                                           ),
                                         ).animateOnPageLoad(animationsMap[
                                             'containerOnPageLoadAnimation4']!),
@@ -808,11 +816,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            const Icon(
-                                              FFIcons.kbell01,
-                                              color: Color(0xFF009C3B),
-                                              size: 24.0,
-                                            ),
                                             Text(
                                               'ALERTAS',
                                               style: FlutterFlowTheme.of(
@@ -857,11 +860,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            const Icon(
-                                              FFIcons.kmessageChatSquare,
-                                              color: Color(0xFF009C3B),
-                                              size: 24.0,
-                                            ),
                                             Text(
                                               '    CHAT    ',
                                               style: FlutterFlowTheme.of(
@@ -899,11 +897,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              const Icon(
-                                                FFIcons.kiconsAnimation,
-                                                color: Color(0x00009C3B),
-                                                size: 24.0,
-                                              ),
                                               Text(
                                                 '  CONECTAR  ',
                                                 style: FlutterFlowTheme.of(
@@ -946,11 +939,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            const Icon(
-                                              Icons.dynamic_feed,
-                                              color: Color(0xFF009C3B),
-                                              size: 24.0,
-                                            ),
                                             Text(
                                               'FEED',
                                               style: FlutterFlowTheme.of(
@@ -998,7 +986,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
             data: {
               'onboarding': true,
             },
-            matchingRows: (rows) => rows.eq(
+            matchingRows: (rows) => rows.eqOrNull(
               'uuid',
               currentUserUid,
             ),
@@ -1010,7 +998,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
               data: {
                 'onboarding': true,
               },
-              matchingRows: (rows) => rows.eq(
+              matchingRows: (rows) => rows.eqOrNull(
                 'uuid',
                 currentUserUid,
               ),

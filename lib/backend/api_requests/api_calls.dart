@@ -201,6 +201,31 @@ class AddAsaasCustomerCall {
       ));
 }
 
+class SetTrialCall {
+  static Future<ApiCallResponse> call({
+    int? id,
+  }) async {
+    final ffApiRequestBody = '''
+{"paciente":$id }''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'set trial',
+      apiUrl:
+          'https://primary-production-21be.up.railway.app/webhook/5dacc29f-9f41-49c8-a09b-9c5aef2d26c4',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;
@@ -243,4 +268,15 @@ String _serializeJson(dynamic jsonVar, [bool isList = false]) {
     }
     return isList ? '[]' : '{}';
   }
+}
+
+String? escapeStringForJson(String? input) {
+  if (input == null) {
+    return null;
+  }
+  return input
+      .replaceAll('\\', '\\\\')
+      .replaceAll('"', '\\"')
+      .replaceAll('\n', '\\n')
+      .replaceAll('\t', '\\t');
 }

@@ -63,8 +63,6 @@ class _EmailResetWidgetState extends State<EmailResetWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

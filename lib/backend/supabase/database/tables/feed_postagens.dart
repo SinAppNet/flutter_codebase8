@@ -45,4 +45,10 @@ class FeedPostagensRow extends SupabaseDataRow {
 
   bool? get approved => getField<bool>('approved');
   set approved(bool? value) => setField<bool>('approved', value);
+
+  bool? get isEventPost => getField<bool>('is_event_post');
+  set isEventPost(bool? value) => setField<bool>('is_event_post', value);
+
+  int? get eventId => getField<int>('event_id');
+  set eventId(int? value) => setField<int>('event_id', value);
 }

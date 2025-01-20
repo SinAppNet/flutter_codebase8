@@ -35,8 +35,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AppBarModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -121,7 +119,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         _model.getEmpresa = await EmpresasTable().queryRows(
-                          queryFn: (q) => q.eq(
+                          queryFn: (q) => q.eqOrNull(
                             'id',
                             FFAppState().currentUser.empresaId,
                           ),
@@ -138,7 +136,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                   height:
                                       MediaQuery.sizeOf(context).height * 0.95,
                                   child: CurrentUserProfileWidget(
-                                    empresa: _model.getEmpresa?.first,
+                                    empresa: _model.getEmpresa?.firstOrNull,
                                   ),
                                 ),
                               ),

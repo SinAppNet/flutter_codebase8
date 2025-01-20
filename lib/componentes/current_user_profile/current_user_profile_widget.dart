@@ -55,8 +55,6 @@ class _CurrentUserProfileWidgetState extends State<CurrentUserProfileWidget>
         ],
       ),
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

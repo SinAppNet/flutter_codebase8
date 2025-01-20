@@ -36,3 +36,12 @@ List<dynamic> newJsonItem(
   jsonList.add(newJson);
   return jsonList;
 }
+
+DateTime addDaysToDate(
+  DateTime date,
+  int days,
+) {
+  DateTime newDate = date.add(Duration(days: days));
+
+  return newDate;
+}

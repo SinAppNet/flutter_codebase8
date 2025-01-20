@@ -60,8 +60,6 @@ class _LogoutWidgetState extends State<LogoutWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -125,7 +123,7 @@ class _LogoutWidgetState extends State<LogoutWidget>
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(24.0, 4.0, 24.0, 0.0),
                       child: Text(
-                        'Ao confirmar, voce será deslogado do app e redirecionado(a) para a pagina de login.',
+                        'Ao confirmar, você será deslogado do app e redirecionado(a) para a pagina de login.',
                         style:
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   fontFamily: 'Inter',
@@ -197,7 +195,7 @@ class _LogoutWidgetState extends State<LogoutWidget>
                                   GoRouter.of(context).clearRedirectLocation();
 
                                   context.goNamedAuth(
-                                      'splashScreenNew', context.mounted);
+                                      'newSplashScreen', context.mounted);
                                 },
                                 text: 'Confirmar',
                                 options: FFButtonOptions(

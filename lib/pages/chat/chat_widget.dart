@@ -1,7 +1,7 @@
 import '/backend/supabase/supabase.dart';
 import '/componentes/app_bar/app_bar_widget.dart';
+import '/componentes/init_chat_messages/init_chat_messages_widget.dart';
 import '/componentes/usuario_conectado/usuario_conectado_widget.dart';
-import '/components/init_chat_messages_widget.dart';
 import '/flutter_flow/flutter_flow_audio_player.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -41,8 +41,6 @@ class _ChatWidgetState extends State<ChatWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -57,7 +55,10 @@ class _ChatWidgetState extends State<ChatWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: const Color(0xFFFFDF00),
@@ -104,11 +105,11 @@ class _ChatWidgetState extends State<ChatWidget> {
                         child: FutureBuilder<List<UsersRow>>(
                           future: UsersTable().querySingleRow(
                             queryFn: (q) => q
-                                .in_(
+                                .inFilterOrNull(
                                   'id',
-                                  widget.chat!.users,
+                                  widget.chat?.users,
                                 )
-                                .neq(
+                                .neqOrNull(
                                   'id',
                                   FFAppState().currentUser.id,
                                 ),
@@ -150,8 +151,11 @@ class _ChatWidgetState extends State<ChatWidget> {
                                       builder: (context) {
                                         return WebViewAware(
                                           child: GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .unfocus(),
+                                            onTap: () {
+                                              FocusScope.of(context).unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -244,16 +248,18 @@ class _ChatWidgetState extends State<ChatWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: FutureBuilder<List<MensagensRow>>(
-                                future: (_model.requestCompleter ??=
-                                        Completer<List<MensagensRow>>()
-                                          ..complete(MensagensTable().queryRows(
-                                            queryFn: (q) => q.eq(
-                                              'chat',
-                                              widget.chat!.id,
-                                            ),
-                                          )))
-                                    .future,
+                              child: StreamBuilder<List<MensagensRow>>(
+                                stream: _model.containerSupabaseStream ??=
+                                    SupaFlow.client
+                                        .from("mensagens")
+                                        .stream(primaryKey: ['id'])
+                                        .eqOrNull(
+                                          'chat',
+                                          widget.chat?.id,
+                                        )
+                                        .map((list) => list
+                                            .map((item) => MensagensRow(item))
+                                            .toList()),
                                 builder: (context, snapshot) {
                                   // Customize what your widget looks like when it's loading.
                                   if (!snapshot.hasData) {
@@ -639,26 +645,11 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                               .currentUser
                                                               .id)
                                                       .toList()
-                                                      .first,
+                                                      .firstOrNull!,
                                                   mensagem: (message) async {
                                                     safeSetState(() {
                                                       _model.textController
                                                           ?.text = message!;
-                                                      _model.textFieldFocusNode
-                                                          ?.requestFocus();
-                                                      WidgetsBinding.instance
-                                                          .addPostFrameCallback(
-                                                              (_) {
-                                                        _model.textController
-                                                                ?.selection =
-                                                            TextSelection
-                                                                .collapsed(
-                                                          offset: _model
-                                                              .textController!
-                                                              .text
-                                                              .length,
-                                                        );
-                                                      });
                                                     });
                                                   },
                                                 ),
@@ -786,11 +777,11 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                           await MensagensTable()
                                                               .queryRows(
                                                         queryFn: (q) => q
-                                                            .eq(
+                                                            .eqOrNull(
                                                               'chat',
-                                                              widget.chat!.id,
+                                                              widget.chat?.id,
                                                             )
-                                                            .eq(
+                                                            .eqOrNull(
                                                               'day_sended',
                                                               supaSerialize<
                                                                       DateTime>(
@@ -833,16 +824,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                                 .text,
                                                           },
                                                           matchingRows:
-                                                              (rows) => rows.eq(
+                                                              (rows) =>
+                                                                  rows.eqOrNull(
                                                             'id',
-                                                            widget.chat!.id,
+                                                            widget.chat?.id,
                                                           ),
                                                         );
-                                                        safeSetState(() => _model
-                                                                .requestCompleter =
-                                                            null);
-                                                        await _model
-                                                            .waitForRequestCompleted();
                                                         unawaited(
                                                           () async {
                                                             await _model
@@ -899,16 +886,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                                 .text,
                                                           },
                                                           matchingRows:
-                                                              (rows) => rows.eq(
+                                                              (rows) =>
+                                                                  rows.eqOrNull(
                                                             'id',
-                                                            widget.chat!.id,
+                                                            widget.chat?.id,
                                                           ),
                                                         );
-                                                        safeSetState(() => _model
-                                                                .requestCompleter =
-                                                            null);
-                                                        await _model
-                                                            .waitForRequestCompleted();
                                                         unawaited(
                                                           () async {
                                                             await _model
@@ -1099,12 +1082,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                             await MensagensTable()
                                                                 .queryRows(
                                                           queryFn: (q) => q
-                                                              .eq(
+                                                              .eqOrNull(
                                                                 'chat',
                                                                 widget
-                                                                    .chat!.id,
+                                                                    .chat?.id,
                                                               )
-                                                              .eq(
+                                                              .eqOrNull(
                                                                 'day_sended',
                                                                 supaSerialize<
                                                                         DateTime>(
@@ -1148,17 +1131,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                                   .text,
                                                             },
                                                             matchingRows:
-                                                                (rows) =>
-                                                                    rows.eq(
+                                                                (rows) => rows
+                                                                    .eqOrNull(
                                                               'id',
-                                                              widget.chat!.id,
+                                                              widget.chat?.id,
                                                             ),
                                                           );
-                                                          safeSetState(() =>
-                                                              _model.requestCompleter =
-                                                                  null);
-                                                          await _model
-                                                              .waitForRequestCompleted();
                                                           unawaited(
                                                             () async {
                                                               await _model
@@ -1214,17 +1192,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                                   .text,
                                                             },
                                                             matchingRows:
-                                                                (rows) =>
-                                                                    rows.eq(
+                                                                (rows) => rows
+                                                                    .eqOrNull(
                                                               'id',
-                                                              widget.chat!.id,
+                                                              widget.chat?.id,
                                                             ),
                                                           );
-                                                          safeSetState(() =>
-                                                              _model.requestCompleter =
-                                                                  null);
-                                                          await _model
-                                                              .waitForRequestCompleted();
                                                           unawaited(
                                                             () async {
                                                               await _model
@@ -1316,7 +1289,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                                   audioRecorder:
                                                       _model.audioRecorder,
                                                   audioName:
-                                                      'recordedFileBytes.mp3',
+                                                      'recordedFileBytes',
                                                   onRecordingComplete:
                                                       (audioFilePath,
                                                           audioBytes) {

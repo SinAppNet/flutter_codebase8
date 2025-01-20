@@ -25,8 +25,6 @@ class _AgendarWidgetState extends State<AgendarWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AgendarModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

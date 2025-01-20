@@ -27,8 +27,6 @@ class _EmptyChatsWidgetState extends State<EmptyChatsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EmptyChatsModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

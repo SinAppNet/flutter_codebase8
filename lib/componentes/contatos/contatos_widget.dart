@@ -28,8 +28,6 @@ class _ContatosWidgetState extends State<ContatosWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ContatosModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -242,11 +240,11 @@ class _ContatosWidgetState extends State<ContatosWidget> {
                                             _model.chats =
                                                 await ChatTable().queryRows(
                                               queryFn: (q) => q
-                                                  .contains(
+                                                  .containsOrNull(
                                                     'users',
-                                                    '{${columnConexoesAceitasRow.id!}}',
+                                                    '{${columnConexoesAceitasRow.id}}',
                                                   )
-                                                  .contains(
+                                                  .containsOrNull(
                                                     'users',
                                                     '{${FFAppState().currentUser.id}}',
                                                   ),
@@ -259,7 +257,7 @@ class _ContatosWidgetState extends State<ContatosWidget> {
                                                 'chat',
                                                 queryParameters: {
                                                   'chat': serializeParam(
-                                                    _model.chats?.first,
+                                                    _model.chats?.firstOrNull,
                                                     ParamType.SupabaseRow,
                                                   ),
                                                 }.withoutNulls,

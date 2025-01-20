@@ -55,8 +55,6 @@ class _EditUserWidgetState extends State<EditUserWidget> {
     _model.sobreTextController ??=
         TextEditingController(text: FFAppState().currentUser.sobre);
     _model.sobreFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -71,7 +69,10 @@ class _EditUserWidgetState extends State<EditUserWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
@@ -199,7 +200,7 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                                         data: {
                                           'profile_pic': _model.uploadedFileUrl,
                                         },
-                                        matchingRows: (rows) => rows.eq(
+                                        matchingRows: (rows) => rows.eqOrNull(
                                           'uuid',
                                           currentUserUid,
                                         ),
@@ -872,7 +873,7 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                                       'sobre': _model.sobreTextController.text,
                                       'interesses': _model.interessesUserValue,
                                     },
-                                    matchingRows: (rows) => rows.eq(
+                                    matchingRows: (rows) => rows.eqOrNull(
                                       'uuid',
                                       currentUserUid,
                                     ),
@@ -899,8 +900,7 @@ class _EditUserWidgetState extends State<EditUserWidget> {
                                       );
                                     },
                                   );
-
-                                  context.pushNamed('home');
+                                  context.safePop();
 
                                   safeSetState(() {});
                                 },

@@ -28,4 +28,7 @@ class ChatRow extends SupabaseDataRow {
 
   String? get lastMessage => getField<String>('last_message');
   set lastMessage(String? value) => setField<String>('last_message', value);
+
+  DateTime? get lastUpdate => getField<DateTime>('last_update');
+  set lastUpdate(DateTime? value) => setField<DateTime>('last_update', value);
 }

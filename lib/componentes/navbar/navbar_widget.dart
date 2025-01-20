@@ -89,8 +89,6 @@ class _NavbarWidgetState extends State<NavbarWidget>
         ],
       ),
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -160,13 +158,7 @@ class _NavbarWidgetState extends State<NavbarWidget>
                           child: const Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                FFIcons.kbell01,
-                                color: Colors.white,
-                                size: 20.0,
-                              ),
-                            ],
+                            children: [],
                           ),
                         ).animateOnPageLoad(
                             animationsMap['containerOnPageLoadAnimation1']!),
@@ -195,13 +187,7 @@ class _NavbarWidgetState extends State<NavbarWidget>
                           child: const Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                FFIcons.kmessageChatSquare,
-                                color: Colors.white,
-                                size: 20.0,
-                              ),
-                            ],
+                            children: [],
                           ),
                         ).animateOnPageLoad(
                             animationsMap['containerOnPageLoadAnimation2']!),
@@ -226,17 +212,6 @@ class _NavbarWidgetState extends State<NavbarWidget>
                               )
                             ],
                             shape: BoxShape.circle,
-                          ),
-                          child: const Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                FFIcons.kiconsAnimation,
-                                color: Colors.white,
-                                size: 20.0,
-                              ),
-                            ],
                           ),
                         ).animateOnPageLoad(
                             animationsMap['containerOnPageLoadAnimation3']!),
@@ -265,13 +240,7 @@ class _NavbarWidgetState extends State<NavbarWidget>
                           child: const Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.dynamic_feed,
-                                color: Colors.white,
-                                size: 20.0,
-                              ),
-                            ],
+                            children: [],
                           ),
                         ).animateOnPageLoad(
                             animationsMap['containerOnPageLoadAnimation4']!),
@@ -313,14 +282,6 @@ class _NavbarWidgetState extends State<NavbarWidget>
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            if (widget.stateInt != 1)
-                              Icon(
-                                FFIcons.kbell01,
-                                color: widget.stateInt == 1
-                                    ? Colors.transparent
-                                    : const Color(0xFF009C3B),
-                                size: 24.0,
-                              ),
                             Text(
                               'ALERTAS',
                               style: FlutterFlowTheme.of(context)
@@ -359,14 +320,6 @@ class _NavbarWidgetState extends State<NavbarWidget>
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            if (widget.stateInt != 2)
-                              Icon(
-                                FFIcons.kmessageChatSquare,
-                                color: widget.stateInt == 2
-                                    ? Colors.transparent
-                                    : const Color(0xFF009C3B),
-                                size: 24.0,
-                              ),
                             Text(
                               '    CHAT    ',
                               style: FlutterFlowTheme.of(context)
@@ -405,14 +358,6 @@ class _NavbarWidgetState extends State<NavbarWidget>
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            if (widget.stateInt != 3)
-                              Icon(
-                                FFIcons.kiconsAnimation,
-                                color: widget.stateInt == 3
-                                    ? Colors.transparent
-                                    : const Color(0xFF009C3B),
-                                size: 24.0,
-                              ),
                             Text(
                               '  CONECTAR  ',
                               style: FlutterFlowTheme.of(context)
@@ -451,14 +396,6 @@ class _NavbarWidgetState extends State<NavbarWidget>
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            if (widget.stateInt != 4)
-                              Icon(
-                                Icons.dynamic_feed,
-                                color: widget.stateInt == 4
-                                    ? Colors.transparent
-                                    : const Color(0xFF009C3B),
-                                size: 24.0,
-                              ),
                             Text(
                               'FEED',
                               style: FlutterFlowTheme.of(context)

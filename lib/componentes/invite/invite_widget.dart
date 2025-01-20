@@ -1,4 +1,4 @@
-import '/auth/supabase_auth/auth_util.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -8,7 +8,12 @@ import 'invite_model.dart';
 export 'invite_model.dart';
 
 class InviteWidget extends StatefulWidget {
-  const InviteWidget({super.key});
+  const InviteWidget({
+    super.key,
+    this.code,
+  });
+
+  final InviteRow? code;
 
   @override
   State<InviteWidget> createState() => _InviteWidgetState();
@@ -28,10 +33,9 @@ class _InviteWidgetState extends State<InviteWidget> {
     super.initState();
     _model = createModel(context, () => InviteModel());
 
-    _model.textController ??= TextEditingController(text: currentUserUid);
+    _model.textController ??=
+        TextEditingController(text: widget.code?.codigoInvite);
     _model.textFieldFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -47,7 +51,7 @@ class _InviteWidgetState extends State<InviteWidget> {
       alignment: const AlignmentDirectional(0.0, 1.0),
       child: Container(
         width: double.infinity,
-        height: 541.0,
+        height: 500.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: const BorderRadius.only(
@@ -181,14 +185,11 @@ class _InviteWidgetState extends State<InviteWidget> {
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    await Clipboard.setData(ClipboardData(
-                        text:
-                            'https://primary-production-52d3.up.railway.app/webhook/test?uuid=$currentUserUid'));
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Link de invite copiado!',
+                          'Código de invite copiado!',
                           style: TextStyle(
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
@@ -197,6 +198,7 @@ class _InviteWidgetState extends State<InviteWidget> {
                         backgroundColor: FlutterFlowTheme.of(context).secondary,
                       ),
                     );
+                    await Clipboard.setData(const ClipboardData(text: 'codigo'));
                   },
                   text: 'Copiar invite',
                   icon: const Icon(

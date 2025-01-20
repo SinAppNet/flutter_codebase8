@@ -66,8 +66,6 @@ class _DeletarContaWidgetState extends State<DeletarContaWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -277,37 +275,38 @@ class _DeletarContaWidgetState extends State<DeletarContaWidget>
                                     ? null
                                     : () async {
                                         await ConexaoTable().delete(
-                                          matchingRows: (rows) => rows.eq(
+                                          matchingRows: (rows) => rows.eqOrNull(
                                             'solicitou',
                                             FFAppState().currentUser.id,
                                           ),
                                         );
                                         await ConexaoTable().delete(
-                                          matchingRows: (rows) => rows.eq(
+                                          matchingRows: (rows) => rows.eqOrNull(
                                             'solicitado',
                                             FFAppState().currentUser.id,
                                           ),
                                         );
                                         await ChatTable().delete(
-                                          matchingRows: (rows) => rows.contains(
+                                          matchingRows: (rows) =>
+                                              rows.containsOrNull(
                                             'users',
                                             '{${FFAppState().currentUser.id}}',
                                           ),
                                         );
                                         await EmpresasTable().delete(
-                                          matchingRows: (rows) => rows.eq(
+                                          matchingRows: (rows) => rows.eqOrNull(
                                             'created_by',
                                             FFAppState().currentUser.id,
                                           ),
                                         );
                                         await MensagensTable().delete(
-                                          matchingRows: (rows) => rows.eq(
+                                          matchingRows: (rows) => rows.eqOrNull(
                                             'sender',
                                             FFAppState().currentUser.id,
                                           ),
                                         );
                                         await UsersTable().delete(
-                                          matchingRows: (rows) => rows.eq(
+                                          matchingRows: (rows) => rows.eqOrNull(
                                             'id',
                                             FFAppState().currentUser.id,
                                           ),
@@ -318,7 +317,7 @@ class _DeletarContaWidgetState extends State<DeletarContaWidget>
                                             .clearRedirectLocation();
 
                                         context.goNamedAuth(
-                                            'splashScreenNew', context.mounted);
+                                            'newSplashScreen', context.mounted);
                                       },
                                 text: 'Deletar conta',
                                 options: FFButtonOptions(

@@ -17,6 +17,8 @@ export 'serialization_util.dart';
 
 const kTransitionInfoKey = '__transition_info__';
 
+GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
+
 class AppStateNotifier extends ChangeNotifier {
   AppStateNotifier._();
 
@@ -74,17 +76,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => RootPageContext.wrap(
-        appStateNotifier.loggedIn ? const HomeWidget() : const SplashScreenNewWidget(),
-        errorRoute: state.uri.toString(),
-      ),
+      navigatorKey: appNavigatorKey,
+      errorBuilder: (context, state) =>
+          appStateNotifier.loggedIn ? const NewHomeWidget() : const NewSplashScreenWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => RootPageContext.wrap(
-            appStateNotifier.loggedIn ? const HomeWidget() : const SplashScreenNewWidget(),
-          ),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? const NewHomeWidget()
+              : const NewSplashScreenWidget(),
         ),
         FFRoute(
           name: 'selectLogin',
@@ -201,6 +202,81 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'splashScreenNew',
           path: '/splashScreenNew',
           builder: (context, params) => const SplashScreenNewWidget(),
+        ),
+        FFRoute(
+          name: 'userProfile',
+          path: '/userProfile',
+          builder: (context, params) => UserProfileWidget(
+            user: params.getParam<UsersRow>(
+              'user',
+              ParamType.SupabaseRow,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'matchPage',
+          path: '/matchPage',
+          builder: (context, params) => MatchPageWidget(
+            fromSignin: params.getParam(
+              'fromSignin',
+              ParamType.bool,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'newSplashScreen',
+          path: '/newSplashScreen',
+          builder: (context, params) => const NewSplashScreenWidget(),
+        ),
+        FFRoute(
+          name: 'signin',
+          path: '/signin',
+          builder: (context, params) => const SigninWidget(),
+        ),
+        FFRoute(
+          name: 'newHome',
+          path: '/newHome',
+          builder: (context, params) => const NewHomeWidget(),
+        ),
+        FFRoute(
+          name: 'newChats',
+          path: '/newChats',
+          builder: (context, params) => const NewChatsWidget(),
+        ),
+        FFRoute(
+          name: 'newChat',
+          path: '/newChat',
+          builder: (context, params) => NewChatWidget(
+            chat: params.getParam<ChatRow>(
+              'chat',
+              ParamType.SupabaseRow,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'newConnections',
+          path: '/newConnections',
+          builder: (context, params) => const NewConnectionsWidget(),
+        ),
+        FFRoute(
+          name: 'newFeed',
+          path: '/newFeed',
+          builder: (context, params) => const NewFeedWidget(),
+        ),
+        FFRoute(
+          name: 'icons',
+          path: '/icons',
+          builder: (context, params) => const IconsWidget(),
+        ),
+        FFRoute(
+          name: 'teste09',
+          path: '/teste09',
+          builder: (context, params) => const Teste09Widget(),
+        ),
+        FFRoute(
+          name: 'connecters',
+          path: '/connecters',
+          builder: (context, params) => const ConnectersWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -372,7 +448,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/splashScreenNew';
+            return '/newSplashScreen';
           }
           return null;
         },

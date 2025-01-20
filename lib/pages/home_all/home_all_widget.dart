@@ -75,8 +75,6 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
         ],
       ),
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -91,7 +89,10 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: const Color(0xFFFFDF00),
@@ -186,9 +187,13 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
                                         builder: (context) {
                                           return WebViewAware(
                                             child: GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
-                                                      .unfocus(),
+                                              onTap: () {
+                                                FocusScope.of(context)
+                                                    .unfocus();
+                                                FocusManager
+                                                    .instance.primaryFocus
+                                                    ?.unfocus();
+                                              },
                                               child: Padding(
                                                 padding:
                                                     MediaQuery.viewInsetsOf(
@@ -333,7 +338,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
                                                 future:
                                                     UsuariosSemConexaoAceitaTable()
                                                         .queryRows(
-                                                  queryFn: (q) => q.eq(
+                                                  queryFn: (q) => q.eqOrNull(
                                                     'perfil_completo',
                                                     true,
                                                   ),
@@ -499,7 +504,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
                                                                               .queryRows(
                                                                         queryFn:
                                                                             (q) =>
-                                                                                q.eq(
+                                                                                q.eqOrNull(
                                                                           'nome',
                                                                           _model
                                                                               .pesquisaNomeTextController
@@ -775,10 +780,13 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
                                                   builder: (context) {
                                                     return WebViewAware(
                                                       child: GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus(),
+                                                        onTap: () {
+                                                          FocusScope.of(context)
+                                                              .unfocus();
+                                                          FocusManager.instance
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                        },
                                                         child: Padding(
                                                           padding: MediaQuery
                                                               .viewInsetsOf(
@@ -868,7 +876,8 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
                                                       ..complete(
                                                           UsuariosSemConexaoAceitaTable()
                                                               .querySingleRow(
-                                                        queryFn: (q) => q.eq(
+                                                        queryFn: (q) =>
+                                                            q.eqOrNull(
                                                           'nome',
                                                           _model
                                                               .pesquisaNomeTextController
@@ -949,7 +958,7 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
                                                               UsuariosSemConexaoAceitaTable()
                                                                   .queryRows(
                                                             queryFn: (q) => q
-                                                                .neq(
+                                                                .neqOrNull(
                                                                   'profile_pic',
                                                                   '',
                                                                 )
@@ -1041,19 +1050,19 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
                                                               UsuariosSemConexaoAceitaTable()
                                                                   .queryRows(
                                                             queryFn: (q) => q
-                                                                .eq(
+                                                                .eqOrNull(
                                                                   'estado_principal',
                                                                   FFAppState()
                                                                       .filtroAplied
                                                                       .estado,
                                                                 )
-                                                                .eq(
+                                                                .eqOrNull(
                                                                   'segmento_empresa',
                                                                   FFAppState()
                                                                       .filtroAplied
                                                                       .segmento,
                                                                 )
-                                                                .neq(
+                                                                .neqOrNull(
                                                                   'profile_pic',
                                                                   '',
                                                                 ),

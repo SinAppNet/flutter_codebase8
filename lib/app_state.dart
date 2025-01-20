@@ -43,6 +43,11 @@ class FFAppState extends ChangeNotifier {
     await _safeInitAsync(() async {
       _invited = await secureStorage.getBool('ff_invited') ?? _invited;
     });
+    await _safeInitAsync(() async {
+      _referCodeOnSignin =
+          await secureStorage.getString('ff_referCodeOnSignin') ??
+              _referCodeOnSignin;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -109,6 +114,17 @@ class FFAppState extends ChangeNotifier {
 
   void deleteInvited() {
     secureStorage.delete(key: 'ff_invited');
+  }
+
+  String _referCodeOnSignin = '';
+  String get referCodeOnSignin => _referCodeOnSignin;
+  set referCodeOnSignin(String value) {
+    _referCodeOnSignin = value;
+    secureStorage.setString('ff_referCodeOnSignin', value);
+  }
+
+  void deleteReferCodeOnSignin() {
+    secureStorage.delete(key: 'ff_referCodeOnSignin');
   }
 
   final _cardManager = FutureRequestManager<List<ConexaoRow>>();

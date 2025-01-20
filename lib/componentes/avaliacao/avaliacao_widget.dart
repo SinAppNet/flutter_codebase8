@@ -26,8 +26,6 @@ class _AvaliacaoWidgetState extends State<AvaliacaoWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AvaliacaoModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

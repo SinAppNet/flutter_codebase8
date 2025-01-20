@@ -22,8 +22,6 @@ class _SelectLoginWidgetState extends State<SelectLoginWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SelectLoginModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -36,7 +34,10 @@ class _SelectLoginWidgetState extends State<SelectLoginWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: const Color(0xFFFFDF00),

@@ -38,4 +38,7 @@ class PlanosAssinaturaRow extends SupabaseDataRow {
 
   bool? get ativo => getField<bool>('ativo');
   set ativo(bool? value) => setField<bool>('ativo', value);
+
+  int? get parcelas => getField<int>('parcelas');
+  set parcelas(int? value) => setField<int>('parcelas', value);
 }
