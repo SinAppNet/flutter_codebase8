@@ -2,10 +2,9 @@ import '/componentes/invite_code/invite_code_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'new_splash_screen_model.dart';
 export 'new_splash_screen_model.dart';
@@ -27,13 +26,6 @@ class _NewSplashScreenWidgetState extends State<NewSplashScreenWidget> {
     super.initState();
     _model = createModel(context, () => NewSplashScreenModel());
 
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (FFAppState().invited == true) {
-        context.pushNamed('signin');
-      }
-    });
-
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -46,8 +38,6 @@ class _NewSplashScreenWidgetState extends State<NewSplashScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -132,7 +122,11 @@ class _NewSplashScreenWidgetState extends State<NewSplashScreenWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.pushNamed('signin');
+                            _model.fcm = await actions.getFCMToken();
+                            _model.fcm = _model.fcm;
+                            safeSetState(() {});
+
+                            safeSetState(() {});
                           },
                           child: RichText(
                             textScaler: MediaQuery.of(context).textScaler,
@@ -182,6 +176,23 @@ class _NewSplashScreenWidgetState extends State<NewSplashScreenWidget> {
                                     letterSpacing: 0.0,
                                   ),
                             ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 12.0, 0.0, 0.0),
+                          child: Text(
+                            valueOrDefault<String>(
+                              _model.fcm,
+                              'a',
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Inter',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
                           ),
                         ),
                         Padding(
