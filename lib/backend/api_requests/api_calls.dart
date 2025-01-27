@@ -66,6 +66,57 @@ class CommonConnectionCall {
 
 /// End Supabase Group Code
 
+/// Start Segment Group Code
+
+class SegmentGroup {
+  static String getBaseUrl() => 'https://api.segment.io/v1';
+  static Map<String, String> headers = {
+    'Content-Type': 'application/json',
+  };
+  static TrackingCall trackingCall = TrackingCall();
+}
+
+class TrackingCall {
+  Future<ApiCallResponse> call({
+    int? userId,
+    String? eventName = '',
+    String? timestamp = '',
+    String? writeKey = 'JK5WJ6o6LxKEytfoQVNDEaw1n35vmLK7',
+  }) async {
+    final baseUrl = SegmentGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "userId": "$userId",
+  "event": "${escapeStringForJson(eventName)}",
+  "context": {
+    "ip": "24.5.68.47"
+  },
+  "timestamp": "${escapeStringForJson(timestamp)}",
+  "writeKey": "${escapeStringForJson(writeKey)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'tracking',
+      apiUrl: '$baseUrl/track',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Segment Group Code
+
 class UptUserCall {
   static Future<ApiCallResponse> call({
     String? jwtUser = '',

@@ -182,6 +182,8 @@ class _NotificacoesWidgetState extends State<NotificacoesWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

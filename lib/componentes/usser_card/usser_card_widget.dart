@@ -85,6 +85,8 @@ class _UsserCardWidgetState extends State<UsserCardWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

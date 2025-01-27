@@ -35,6 +35,8 @@ class _CommentsWidgetState extends State<CommentsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CommentsModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

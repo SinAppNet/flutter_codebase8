@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -70,6 +71,8 @@ class _CommenWidgetState extends State<CommenWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -334,6 +337,13 @@ class _CommenWidgetState extends State<CommenWidget>
                                   'post': widget.comment?.post,
                                   'comment': widget.comment?.id,
                                 });
+                                await action_blocks.sendPush(
+                                  context,
+                                  userId: widget.comment?.commenter,
+                                  title: 'Curtiram seu comentário!',
+                                  message:
+                                      '${FFAppState().currentUser.nome} acabou de curtir o seu comentário!',
+                                );
                               } else {
                                 await LikesTable().delete(
                                   matchingRows: (rows) => rows

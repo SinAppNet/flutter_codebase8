@@ -25,4 +25,7 @@ class InviteRow extends SupabaseDataRow {
 
   String? get codigoInvite => getField<String>('codigo_invite');
   set codigoInvite(String? value) => setField<String>('codigo_invite', value);
+
+  String? get categoria => getField<String>('categoria');
+  set categoria(String? value) => setField<String>('categoria', value);
 }

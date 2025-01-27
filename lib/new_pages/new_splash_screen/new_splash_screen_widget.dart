@@ -33,6 +33,8 @@ class _NewSplashScreenWidgetState extends State<NewSplashScreenWidget> {
         context.pushNamed('signin');
       }
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

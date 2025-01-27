@@ -59,6 +59,8 @@ class _ConexoesWidgetState extends State<ConexoesWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

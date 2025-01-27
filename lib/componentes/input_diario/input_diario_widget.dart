@@ -33,6 +33,8 @@ class _InputDiarioWidgetState extends State<InputDiarioWidget> {
 
     _model.postTextTextController ??= TextEditingController();
     _model.postTextFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

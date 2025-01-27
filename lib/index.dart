@@ -35,3 +35,5 @@ export '/new_pages/new_feed/new_feed_widget.dart' show NewFeedWidget;
 export '/new_pages/icons/icons_widget.dart' show IconsWidget;
 export '/teste09/teste09_widget.dart' show Teste09Widget;
 export '/connecters/connecters_widget.dart' show ConnectersWidget;
+export '/edit_personal_info/edit_personal_info_widget.dart'
+    show EditPersonalInfoWidget;

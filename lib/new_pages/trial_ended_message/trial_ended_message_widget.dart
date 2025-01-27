@@ -30,6 +30,8 @@ class _TrialEndedMessageWidgetState extends State<TrialEndedMessageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TrialEndedMessageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -77,19 +79,6 @@ class _TrialEndedMessageWidgetState extends State<TrialEndedMessageWidget> {
                       ),
                     ),
                   ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                child: Text(
-                  'Seus 7 dias de teste foram finalizados!',
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Inter',
-                        fontSize: 18.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.w800,
-                      ),
                 ),
               ),
               Padding(
@@ -182,7 +171,7 @@ class _TrialEndedMessageWidgetState extends State<TrialEndedMessageWidget> {
                                     ),
                               ),
                               Text(
-                                'R\$ 1188/ano',
+                                'R\$ 99/mês',
                                 style: FlutterFlowTheme.of(context)
                                     .headlineMedium
                                     .override(

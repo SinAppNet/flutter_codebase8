@@ -27,6 +27,8 @@ class _PremiumPlansWidgetState extends State<PremiumPlansWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PremiumPlansModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

@@ -54,6 +54,7 @@ class _NewConnectionsWidgetState extends State<NewConnectionsWidget> {
         safeSetState(() {});
       },
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

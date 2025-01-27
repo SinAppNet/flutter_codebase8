@@ -54,6 +54,8 @@ class _CadastroWidgetState extends State<CadastroWidget> {
 
     _model.tipoConexTextController ??= TextEditingController();
     _model.tipoConexFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

@@ -38,6 +38,8 @@ class _NewChatWidgetState extends State<NewChatWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -1095,6 +1097,18 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                                             safeSetState(() {
                                               _model.textController?.clear();
                                             });
+                                            await ChatTable().update(
+                                              data: {
+                                                'last_update':
+                                                    supaSerialize<DateTime>(
+                                                        getCurrentTimestamp),
+                                              },
+                                              matchingRows: (rows) =>
+                                                  rows.eqOrNull(
+                                                'id',
+                                                widget.chat?.id,
+                                              ),
+                                            );
                                           } else {
                                             await MensagensTable().insert({
                                               'chat': widget.chat?.id,
@@ -1137,20 +1151,19 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                                             safeSetState(() {
                                               _model.textController?.clear();
                                             });
+                                            await ChatTable().update(
+                                              data: {
+                                                'last_update':
+                                                    supaSerialize<DateTime>(
+                                                        getCurrentTimestamp),
+                                              },
+                                              matchingRows: (rows) =>
+                                                  rows.eqOrNull(
+                                                'id',
+                                                widget.chat?.id,
+                                              ),
+                                            );
                                           }
-
-                                          await ChatTable().update(
-                                            data: {
-                                              'last_update':
-                                                  supaSerialize<DateTime>(
-                                                      getCurrentTimestamp),
-                                            },
-                                            matchingRows: (rows) =>
-                                                rows.eqOrNull(
-                                              'id',
-                                              widget.chat?.id,
-                                            ),
-                                          );
 
                                           safeSetState(() {});
                                         },

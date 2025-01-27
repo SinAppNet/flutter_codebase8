@@ -75,6 +75,8 @@ class _HomeAllWidgetState extends State<HomeAllWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

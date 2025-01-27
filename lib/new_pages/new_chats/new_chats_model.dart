@@ -9,6 +9,8 @@ class NewChatsModel extends FlutterFlowModel<NewChatsWidget> {
 
   String tab = 'all';
 
+  UsersRow? searched;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for PesquisaNome widget.

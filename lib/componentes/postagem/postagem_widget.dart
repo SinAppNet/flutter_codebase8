@@ -4,6 +4,7 @@ import '/componentes/write_post/write_post_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -40,6 +41,8 @@ class _PostagemWidgetState extends State<PostagemWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PostagemModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -178,13 +181,7 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                           ].divide(const SizedBox(width: 12.0)),
                         ),
                       ),
-                      if (responsiveVisibility(
-                        context: context,
-                        phone: false,
-                        tablet: false,
-                        tabletLandscape: false,
-                        desktop: false,
-                      ))
+                      if (widget.feed?.poster == FFAppState().currentUser.id)
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -219,14 +216,6 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                                                   .requestCompleter3 = null);
                                               await _model
                                                   .waitForRequestCompleted3();
-                                              safeSetState(() => _model
-                                                  .requestCompleter1 = null);
-                                              await _model
-                                                  .waitForRequestCompleted1();
-                                              safeSetState(() => _model
-                                                  .requestCompleter2 = null);
-                                              await _model
-                                                  .waitForRequestCompleted2();
                                             },
                                           ),
                                         ),
@@ -361,16 +350,18 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FutureBuilder<List<FeedComentariosRow>>(
-                          future: (_model.requestCompleter2 ??=
-                                  Completer<List<FeedComentariosRow>>()
-                                    ..complete(FeedComentariosTable().queryRows(
-                                      queryFn: (q) => q.eqOrNull(
-                                        'post',
-                                        widget.feed?.id,
-                                      ),
-                                    )))
-                              .future,
+                        StreamBuilder<List<FeedComentariosRow>>(
+                          stream: _model.containerSupabaseStream1 ??= SupaFlow
+                              .client
+                              .from("feed_comentarios")
+                              .stream(primaryKey: ['id'])
+                              .eqOrNull(
+                                'post',
+                                widget.feed?.id,
+                              )
+                              .map((list) => list
+                                  .map((item) => FeedComentariosRow(item))
+                                  .toList()),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -447,16 +438,17 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                             );
                           },
                         ),
-                        FutureBuilder<List<LikesRow>>(
-                          future: (_model.requestCompleter1 ??=
-                                  Completer<List<LikesRow>>()
-                                    ..complete(LikesTable().queryRows(
-                                      queryFn: (q) => q.eqOrNull(
-                                        'post',
-                                        widget.feed?.id,
-                                      ),
-                                    )))
-                              .future,
+                        StreamBuilder<List<LikesRow>>(
+                          stream: _model.containerSupabaseStream2 ??= SupaFlow
+                              .client
+                              .from("likes")
+                              .stream(primaryKey: ['id'])
+                              .eqOrNull(
+                                'post',
+                                widget.feed?.id,
+                              )
+                              .map((list) =>
+                                  list.map((item) => LikesRow(item)).toList()),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -493,9 +485,13 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                                     'user': FFAppState().currentUser.id,
                                     'post': widget.feed?.id,
                                   });
-                                  safeSetState(
-                                      () => _model.requestCompleter1 = null);
-                                  await _model.waitForRequestCompleted1();
+                                  await action_blocks.sendPush(
+                                    context,
+                                    userId: widget.feed?.poster,
+                                    title: 'Você recebeu um like!',
+                                    message:
+                                        '${FFAppState().currentUser.nome} acabou de curtir o seu post!',
+                                  );
                                 } else {
                                   await LikesTable().delete(
                                     matchingRows: (rows) => rows
@@ -508,9 +504,6 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                                           widget.feed?.id,
                                         ),
                                   );
-                                  safeSetState(
-                                      () => _model.requestCompleter1 = null);
-                                  await _model.waitForRequestCompleted1();
                                 }
 
                                 await widget.callback?.call();

@@ -29,6 +29,8 @@ class _NewFeedWidgetState extends State<NewFeedWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NewFeedModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -176,6 +178,7 @@ class _NewFeedWidgetState extends State<NewFeedWidget> {
                             await showModalBottomSheet(
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
+                              useSafeArea: true,
                               context: context,
                               builder: (context) {
                                 return WebViewAware(

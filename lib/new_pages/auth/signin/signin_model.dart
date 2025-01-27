@@ -1,9 +1,7 @@
-import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'signin_widget.dart' show SigninWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class SigninModel extends FlutterFlowModel<SigninWidget> {
@@ -50,25 +48,16 @@ class SigninModel extends FlutterFlowModel<SigninWidget> {
   UsersRow? createdUser;
   // Stores action output result for [Backend Call - Insert Row] action in Button widget.
   EmpresasRow? createdEmpresa;
-  // Stores action output result for [Backend Call - API (add asaas customer)] action in Button widget.
-  ApiCallResponse? asaasClient;
   // Stores action output result for [Backend Call - Update Row(s)] action in Button widget.
   List<UsersRow>? editedUser;
   // State field(s) for tipoConex widget.
   FocusNode? tipoConexFocusNode;
   TextEditingController? tipoConexTextController;
   String? Function(BuildContext, String?)? tipoConexTextControllerValidator;
-  // State field(s) for SwipeableStack widget.
-  late CardSwiperController swipeableStackController;
-  // Stores action output result for [Backend Call - Query Rows] action in SwipeableStack widget.
-  List<UsersRow>? usres;
-  // Stores action output result for [Backend Call - API (send push)] action in SwipeableStack widget.
-  ApiCallResponse? apiResultnx6a;
 
   @override
   void initState(BuildContext context) {
     senhaVisibility = false;
-    swipeableStackController = CardSwiperController();
   }
 
   @override

@@ -35,6 +35,10 @@ class ChatModel extends FlutterFlowModel<ChatWidget> {
   String? Function(BuildContext, String?)? textControllerValidator;
   // Stores action output result for [Backend Call - Query Rows] action in Icon widget.
   List<MensagensRow>? msgs;
+  // Stores action output result for [Backend Call - Query Rows] action in Icon widget.
+  List<UsersRow>? user1;
+  // Stores action output result for [Backend Call - Query Rows] action in Icon widget.
+  List<UsersRow>? user2;
   AudioRecorder? audioRecorder;
   String? stopped;
   FFUploadedFile recordedFileBytes =

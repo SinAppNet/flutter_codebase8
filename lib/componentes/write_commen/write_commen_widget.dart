@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -39,6 +40,8 @@ class _WriteCommenWidgetState extends State<WriteCommenWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -222,10 +225,26 @@ class _WriteCommenWidgetState extends State<WriteCommenWidget> {
                             'commenter': FFAppState().currentUser.id,
                             'comment_text': _model.textController.text,
                           });
+                          _model.op = await UsersTable().queryRows(
+                            queryFn: (q) => q.eqOrNull(
+                              'id',
+                              widget.post?.poster,
+                            ),
+                          );
+                          await SendPushCall.call(
+                            fcmToken: _model.op?.firstOrNull?.fcmToken,
+                            pushTitle: 'Novo comentário!',
+                            pushMessage:
+                                '${FFAppState().currentUser.nome} acabou de comentar no seu post!',
+                          );
+
                           await widget.callback?.call();
                           safeSetState(() {
                             _model.textController?.clear();
                           });
+                          Navigator.pop(context);
+
+                          safeSetState(() {});
                         },
                   text: 'Comentar',
                   icon: const Icon(

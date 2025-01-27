@@ -63,6 +63,8 @@ class _WritePostWidgetState extends State<WritePostWidget> {
 
     _model.postTextTextController ??= TextEditingController();
     _model.postTextFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -172,7 +174,7 @@ class _WritePostWidgetState extends State<WritePostWidget> {
                 autofocus: false,
                 obscureText: false,
                 decoration: InputDecoration(
-                  hintText: 'O que você está buscando?',
+                  hintText: 'O que você quer compartilhar hoje?',
                   hintStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,

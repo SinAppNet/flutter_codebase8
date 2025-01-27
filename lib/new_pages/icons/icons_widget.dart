@@ -20,6 +20,8 @@ class _IconsWidgetState extends State<IconsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => IconsModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

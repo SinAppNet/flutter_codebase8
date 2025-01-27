@@ -45,3 +45,11 @@ DateTime addDaysToDate(
 
   return newDate;
 }
+
+int differenceBetween(
+  DateTime date1,
+  DateTime date2,
+) {
+  final difference = date2.difference(date1).inDays;
+  return difference.abs();
+}

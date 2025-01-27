@@ -37,7 +37,7 @@ class _EditUserWidgetState extends State<EditUserWidget> {
     _model.usernameFocusNode ??= FocusNode();
 
     _model.emailTextController ??=
-        TextEditingController(text: FFAppState().currentUser.email);
+        TextEditingController(text: currentUserEmail);
     _model.emailFocusNode ??= FocusNode();
 
     _model.instagramTextController ??=
@@ -55,6 +55,8 @@ class _EditUserWidgetState extends State<EditUserWidget> {
     _model.sobreTextController ??=
         TextEditingController(text: FFAppState().currentUser.sobre);
     _model.sobreFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

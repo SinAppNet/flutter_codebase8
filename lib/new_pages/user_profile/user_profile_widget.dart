@@ -31,6 +31,8 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UserProfileModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -517,7 +519,15 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                                                 text: TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: 'Cidade',
+                                                      text: valueOrDefault<
+                                                          String>(
+                                                        getJsonField(
+                                                          rowEmpresasRow
+                                                              ?.address,
+                                                          r'''$.cidade''',
+                                                        )?.toString(),
+                                                        'Cidade',
+                                                      ),
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
@@ -540,9 +550,17 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                                                         fontSize: 14.0,
                                                       ),
                                                     ),
-                                                    const TextSpan(
-                                                      text: 'Estado',
-                                                      style: TextStyle(
+                                                    TextSpan(
+                                                      text: valueOrDefault<
+                                                          String>(
+                                                        getJsonField(
+                                                          rowEmpresasRow
+                                                              ?.address,
+                                                          r'''$.estado''',
+                                                        )?.toString(),
+                                                        'Estado',
+                                                      ),
+                                                      style: const TextStyle(
                                                         color:
                                                             Color(0xFF6F6F6F),
                                                         fontWeight:
@@ -828,7 +846,28 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                           size: 32.0,
                         ),
                         onPressed: () async {
-                          context.pushNamed('editUser');
+                          _model.empresa = await EmpresasTable().queryRows(
+                            queryFn: (q) => q.eqOrNull(
+                              'id',
+                              widget.user?.empresa,
+                            ),
+                          );
+
+                          context.pushNamed(
+                            'editPersonalInfo',
+                            queryParameters: {
+                              'user': serializeParam(
+                                widget.user,
+                                ParamType.SupabaseRow,
+                              ),
+                              'empresa': serializeParam(
+                                _model.empresa?.firstOrNull,
+                                ParamType.SupabaseRow,
+                              ),
+                            }.withoutNulls,
+                          );
+
+                          safeSetState(() {});
                         },
                       ),
                     ),

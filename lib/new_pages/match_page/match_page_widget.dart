@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/componentes/user_profile_card/user_profile_card_widget.dart';
@@ -8,8 +7,10 @@ import '/flutter_flow/flutter_flow_swipeable_stack.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +56,8 @@ class _MatchPageWidgetState extends State<MatchPageWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -107,14 +110,6 @@ class _MatchPageWidgetState extends State<MatchPageWidget>
                 List<UsuariosSemConexoesRow>
                     swipeableStackUsuariosSemConexoesRowList = snapshot.data!;
 
-                if (swipeableStackUsuariosSemConexoesRowList.isEmpty) {
-                  return Center(
-                    child: Image.asset(
-                      'assets/images/thumbs-up.png',
-                    ),
-                  );
-                }
-
                 return FlutterFlowSwipeableStack(
                   onSwipeFn: (index) {},
                   onLeftSwipe: (index) {},
@@ -127,20 +122,14 @@ class _MatchPageWidgetState extends State<MatchPageWidget>
                           swipeableStackUsuariosSemConexoesRowList[index].id,
                       'status': StatusConexao.solicitada.name,
                     });
-                    _model.usre = await UsersTable().queryRows(
-                      queryFn: (q) => q.eqOrNull(
-                        'id',
-                        swipeableStackUsuariosSemConexoesRowList[index].id,
-                      ),
-                    );
-                    _model.apiResultnx6 = await SendPushCall.call(
-                      fcmToken: _model.usre?.firstOrNull?.fcmToken,
-                      pushTitle: 'Solicitação de conexão',
-                      pushMessage:
+                    await action_blocks.sendPush(
+                      context,
+                      userId:
+                          swipeableStackUsuariosSemConexoesRowList[index].id,
+                      title: 'Nova solicitação de conexão!',
+                      message:
                           '${FFAppState().currentUser.nome} quer fazer uma conexão com você!',
                     );
-
-                    safeSetState(() {});
                   },
                   onUpSwipe: (index) {},
                   onDownSwipe: (index) {},
@@ -169,20 +158,22 @@ class _MatchPageWidgetState extends State<MatchPageWidget>
                   scale: 1.0,
                   cardPadding:
                       const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  allowedSwipeDirection:
+                      AllowedSwipeDirection.symmetric(horizontal: true),
                 );
               },
             ),
             Align(
               alignment: const AlignmentDirectional(0.0, 1.0),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(18.0, 0.0, 18.0, 212.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(18.0, 0.0, 18.0, 25.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FlutterFlowIconButton(
                       borderRadius: 200.0,
-                      buttonSize: 100.0,
+                      buttonSize: 85.0,
                       fillColor: const Color(0x66EF3939),
                       icon: const Icon(
                         Icons.close_outlined,
@@ -195,7 +186,7 @@ class _MatchPageWidgetState extends State<MatchPageWidget>
                     ),
                     FlutterFlowIconButton(
                       borderRadius: 200.0,
-                      buttonSize: 100.0,
+                      buttonSize: 85.0,
                       fillColor: const Color(0x67009C3B),
                       icon: const Icon(
                         FFIcons.klikeoutl,

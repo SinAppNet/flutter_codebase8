@@ -36,6 +36,8 @@ class _InviteWidgetState extends State<InviteWidget> {
     _model.textController ??=
         TextEditingController(text: widget.code?.codigoInvite);
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

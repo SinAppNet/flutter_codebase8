@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/upload_data.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -40,6 +39,8 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
     _model.faturamentoAnualFocusNode ??= FocusNode();
 
     _model.qntdColaboradoresFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -147,74 +148,8 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                   Align(
                                     alignment: const AlignmentDirectional(0.0, 1.0),
                                     child: FFButtonWidget(
-                                      onPressed: () async {
-                                        final selectedMedia =
-                                            await selectMediaWithSourceBottomSheet(
-                                          context: context,
-                                          storageFolderPath: 'empresa',
-                                          allowPhoto: true,
-                                        );
-                                        if (selectedMedia != null &&
-                                            selectedMedia.every((m) =>
-                                                validateFileFormat(
-                                                    m.storagePath, context))) {
-                                          safeSetState(() =>
-                                              _model.isDataUploading = true);
-                                          var selectedUploadedFiles =
-                                              <FFUploadedFile>[];
-
-                                          var downloadUrls = <String>[];
-                                          try {
-                                            selectedUploadedFiles =
-                                                selectedMedia
-                                                    .map((m) => FFUploadedFile(
-                                                          name: m.storagePath
-                                                              .split('/')
-                                                              .last,
-                                                          bytes: m.bytes,
-                                                          height: m.dimensions
-                                                              ?.height,
-                                                          width: m.dimensions
-                                                              ?.width,
-                                                          blurHash: m.blurHash,
-                                                        ))
-                                                    .toList();
-
-                                            downloadUrls =
-                                                await uploadSupabaseStorageFiles(
-                                              bucketName: 'users',
-                                              selectedFiles: selectedMedia,
-                                            );
-                                          } finally {
-                                            _model.isDataUploading = false;
-                                          }
-                                          if (selectedUploadedFiles.length ==
-                                                  selectedMedia.length &&
-                                              downloadUrls.length ==
-                                                  selectedMedia.length) {
-                                            safeSetState(() {
-                                              _model.uploadedLocalFile =
-                                                  selectedUploadedFiles.first;
-                                              _model.uploadedFileUrl =
-                                                  downloadUrls.first;
-                                            });
-                                          } else {
-                                            safeSetState(() {});
-                                            return;
-                                          }
-                                        }
-
-                                        await EmpresasTable().update(
-                                          data: {
-                                            'logo_pic': _model.uploadedFileUrl,
-                                          },
-                                          matchingRows: (rows) => rows.eqOrNull(
-                                            'id',
-                                            FFAppState().currentUser.empresaId,
-                                          ),
-                                        );
-                                        _model.change = true;
-                                        safeSetState(() {});
+                                      onPressed: () {
+                                        print('Button pressed ...');
                                       },
                                       text: 'Editar',
                                       options: FFButtonOptions(
@@ -272,14 +207,6 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                         text: containerEmpresasRow?.nome,
                                       ),
                                       focusNode: _model.nomeEmpresaFocusNode,
-                                      onChanged: (_) => EasyDebounce.debounce(
-                                        '_model.nomeEmpresaTextController',
-                                        const Duration(milliseconds: 0),
-                                        () async {
-                                          _model.change = true;
-                                          safeSetState(() {});
-                                        },
-                                      ),
                                       autofocus: false,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -376,10 +303,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                     onChanged: (_) => EasyDebounce.debounce(
                                       '_model.cnpjEmpresaTextController',
                                       const Duration(milliseconds: 0),
-                                      () async {
-                                        _model.change = true;
-                                        safeSetState(() {});
-                                      },
+                                      () => safeSetState(() {}),
                                     ),
                                     autofocus: false,
                                     obscureText: false,
@@ -488,10 +412,7 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                               EasyDebounce.debounce(
                                             '_model.cidadeEmpresaTextController',
                                             const Duration(milliseconds: 0),
-                                            () async {
-                                              _model.change = true;
-                                              safeSetState(() {});
-                                            },
+                                            () => safeSetState(() {}),
                                           ),
                                           autofocus: false,
                                           obscureText: false,
@@ -622,12 +543,8 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                           'SE',
                                           'TO'
                                         ],
-                                        onChanged: (val) async {
-                                          safeSetState(() =>
-                                              _model.estadoEmpresaValue = val);
-                                          _model.change = true;
-                                          safeSetState(() {});
-                                        },
+                                        onChanged: (val) => safeSetState(() =>
+                                            _model.estadoEmpresaValue = val),
                                         width: double.infinity,
                                         height: 50.0,
                                         textStyle: FlutterFlowTheme.of(context)
@@ -708,12 +625,8 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                     'Varejo',
                                     'Outros'
                                   ],
-                                  onChanged: (val) async {
-                                    safeSetState(() =>
-                                        _model.segmentoEmpresaValue = val);
-                                    _model.change = true;
-                                    safeSetState(() {});
-                                  },
+                                  onChanged: (val) => safeSetState(
+                                      () => _model.segmentoEmpresaValue = val),
                                   width: double.infinity,
                                   height: 50.0,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -982,12 +895,8 @@ class _EditCiaWidgetState extends State<EditCiaWidget> {
                                     'Média - Faturamento bruto anual maior que 4,8 milhões ou igual a 300 milhões',
                                     'Grande - Faturamento bruto anual maior que 300 milhões'
                                   ],
-                                  onChanged: (val) async {
-                                    safeSetState(
-                                        () => _model.portesValue = val);
-                                    _model.change = true;
-                                    safeSetState(() {});
-                                  },
+                                  onChanged: (val) => safeSetState(
+                                      () => _model.portesValue = val),
                                   width: double.infinity,
                                   height: 50.0,
                                   textStyle: FlutterFlowTheme.of(context)

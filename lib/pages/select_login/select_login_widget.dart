@@ -22,6 +22,8 @@ class _SelectLoginWidgetState extends State<SelectLoginWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SelectLoginModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

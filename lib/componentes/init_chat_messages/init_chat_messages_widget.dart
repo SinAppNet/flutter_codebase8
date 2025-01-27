@@ -45,6 +45,8 @@ class _InitChatMessagesWidgetState extends State<InitChatMessagesWidget> {
         ),
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

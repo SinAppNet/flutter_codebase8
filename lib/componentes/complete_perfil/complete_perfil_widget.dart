@@ -46,6 +46,8 @@ class _CompletePerfilWidgetState extends State<CompletePerfilWidget> {
 
     _model.cidadeEmpresaTextController ??= TextEditingController();
     _model.cidadeEmpresaFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

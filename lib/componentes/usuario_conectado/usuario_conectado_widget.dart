@@ -77,6 +77,8 @@ class _UsuarioConectadoWidgetState extends State<UsuarioConectadoWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

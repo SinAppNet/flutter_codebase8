@@ -26,6 +26,8 @@ class _ConnectRecommendWidgetState extends State<ConnectRecommendWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ConnectRecommendModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

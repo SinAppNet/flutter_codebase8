@@ -1,4 +1,5 @@
 import '/auth/supabase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -50,4 +51,26 @@ Future<UsersRow?> updateUserState(BuildContext context) async {
   ]);
 
   return null;
+}
+
+Future sendPush(
+  BuildContext context, {
+  int? userId,
+  String? title,
+  String? message,
+}) async {
+  List<UsersRow>? user;
+  ApiCallResponse? apiResultr37;
+
+  user = await UsersTable().queryRows(
+    queryFn: (q) => q.eqOrNull(
+      'id',
+      userId,
+    ),
+  );
+  apiResultr37 = await SendPushCall.call(
+    fcmToken: user.firstOrNull?.fcmToken,
+    pushTitle: title,
+    pushMessage: message,
+  );
 }

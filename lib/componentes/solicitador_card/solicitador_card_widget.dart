@@ -1,8 +1,8 @@
-import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
@@ -36,6 +36,8 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SolicitadorCardModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -144,7 +146,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                                   containerUsersRow?.nome,
                                   'Username',
                                 ).maybeHandleOverflow(
-                                  maxChars: 18,
+                                  maxChars: 12,
                                   replacement: '…',
                                 ),
                                 style: FlutterFlowTheme.of(context)
@@ -288,19 +290,14 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                               ),
                             );
                             await widget.callb?.call();
-                            _model.apiResult02mCopy = await SendPushCall.call(
-                              fcmToken: containerUsersRow?.fcmToken,
-                              pushTitle: 'Conexão aceita!',
-                              pushMessage:
+                            await action_blocks.sendPush(
+                              context,
+                              userId: containerUsersRow?.id,
+                              title: 'Conexão aceita!',
+                              message:
                                   '${containerUsersRow?.nome} agora faz parte da sua rede de conexões!',
-                              pushImg: containerUsersRow?.profilePic != null &&
-                                      containerUsersRow?.profilePic != ''
-                                  ? containerUsersRow?.profilePic
-                                  : 'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
                             );
                           }
-
-                          safeSetState(() {});
                         },
                         child: Container(
                           width: 42.0,
@@ -318,7 +315,7 @@ class _SolicitadorCardWidgetState extends State<SolicitadorCardWidget> {
                       ),
                     ].divide(const SizedBox(width: 10.0)),
                   ),
-                ],
+                ].divide(const SizedBox(width: 12.0)),
               ),
             ),
           );

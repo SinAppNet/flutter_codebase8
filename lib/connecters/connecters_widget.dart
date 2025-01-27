@@ -21,6 +21,8 @@ class _ConnectersWidgetState extends State<ConnectersWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ConnectersModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

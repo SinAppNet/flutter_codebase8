@@ -277,6 +277,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'connecters',
           path: '/connecters',
           builder: (context, params) => const ConnectersWidget(),
+        ),
+        FFRoute(
+          name: 'editPersonalInfo',
+          path: '/editPersonalInfo',
+          builder: (context, params) => EditPersonalInfoWidget(
+            user: params.getParam<UsersRow>(
+              'user',
+              ParamType.SupabaseRow,
+            ),
+            empresa: params.getParam<EmpresasRow>(
+              'empresa',
+              ParamType.SupabaseRow,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

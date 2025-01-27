@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
+import '/actions/actions.dart' as action_blocks;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -41,6 +42,8 @@ class _ChatWidgetState extends State<ChatWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -259,7 +262,8 @@ class _ChatWidgetState extends State<ChatWidget> {
                                         )
                                         .map((list) => list
                                             .map((item) => MensagensRow(item))
-                                            .toList()),
+                                            .toList())
+                                      ..listen((_) {}),
                                 builder: (context, snapshot) {
                                   // Customize what your widget looks like when it's loading.
                                   if (!snapshot.hasData) {
@@ -674,8 +678,15 @@ class _ChatWidgetState extends State<ChatWidget> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  if (_model.currentAudio != null &&
-                                      _model.currentAudio != '')
+                                  if ((_model.currentAudio != null &&
+                                          _model.currentAudio != '') &&
+                                      responsiveVisibility(
+                                        context: context,
+                                        phone: false,
+                                        tablet: false,
+                                        tabletLandscape: false,
+                                        desktop: false,
+                                      ))
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           18.0, 18.0, 18.0, 18.0),
@@ -963,353 +974,410 @@ class _ChatWidgetState extends State<ChatWidget> {
                                         ],
                                       ),
                                     ),
-                                  if (_model.currentAudio == null ||
-                                      _model.currentAudio == '')
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    18.0, 18.0, 12.0, 18.0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              constraints: const BoxConstraints(
-                                                minHeight: 36.0,
-                                                maxHeight: 300.0,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xFFF2F7FB),
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(5.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Container(
-                                                        decoration:
-                                                            const BoxDecoration(),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      12.0,
-                                                                      0.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child: TextFormField(
-                                                            controller: _model
-                                                                .textController,
-                                                            focusNode: _model
-                                                                .textFieldFocusNode,
-                                                            autofocus: false,
-                                                            obscureText: false,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              isDense: true,
-                                                              labelStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Inter',
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                              hintText:
-                                                                  'Nova mensagem',
-                                                              hintStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Inter',
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                              enabledBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                              focusedBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                              errorBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                              focusedErrorBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                            maxLines: null,
-                                                            validator: _model
-                                                                .textControllerValidator
-                                                                .asValidator(
-                                                                    context),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  18.0, 18.0, 12.0, 18.0),
+                                          child: Container(
+                                            width: double.infinity,
+                                            constraints: const BoxConstraints(
+                                              minHeight: 36.0,
+                                              maxHeight: 300.0,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFFF2F7FB),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child: Container(
+                                                      decoration:
+                                                          const BoxDecoration(),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    12.0,
+                                                                    0.0,
+                                                                    8.0,
+                                                                    0.0),
+                                                        child: TextFormField(
+                                                          controller: _model
+                                                              .textController,
+                                                          focusNode: _model
+                                                              .textFieldFocusNode,
+                                                          autofocus: false,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            isDense: true,
+                                                            labelStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            hintText:
+                                                                'Nova mensagem',
+                                                            hintStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            enabledBorder:
+                                                                InputBorder
+                                                                    .none,
+                                                            focusedBorder:
+                                                                InputBorder
+                                                                    .none,
+                                                            errorBorder:
+                                                                InputBorder
+                                                                    .none,
+                                                            focusedErrorBorder:
+                                                                InputBorder
+                                                                    .none,
                                                           ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                          maxLines: null,
+                                                          validator: _model
+                                                              .textControllerValidator
+                                                              .asValidator(
+                                                                  context),
                                                         ),
                                                       ),
                                                     ),
-                                                    InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        _model.msgs =
-                                                            await MensagensTable()
+                                                  ),
+                                                  InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      _model.msgs =
+                                                          await MensagensTable()
+                                                              .queryRows(
+                                                        queryFn: (q) => q
+                                                            .eqOrNull(
+                                                              'chat',
+                                                              widget.chat?.id,
+                                                            )
+                                                            .eqOrNull(
+                                                              'day_sended',
+                                                              supaSerialize<
+                                                                      DateTime>(
+                                                                  getCurrentTimestamp),
+                                                            ),
+                                                      );
+                                                      if ((_model.msgs !=
+                                                                  null &&
+                                                              (_model.msgs)!
+                                                                  .isNotEmpty) ==
+                                                          false) {
+                                                        await MensagensTable()
+                                                            .insert({
+                                                          'chat':
+                                                              widget.chat?.id,
+                                                          'sender': FFAppState()
+                                                              .currentUser
+                                                              .id,
+                                                          'mensagem': _model
+                                                              .textController
+                                                              .text,
+                                                          'day_sended':
+                                                              supaSerialize<
+                                                                      DateTime>(
+                                                                  getCurrentTimestamp),
+                                                          'first_message_of_day':
+                                                              true,
+                                                        });
+                                                        await ChatTable()
+                                                            .update(
+                                                          data: {
+                                                            'messagesCount':
+                                                                functions.sum(
+                                                                    widget
+                                                                        .chat!
+                                                                        .messagesCount!,
+                                                                    1),
+                                                            'last_message': _model
+                                                                .textController
+                                                                .text,
+                                                          },
+                                                          matchingRows:
+                                                              (rows) =>
+                                                                  rows.eqOrNull(
+                                                            'id',
+                                                            widget.chat?.id,
+                                                          ),
+                                                        );
+                                                        _model.user1 =
+                                                            await UsersTable()
                                                                 .queryRows(
                                                           queryFn: (q) => q
-                                                              .eqOrNull(
-                                                                'chat',
-                                                                widget
-                                                                    .chat?.id,
+                                                              .inFilterOrNull(
+                                                                'id',
+                                                                widget.chat
+                                                                    ?.users,
                                                               )
-                                                              .eqOrNull(
-                                                                'day_sended',
-                                                                supaSerialize<
-                                                                        DateTime>(
-                                                                    getCurrentTimestamp),
+                                                              .neqOrNull(
+                                                                'id',
+                                                                FFAppState()
+                                                                    .currentUser
+                                                                    .id,
                                                               ),
                                                         );
-                                                        if ((_model.msgs !=
-                                                                    null &&
-                                                                (_model.msgs)!
-                                                                    .isNotEmpty) ==
-                                                            false) {
-                                                          await MensagensTable()
-                                                              .insert({
-                                                            'chat': widget
-                                                                .chat?.id,
-                                                            'sender':
+                                                        await action_blocks
+                                                            .sendPush(
+                                                          context,
+                                                          userId: _model.user1
+                                                              ?.firstOrNull?.id,
+                                                          title:
+                                                              'Nova mensagem!',
+                                                          message:
+                                                              '${FFAppState().currentUser.nome} te enviou uma nova mensagem!',
+                                                        );
+                                                        unawaited(
+                                                          () async {
+                                                            await _model
+                                                                .mensagens
+                                                                ?.animateTo(
+                                                              _model
+                                                                  .mensagens!
+                                                                  .position
+                                                                  .maxScrollExtent,
+                                                              duration: const Duration(
+                                                                  milliseconds:
+                                                                      100),
+                                                              curve:
+                                                                  Curves.ease,
+                                                            );
+                                                          }(),
+                                                        );
+                                                        safeSetState(() {
+                                                          _model.textController
+                                                              ?.clear();
+                                                        });
+                                                      } else {
+                                                        await MensagensTable()
+                                                            .insert({
+                                                          'chat':
+                                                              widget.chat?.id,
+                                                          'sender': FFAppState()
+                                                              .currentUser
+                                                              .id,
+                                                          'mensagem': _model
+                                                              .textController
+                                                              .text,
+                                                          'day_sended':
+                                                              supaSerialize<
+                                                                      DateTime>(
+                                                                  getCurrentTimestamp),
+                                                          'first_message_of_day':
+                                                              false,
+                                                        });
+                                                        await ChatTable()
+                                                            .update(
+                                                          data: {
+                                                            'messagesCount':
+                                                                functions.sum(
+                                                                    widget
+                                                                        .chat!
+                                                                        .messagesCount!,
+                                                                    1),
+                                                            'last_message': _model
+                                                                .textController
+                                                                .text,
+                                                          },
+                                                          matchingRows:
+                                                              (rows) =>
+                                                                  rows.eqOrNull(
+                                                            'id',
+                                                            widget.chat?.id,
+                                                          ),
+                                                        );
+                                                        _model.user2 =
+                                                            await UsersTable()
+                                                                .queryRows(
+                                                          queryFn: (q) => q
+                                                              .inFilterOrNull(
+                                                                'id',
+                                                                widget.chat
+                                                                    ?.users,
+                                                              )
+                                                              .neqOrNull(
+                                                                'id',
                                                                 FFAppState()
                                                                     .currentUser
                                                                     .id,
-                                                            'mensagem': _model
-                                                                .textController
-                                                                .text,
-                                                            'day_sended':
-                                                                supaSerialize<
-                                                                        DateTime>(
-                                                                    getCurrentTimestamp),
-                                                            'first_message_of_day':
-                                                                true,
-                                                          });
-                                                          await ChatTable()
-                                                              .update(
-                                                            data: {
-                                                              'messagesCount':
-                                                                  functions.sum(
-                                                                      widget
-                                                                          .chat!
-                                                                          .messagesCount!,
-                                                                      1),
-                                                              'last_message': _model
-                                                                  .textController
-                                                                  .text,
-                                                            },
-                                                            matchingRows:
-                                                                (rows) => rows
-                                                                    .eqOrNull(
-                                                              'id',
-                                                              widget.chat?.id,
-                                                            ),
-                                                          );
-                                                          unawaited(
-                                                            () async {
-                                                              await _model
-                                                                  .mensagens
-                                                                  ?.animateTo(
-                                                                _model
-                                                                    .mensagens!
-                                                                    .position
-                                                                    .maxScrollExtent,
-                                                                duration: const Duration(
-                                                                    milliseconds:
-                                                                        100),
-                                                                curve:
-                                                                    Curves.ease,
-                                                              );
-                                                            }(),
-                                                          );
-                                                          safeSetState(() {
-                                                            _model
-                                                                .textController
-                                                                ?.clear();
-                                                          });
-                                                        } else {
-                                                          await MensagensTable()
-                                                              .insert({
-                                                            'chat': widget
-                                                                .chat?.id,
-                                                            'sender':
-                                                                FFAppState()
-                                                                    .currentUser
-                                                                    .id,
-                                                            'mensagem': _model
-                                                                .textController
-                                                                .text,
-                                                            'day_sended':
-                                                                supaSerialize<
-                                                                        DateTime>(
-                                                                    getCurrentTimestamp),
-                                                            'first_message_of_day':
-                                                                false,
-                                                          });
-                                                          await ChatTable()
-                                                              .update(
-                                                            data: {
-                                                              'messagesCount':
-                                                                  functions.sum(
-                                                                      widget
-                                                                          .chat!
-                                                                          .messagesCount!,
-                                                                      1),
-                                                              'last_message': _model
-                                                                  .textController
-                                                                  .text,
-                                                            },
-                                                            matchingRows:
-                                                                (rows) => rows
-                                                                    .eqOrNull(
-                                                              'id',
-                                                              widget.chat?.id,
-                                                            ),
-                                                          );
-                                                          unawaited(
-                                                            () async {
-                                                              await _model
-                                                                  .mensagens
-                                                                  ?.animateTo(
-                                                                _model
-                                                                    .mensagens!
-                                                                    .position
-                                                                    .maxScrollExtent,
-                                                                duration: const Duration(
-                                                                    milliseconds:
-                                                                        100),
-                                                                curve:
-                                                                    Curves.ease,
-                                                              );
-                                                            }(),
-                                                          );
-                                                          safeSetState(() {
-                                                            _model
-                                                                .textController
-                                                                ?.clear();
-                                                          });
-                                                        }
+                                                              ),
+                                                        );
+                                                        await action_blocks
+                                                            .sendPush(
+                                                          context,
+                                                          userId: _model.user2
+                                                              ?.firstOrNull?.id,
+                                                          title:
+                                                              'Nova mensagem!',
+                                                          message:
+                                                              '${FFAppState().currentUser.nome} te enviou uma nova mensagem!',
+                                                        );
+                                                        unawaited(
+                                                          () async {
+                                                            await _model
+                                                                .mensagens
+                                                                ?.animateTo(
+                                                              _model
+                                                                  .mensagens!
+                                                                  .position
+                                                                  .maxScrollExtent,
+                                                              duration: const Duration(
+                                                                  milliseconds:
+                                                                      100),
+                                                              curve:
+                                                                  Curves.ease,
+                                                            );
+                                                          }(),
+                                                        );
+                                                        safeSetState(() {
+                                                          _model.textController
+                                                              ?.clear();
+                                                        });
+                                                      }
 
-                                                        safeSetState(() {});
-                                                      },
-                                                      child: Icon(
-                                                        Icons.send_rounded,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        size: 32.0,
-                                                      ),
+                                                      safeSetState(() {});
+                                                    },
+                                                    child: Icon(
+                                                      Icons.send_rounded,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 32.0,
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
                                         ),
-                                        if (_model.isRecording == false)
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 18.0, 0.0),
-                                            child: FlutterFlowIconButton(
-                                              borderRadius: 32.0,
-                                              buttonSize: 48.0,
-                                              fillColor: const Color(0xFF009C3B),
-                                              icon: const Icon(
-                                                Icons.mic_rounded,
-                                                color: Colors.white,
-                                                size: 24.0,
-                                              ),
-                                              onPressed: () async {
-                                                _model.isRecording = true;
-                                                safeSetState(() {});
-                                                await startAudioRecording(
-                                                  context,
-                                                  audioRecorder:
-                                                      _model.audioRecorder ??=
-                                                          AudioRecorder(),
-                                                );
-                                              },
+                                      ),
+                                      if ((_model.isRecording == false) &&
+                                          responsiveVisibility(
+                                            context: context,
+                                            phone: false,
+                                            tablet: false,
+                                            tabletLandscape: false,
+                                            desktop: false,
+                                          ))
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 18.0, 0.0),
+                                          child: FlutterFlowIconButton(
+                                            borderRadius: 32.0,
+                                            buttonSize: 48.0,
+                                            fillColor: const Color(0xFF009C3B),
+                                            icon: const Icon(
+                                              Icons.mic_rounded,
+                                              color: Colors.white,
+                                              size: 24.0,
                                             ),
+                                            onPressed: () async {
+                                              _model.isRecording = true;
+                                              safeSetState(() {});
+                                              await startAudioRecording(
+                                                context,
+                                                audioRecorder:
+                                                    _model.audioRecorder ??=
+                                                        AudioRecorder(),
+                                              );
+                                            },
                                           ),
-                                        if (_model.isRecording == true)
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 18.0, 0.0),
-                                            child: FlutterFlowIconButton(
-                                              borderColor: Colors.transparent,
-                                              borderRadius: 32.0,
-                                              buttonSize: 48.0,
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              icon: const Icon(
-                                                Icons.stop_rounded,
-                                                color: Colors.white,
-                                                size: 24.0,
-                                              ),
-                                              onPressed: () async {
-                                                _model.isRecording = false;
-                                                safeSetState(() {});
-                                                await stopAudioRecording(
-                                                  audioRecorder:
-                                                      _model.audioRecorder,
-                                                  audioName:
-                                                      'recordedFileBytes',
-                                                  onRecordingComplete:
-                                                      (audioFilePath,
-                                                          audioBytes) {
-                                                    _model.stopped =
-                                                        audioFilePath;
-                                                    _model.recordedFileBytes =
-                                                        audioBytes;
-                                                  },
-                                                );
-
-                                                _model.currentAudio =
-                                                    _model.stopped;
-                                                safeSetState(() {});
-
-                                                safeSetState(() {});
-                                              },
+                                        ),
+                                      if ((_model.isRecording == true) &&
+                                          responsiveVisibility(
+                                            context: context,
+                                            phone: false,
+                                            tablet: false,
+                                            tabletLandscape: false,
+                                            desktop: false,
+                                          ))
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 18.0, 0.0),
+                                          child: FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 32.0,
+                                            buttonSize: 48.0,
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .error,
+                                            icon: const Icon(
+                                              Icons.stop_rounded,
+                                              color: Colors.white,
+                                              size: 24.0,
                                             ),
+                                            onPressed: () async {
+                                              _model.isRecording = false;
+                                              safeSetState(() {});
+                                              await stopAudioRecording(
+                                                audioRecorder:
+                                                    _model.audioRecorder,
+                                                audioName: 'recordedFileBytes',
+                                                onRecordingComplete:
+                                                    (audioFilePath,
+                                                        audioBytes) {
+                                                  _model.stopped =
+                                                      audioFilePath;
+                                                  _model.recordedFileBytes =
+                                                      audioBytes;
+                                                },
+                                              );
+
+                                              _model.currentAudio =
+                                                  _model.stopped;
+                                              safeSetState(() {});
+
+                                              safeSetState(() {});
+                                            },
                                           ),
-                                      ],
-                                    ),
+                                        ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),

@@ -49,6 +49,8 @@ class _SplashScreenNewWidgetState extends State<SplashScreenNewWidget> {
 
     _model.codigoInviteTextController ??= TextEditingController();
     _model.codigoInviteFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

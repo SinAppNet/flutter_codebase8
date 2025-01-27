@@ -23,6 +23,8 @@ class _ConteudosWidgetState extends State<ConteudosWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ConteudosModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

@@ -32,6 +32,8 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     _model.passwordTextController ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -245,6 +247,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   fontSize: 16.0,
                                                   letterSpacing: 0.0,
                                                 ),
+                                            keyboardType:
+                                                TextInputType.emailAddress,
                                             validator: _model
                                                 .emailTextControllerValidator
                                                 .asValidator(context),
@@ -276,6 +280,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             focusNode:
                                                 _model.textFieldFocusNode2,
                                             autofocus: false,
+                                            textInputAction:
+                                                TextInputAction.send,
                                             obscureText:
                                                 !_model.passwordVisibility,
                                             decoration: InputDecoration(

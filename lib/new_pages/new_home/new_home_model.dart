@@ -14,18 +14,19 @@ class NewHomeModel extends FlutterFlowModel<NewHomeWidget> {
   UsersRow? user;
   // Stores action output result for [Backend Call - Query Rows] action in newHome widget.
   List<RegistroDiarioRow>? diario;
+  Stream<List<UsersRow>>? containerSupabaseStream1;
   // State field(s) for Carousel widget.
   CarouselSliderController? carouselController;
   int carouselCurrentIndex = 1;
 
+  // Stores action output result for [Backend Call - Query Rows] action in Container widget.
+  List<UsersRow>? userd;
+  // Stores action output result for [Backend Call - Query Rows] action in Container widget.
+  List<EmpresasRow>? empresa;
   Stream<List<FeedPostagensRow>>? columnSupabaseStream;
   // Model for newAppBar component.
   late NewAppBarModel newAppBarModel;
-  Stream<List<UsersRow>>? containerSupabaseStream;
-  // Stores action output result for [Backend Call - Query Rows] action in Row widget.
-  List<InviteRow>? invite;
-  // Stores action output result for [Backend Call - Insert Row] action in Row widget.
-  InviteRow? createdInvite;
+  Stream<List<UsersRow>>? containerSupabaseStream2;
 
   @override
   void initState(BuildContext context) {

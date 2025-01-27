@@ -60,6 +60,8 @@ class _LogoutWidgetState extends State<LogoutWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

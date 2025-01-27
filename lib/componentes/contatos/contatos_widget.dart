@@ -28,6 +28,8 @@ class _ContatosWidgetState extends State<ContatosWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ContatosModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
