@@ -122,8 +122,8 @@ class _NewSplashScreenWidgetState extends State<NewSplashScreenWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            _model.fcm = await actions.getFCMToken();
-                            _model.fcm = _model.fcm;
+                            _model.fcmtk = await actions.getFCMToken();
+                            _model.fcmt = _model.fcmtk;
                             safeSetState(() {});
 
                             safeSetState(() {});
@@ -183,7 +183,7 @@ class _NewSplashScreenWidgetState extends State<NewSplashScreenWidget> {
                               0.0, 12.0, 0.0, 0.0),
                           child: Text(
                             valueOrDefault<String>(
-                              _model.fcm,
+                              _model.fcmt,
                               'a',
                             ),
                             style: FlutterFlowTheme.of(context)

@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 class NewSplashScreenModel extends FlutterFlowModel<NewSplashScreenWidget> {
   ///  Local state fields for this page.
 
-  String? fcm;
+  String? fcmt;
 
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Custom Action - getFCMToken] action in RichText widget.
-  String? fcm;
+  String? fcmtk;
 
   @override
   void initState(BuildContext context) {}
