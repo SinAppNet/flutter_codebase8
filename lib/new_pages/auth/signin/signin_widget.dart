@@ -1134,10 +1134,6 @@ class _SigninWidgetState extends State<SigninWidget> {
                                         currentUserUid,
                                       ),
                                     );
-                                    await ColaboradoresEmpresasTable().insert({
-                                      'empresa': _model.createdEmpresa?.id,
-                                      'colaborador': _model.createdUser?.id,
-                                    });
                                     await SetTrialCall.call(
                                       id: _model.createdUser?.id,
                                     );
@@ -1193,166 +1189,200 @@ class _SigninWidgetState extends State<SigninWidget> {
                       ],
                     ),
                   if (_model.currentStep == 1)
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          LinearPercentIndicator(
-                            percent: 0.6,
-                            width: MediaQuery.sizeOf(context).width * 1.0,
-                            lineHeight: 12.0,
-                            animation: true,
-                            animateFromLastPercent: true,
-                            progressColor: const Color(0xFF009C3B),
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).accent4,
-                            padding: EdgeInsets.zero,
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                18.0, 24.0, 18.0, 0.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Conte um pouco mais sobre o tipo de conexão que deseja fazer',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        fontSize: 32.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 32.0, 0.0, 0.0),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                        child: TextFormField(
-                                          controller:
-                                              _model.tipoConexTextController,
-                                          focusNode: _model.tipoConexFocusNode,
-                                          onChanged: (_) =>
-                                              EasyDebounce.debounce(
-                                            '_model.tipoConexTextController',
-                                            const Duration(milliseconds: 0),
-                                            () => safeSetState(() {}),
-                                          ),
-                                          autofocus: false,
-                                          textInputAction: TextInputAction.done,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            isDense: true,
-                                            hintText:
-                                                'Conte um pouco sobre você e suas experiências pessoais...',
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Inter',
-                                                      color: const Color(0xFF667085),
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                color: Color(0xFFD0D5DD),
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                color: Color(0xB1009C3B),
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            contentPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 20.0, 15.0, 20.0),
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color: const Color(0xFF667085),
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
-                                              ),
-                                          maxLines: 5,
-                                          validator: _model
-                                              .tipoConexTextControllerValidator
-                                              .asValidator(context),
-                                        ),
-                                      ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        LinearPercentIndicator(
+                          percent: 0.6,
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          lineHeight: 12.0,
+                          animation: true,
+                          animateFromLastPercent: true,
+                          progressColor: const Color(0xFF009C3B),
+                          backgroundColor: FlutterFlowTheme.of(context).accent4,
+                          padding: EdgeInsets.zero,
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              18.0, 24.0, 18.0, 0.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Conte um pouco mais sobre o tipo de conexão que deseja fazer',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      fontSize: 32.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 8.0, 0.0, 0.0),
-                                      child: Text(
-                                        '* Ao clicar em continuar, seu teste gratuito de 7 dias será iniciado e você será redirecionado(a) a central de conexões!',
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 32.0, 0.0, 0.0),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: TextFormField(
+                                        controller:
+                                            _model.tipoConexTextController,
+                                        focusNode: _model.tipoConexFocusNode,
+                                        onChanged: (_) => EasyDebounce.debounce(
+                                          '_model.tipoConexTextController',
+                                          const Duration(milliseconds: 0),
+                                          () => safeSetState(() {}),
+                                        ),
+                                        autofocus: false,
+                                        textInputAction: TextInputAction.done,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          hintText:
+                                              'Conte um pouco sobre você e suas experiências pessoais...',
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    color: const Color(0xFF667085),
+                                                    fontSize: 16.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFFD0D5DD),
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0xB1009C3B),
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          contentPadding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  15.0, 20.0, 15.0, 20.0),
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Inter',
-                                              fontSize: 12.0,
+                                              color: const Color(0xFF667085),
+                                              fontSize: 16.0,
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w200,
                                             ),
+                                        maxLines: 5,
+                                        validator: _model
+                                            .tipoConexTextControllerValidator
+                                            .asValidator(context),
                                       ),
                                     ),
-                                  ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        12.0, 8.0, 0.0, 0.0),
+                                    child: Text(
+                                      '* Ao clicar em continuar, seu teste gratuito de 7 dias será iniciado e você será redirecionado(a) a central de conexões!',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            fontSize: 12.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w200,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 32.0, 0.0, 0.0),
+                                child: Text(
+                                  'Sugestões',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        fontSize: 18.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 32.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Sugestões',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          fontSize: 18.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFD1FFE2),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 4.0,
+                                      color: Color(0x33000000),
+                                      offset: Offset(
+                                        0.0,
+                                        2.0,
+                                      ),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        'Busco empresários na área da tecnologia para apresentar meus serviços. ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Container(
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 0.0),
+                                child: Container(
                                   decoration: BoxDecoration(
                                     color: const Color(0xFFD1FFE2),
                                     boxShadow: const [
@@ -1373,7 +1403,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          'Busco empresários na área da tecnologia para apresentar meus serviços. ',
+                                          'Busco conhecer novos negócios para poder diversificar os meus investimentos.',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -1386,109 +1416,71 @@ class _SigninWidgetState extends State<SigninWidget> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFD1FFE2),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 4.0,
-                                          color: Color(0x33000000),
-                                          offset: Offset(
-                                            0.0,
-                                            2.0,
-                                          ),
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text(
-                                            'Busco conhecer novos negócios para poder diversificar os meus investimentos.',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ].divide(const SizedBox(height: 8.0)),
-                            ),
+                              ),
+                            ].divide(const SizedBox(height: 8.0)),
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                24.0, 32.0, 24.0, 32.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                await UsersTable().update(
-                                  data: {
-                                    'tipo_conexao':
-                                        _model.tipoConexTextController.text,
-                                  },
-                                  matchingRows: (rows) => rows.eqOrNull(
-                                    'uuid',
-                                    currentUserUid,
-                                  ),
-                                );
-                                FFAppState().invited = false;
-                                safeSetState(() {});
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              24.0, 32.0, 24.0, 32.0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              await UsersTable().update(
+                                data: {
+                                  'tipo_conexao':
+                                      _model.tipoConexTextController.text,
+                                },
+                                matchingRows: (rows) => rows.eqOrNull(
+                                  'uuid',
+                                  currentUserUid,
+                                ),
+                              );
+                              FFAppState().invited = false;
+                              safeSetState(() {});
 
-                                context.pushNamed(
-                                  'matchPage',
-                                  queryParameters: {
-                                    'fromSignin': serializeParam(
-                                      true,
-                                      ParamType.bool,
-                                    ),
-                                  }.withoutNulls,
-                                );
-                              },
-                              text: 'Iniciar teste gratuito',
-                              icon: const Icon(
-                                Icons.arrow_forward_rounded,
-                                size: 18.0,
-                              ),
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 48.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: const Color(0xFF009C3B),
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: Colors.white,
-                                      fontSize: 14.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              showLoadingIndicator: false,
+                              context.pushNamed(
+                                'matchPage',
+                                queryParameters: {
+                                  'fromSignin': serializeParam(
+                                    true,
+                                    ParamType.bool,
+                                  ),
+                                }.withoutNulls,
+                              );
+                            },
+                            text: 'Iniciar teste gratuito',
+                            icon: const Icon(
+                              Icons.arrow_forward_rounded,
+                              size: 18.0,
                             ),
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 48.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 0.0, 24.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: const Color(0xFF009C3B),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            showLoadingIndicator: false,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                 ],
               ),
