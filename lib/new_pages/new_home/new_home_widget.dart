@@ -5,6 +5,7 @@ import '/componentes/empty/empty_widget.dart';
 import '/componentes/logout/logout_widget.dart';
 import '/componentes/postagem/postagem_widget.dart';
 import '/components/ia_recommend_widget.dart';
+import '/components/limit_views_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -1108,47 +1109,258 @@ class _NewHomeWidgetState extends State<NewHomeWidget> {
                                       Align(
                                         alignment:
                                             const AlignmentDirectional(0.0, -1.0),
-                                        child: InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            context.pushNamed('matchPage');
-                                          },
-                                          child: Container(
-                                            width: double.infinity,
-                                            height: 159.0,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: Image.asset(
-                                                  'assets/images/vnimc_1.png',
-                                                ).image,
-                                              ),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  blurRadius: 4.0,
-                                                  color: Color(0x33000000),
-                                                  offset: Offset(
-                                                    0.0,
-                                                    2.0,
-                                                  ),
-                                                )
-                                              ],
-                                              gradient: const LinearGradient(
-                                                colors: [
-                                                  Color(0xFF009C3B),
-                                                  Color(0xFF003614)
+                                        child: Builder(
+                                          builder: (context) => InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              var shouldSetState = false;
+                                              if (containerUsersRow
+                                                      ?.perfilCompleto ==
+                                                  true) {
+                                                _model.matchTrack =
+                                                    await MatchTrackingTable()
+                                                        .queryRows(
+                                                  queryFn: (q) => q
+                                                      .eqOrNull(
+                                                        'user',
+                                                        FFAppState()
+                                                            .currentUser
+                                                            .id,
+                                                      )
+                                                      .eqOrNull(
+                                                        'date',
+                                                        supaSerialize<DateTime>(
+                                                            getCurrentTimestamp),
+                                                      ),
+                                                );
+                                                shouldSetState = true;
+                                                if (_model
+                                                        .matchTrack
+                                                        ?.firstOrNull
+                                                        ?.qntdDisponivel ==
+                                                    0) {
+                                                  await showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: WebViewAware(
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              FocusScope.of(
+                                                                      dialogContext)
+                                                                  .unfocus();
+                                                              FocusManager
+                                                                  .instance
+                                                                  .primaryFocus
+                                                                  ?.unfocus();
+                                                            },
+                                                            child: const SizedBox(
+                                                              height: double
+                                                                  .infinity,
+                                                              width: double
+                                                                  .infinity,
+                                                              child:
+                                                                  LimitViewsWidget(
+                                                                type:
+                                                                    'recomendacoes',
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+
+                                                  if (shouldSetState) {
+                                                    safeSetState(() {});
+                                                  }
+                                                  return;
+                                                } else {
+                                                  if (_model
+                                                          .matchTrack
+                                                          ?.firstOrNull
+                                                          ?.likesDisponiveis ==
+                                                      0) {
+                                                    await showDialog(
+                                                      barrierDismissible: false,
+                                                      context: context,
+                                                      builder: (dialogContext) {
+                                                        return Dialog(
+                                                          elevation: 0,
+                                                          insetPadding:
+                                                              EdgeInsets.zero,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          alignment: const AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                          child: WebViewAware(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () {
+                                                                FocusScope.of(
+                                                                        dialogContext)
+                                                                    .unfocus();
+                                                                FocusManager
+                                                                    .instance
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                              },
+                                                              child: const SizedBox(
+                                                                height: double
+                                                                    .infinity,
+                                                                width: double
+                                                                    .infinity,
+                                                                child:
+                                                                    LimitViewsWidget(
+                                                                  type: 'likes',
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    context.pushNamed(
+                                                      'matchPage',
+                                                      queryParameters: {
+                                                        'fromSignin':
+                                                            serializeParam(
+                                                          false,
+                                                          ParamType.bool,
+                                                        ),
+                                                      }.withoutNulls,
+                                                    );
+
+                                                    unawaited(
+                                                      () async {
+                                                        await action_blocks
+                                                            .appTracking(
+                                                          context,
+                                                          userid: FFAppState()
+                                                              .currentUser
+                                                              .id,
+                                                          eventName:
+                                                              'abrir-central-conexoes',
+                                                        );
+                                                      }(),
+                                                    );
+                                                  }
+
+                                                  if (shouldSetState) {
+                                                    safeSetState(() {});
+                                                  }
+                                                  return;
+                                                }
+                                              } else {
+                                                await showDialog(
+                                                  barrierDismissible: false,
+                                                  context: context,
+                                                  builder: (dialogContext) {
+                                                    return Dialog(
+                                                      elevation: 0,
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          const AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                      child: WebViewAware(
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
+                                                          child: const SizedBox(
+                                                            height:
+                                                                double.infinity,
+                                                            width:
+                                                                double.infinity,
+                                                            child:
+                                                                LimitViewsWidget(
+                                                              type:
+                                                                  'completarPerfil',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+
+                                                if (shouldSetState) {
+                                                  safeSetState(() {});
+                                                }
+                                                return;
+                                              }
+
+                                              if (shouldSetState) {
+                                                safeSetState(() {});
+                                              }
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 159.0,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: Image.asset(
+                                                    'assets/images/vnimc_1.png',
+                                                  ).image,
+                                                ),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    blurRadius: 4.0,
+                                                    color: Color(0x33000000),
+                                                    offset: Offset(
+                                                      0.0,
+                                                      2.0,
+                                                    ),
+                                                  )
                                                 ],
-                                                stops: [0.0, 1.0],
-                                                begin: AlignmentDirectional(
-                                                    -1.0, -0.87),
-                                                end: AlignmentDirectional(
-                                                    1.0, 0.87),
+                                                gradient: const LinearGradient(
+                                                  colors: [
+                                                    Color(0xFF009C3B),
+                                                    Color(0xFF003614)
+                                                  ],
+                                                  stops: [0.0, 1.0],
+                                                  begin: AlignmentDirectional(
+                                                      -1.0, -0.87),
+                                                  end: AlignmentDirectional(
+                                                      1.0, 0.87),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
                                             ),
                                           ),
                                         ),

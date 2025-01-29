@@ -1,7 +1,9 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/componentes/empty/empty_widget.dart';
 import '/componentes/solicitador_card/solicitador_card_widget.dart';
+import '/components/limit_views_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/new_pages/new_app_bar/new_app_bar_widget.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'new_connections_model.dart';
 export 'new_connections_model.dart';
 
@@ -127,37 +130,182 @@ class _NewConnectionsWidgetState extends State<NewConnectionsWidget> {
                           color: const Color(0x43009C3B),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.pushNamed(
-                              'matchPage',
-                              extra: <String, dynamic>{
-                                kTransitionInfoKey: const TransitionInfo(
-                                  hasTransition: true,
-                                  transitionType: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
+                        child: Builder(
+                          builder: (context) => InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              var shouldSetState = false;
+                              _model.userd = await UsersTable().queryRows(
+                                queryFn: (q) => q.eqOrNull(
+                                  'uuid',
+                                  currentUserUid,
                                 ),
-                              },
-                            );
-
-                            unawaited(
-                              () async {
-                                await action_blocks.appTracking(
-                                  context,
-                                  userid: FFAppState().currentUser.id,
-                                  eventName: 'abrir-central-conexoes',
+                              );
+                              shouldSetState = true;
+                              if (_model.userd?.firstOrNull?.perfilCompleto ==
+                                  true) {
+                                _model.matchTrack =
+                                    await MatchTrackingTable().queryRows(
+                                  queryFn: (q) => q
+                                      .eqOrNull(
+                                        'user',
+                                        FFAppState().currentUser.id,
+                                      )
+                                      .eqOrNull(
+                                        'date',
+                                        supaSerialize<DateTime>(
+                                            getCurrentTimestamp),
+                                      ),
                                 );
-                              }(),
-                            );
-                          },
-                          child: const Icon(
-                            FFIcons.kadduser,
-                            color: Color(0xFF009C3B),
-                            size: 18.0,
+                                shouldSetState = true;
+                                if (_model.matchTrack?.firstOrNull
+                                        ?.qntdDisponivel ==
+                                    0) {
+                                  await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            const AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        child: WebViewAware(
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(dialogContext)
+                                                  .unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: const SizedBox(
+                                              height: double.infinity,
+                                              width: double.infinity,
+                                              child: LimitViewsWidget(
+                                                type: 'recomendacoes',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                  if (shouldSetState) safeSetState(() {});
+                                  return;
+                                } else {
+                                  if (_model.matchTrack?.firstOrNull
+                                          ?.likesDisponiveis ==
+                                      0) {
+                                    await showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: const AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: WebViewAware(
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                FocusScope.of(dialogContext)
+                                                    .unfocus();
+                                                FocusManager
+                                                    .instance.primaryFocus
+                                                    ?.unfocus();
+                                              },
+                                              child: const SizedBox(
+                                                height: double.infinity,
+                                                width: double.infinity,
+                                                child: LimitViewsWidget(
+                                                  type: 'likes',
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    context.pushNamed(
+                                      'matchPage',
+                                      extra: <String, dynamic>{
+                                        kTransitionInfoKey: const TransitionInfo(
+                                          hasTransition: true,
+                                          transitionType:
+                                              PageTransitionType.fade,
+                                          duration: Duration(milliseconds: 0),
+                                        ),
+                                      },
+                                    );
+
+                                    unawaited(
+                                      () async {
+                                        await action_blocks.appTracking(
+                                          context,
+                                          userid: FFAppState().currentUser.id,
+                                          eventName: 'abrir-central-conexoes',
+                                        );
+                                      }(),
+                                    );
+                                  }
+
+                                  if (shouldSetState) safeSetState(() {});
+                                  return;
+                                }
+                              } else {
+                                await showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (dialogContext) {
+                                    return Dialog(
+                                      elevation: 0,
+                                      insetPadding: EdgeInsets.zero,
+                                      backgroundColor: Colors.transparent,
+                                      alignment: const AlignmentDirectional(0.0, 0.0)
+                                          .resolve(Directionality.of(context)),
+                                      child: WebViewAware(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(dialogContext)
+                                                .unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: const SizedBox(
+                                            height: double.infinity,
+                                            width: double.infinity,
+                                            child: LimitViewsWidget(
+                                              type: 'completarPerfil',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+
+                                if (shouldSetState) safeSetState(() {});
+                                return;
+                              }
+
+                              if (shouldSetState) safeSetState(() {});
+                            },
+                            child: const Icon(
+                              FFIcons.kadduser,
+                              color: Color(0xFF009C3B),
+                              size: 18.0,
+                            ),
                           ),
                         ),
                       ),

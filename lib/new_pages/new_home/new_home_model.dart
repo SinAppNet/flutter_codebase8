@@ -21,6 +21,8 @@ class NewHomeModel extends FlutterFlowModel<NewHomeWidget> {
   int carouselCurrentIndex = 1;
 
   // Stores action output result for [Backend Call - Query Rows] action in Container widget.
+  List<MatchTrackingRow>? matchTrack;
+  // Stores action output result for [Backend Call - Query Rows] action in Container widget.
   List<UsersRow>? userd;
   // Stores action output result for [Backend Call - Query Rows] action in Container widget.
   List<EmpresasRow>? empresa;

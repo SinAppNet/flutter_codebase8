@@ -291,6 +291,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.SupabaseRow,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'emailConfirmed',
+          path: '/emailConfirmed',
+          builder: (context, params) => const EmailConfirmedWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

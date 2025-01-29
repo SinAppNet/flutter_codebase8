@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 import 'premium_plans_model.dart';
 export 'premium_plans_model.dart';
 
+/// create a subscription plans page
 class PremiumPlansWidget extends StatefulWidget {
-  /// create a subscription plans page
   const PremiumPlansWidget({super.key});
 
   @override

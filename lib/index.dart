@@ -37,3 +37,4 @@ export '/teste09/teste09_widget.dart' show Teste09Widget;
 export '/connecters/connecters_widget.dart' show ConnectersWidget;
 export '/edit_personal_info/edit_personal_info_widget.dart'
     show EditPersonalInfoWidget;
+export '/email_confirmed/email_confirmed_widget.dart' show EmailConfirmedWidget;

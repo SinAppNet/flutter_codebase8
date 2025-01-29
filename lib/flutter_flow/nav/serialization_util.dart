@@ -256,6 +256,8 @@ dynamic deserializeParam<T>(
             return FeedPostagensRow(data);
           case EventsRow:
             return EventsRow(data);
+          case MatchTrackingRow:
+            return MatchTrackingRow(data);
           case UsersRow:
             return UsersRow(data);
           case LikesRow:

@@ -23,6 +23,7 @@ export 'tables/feed_comentarios.dart';
 export 'tables/colaboradores_empresas.dart';
 export 'tables/feed_postagens.dart';
 export 'tables/events.dart';
+export 'tables/match_tracking.dart';
 export 'tables/users.dart';
 export 'tables/likes.dart';
 export 'tables/user_info_view.dart';

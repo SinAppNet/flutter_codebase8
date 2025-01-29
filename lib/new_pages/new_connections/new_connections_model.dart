@@ -12,6 +12,10 @@ class NewConnectionsModel extends FlutterFlowModel<NewConnectionsWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - Query Rows] action in Icon widget.
+  List<UsersRow>? userd;
+  // Stores action output result for [Backend Call - Query Rows] action in Icon widget.
+  List<MatchTrackingRow>? matchTrack;
   // State field(s) for PesquisaNome widget.
   FocusNode? pesquisaNomeFocusNode;
   TextEditingController? pesquisaNomeTextController;

@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'trial_ended_message_model.dart';
 export 'trial_ended_message_model.dart';
 
@@ -43,6 +44,8 @@ class _TrialEndedMessageWidgetState extends State<TrialEndedMessageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Align(
       alignment: const AlignmentDirectional(0.0, 1.0),
       child: Container(
@@ -254,7 +257,7 @@ class _TrialEndedMessageWidgetState extends State<TrialEndedMessageWidget> {
                                     ),
                                   );
                                   await launchURL(
-                                      'https://sinapp.tech/payment?emb=${_model.user?.firstOrNull?.referredCode}');
+                                      'https://sinapp.tech/payment?emb=${_model.user?.firstOrNull?.referredCode}&user=${FFAppState().currentUser.id.toString()}');
 
                                   safeSetState(() {});
                                 },
